@@ -1,0 +1,8 @@
+pandoc: 2.11.2
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  clusterevaluation: clusterevaluation.html
+  clusterworkflow: clusterworkflow.html
+last_built: 2021-03-17T14:28Z
+
