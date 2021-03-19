@@ -2,10 +2,16 @@
 % Please edit documentation in R/run_app.R
 \name{run_app}
 \alias{run_app}
-\title{Function to run app}
+\title{Runs the Shiny app}
 \usage{
 run_app()
 }
 \description{
-Function to run app
+Runs the Shiny app
+}
+\examples{
+\dontrun{
+library(visxhclust)
+run_app()
+}
 }

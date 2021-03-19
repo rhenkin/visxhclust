@@ -11,7 +11,7 @@ ui_significance <- function() {
         options = list(
           onInitialize = I('function(){this.setValue("");}')
         )
-      ) %>% helper(type = "markdown", content = "signif_help"),
+      ) %>% shinyhelper::helper(type = "markdown", content = "signif_help"),
       splitLayout(
         plotOutput(ns("signif_boxplot"), height = 700),
         htmlOutput(ns("signif_results"), container = pre),
@@ -20,8 +20,6 @@ ui_significance <- function() {
     )
   )
 }
-
-#' @importFrom stats as.formula t.test
 server_significance <- function(id, all_data, cluster_labels, cluster_colors,
                              unselected_vars) {
   moduleServer(id, function(input, output, session) {
@@ -52,7 +50,7 @@ server_significance <- function(id, all_data, cluster_labels, cluster_colors,
 
       if (num_clusters > 2) {
         dunn.test::dunn.test(
-          x = pull(all_df, input$signif_var),
+          x = dplyr::pull(all_df, input$signif_var),
           g = clusters,
           method = "bh"
         )

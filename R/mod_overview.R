@@ -10,7 +10,7 @@ ui_overview <- function() {
              ) %>%
              bs_append(
                "Highly correlated variables",
-               DTOutput(ns("dropped_vars_table"))) %>%
+               DT::DTOutput(ns("dropped_vars_table"))) %>%
              bs_append(
                "Unscaled data histogram",
                verticalLayout(
@@ -24,10 +24,10 @@ ui_overview <- function() {
                    ns("overview_hist"),
                    width = "400px", height = "400px")
                )
-             ) %>% helper(type = "markdown", content = "overview_help")
+             ) %>% shinyhelper::helper(type = "markdown",
+                                       content = "overview_help")
   )
 }
-#' @importFrom DT renderDT
 server_overview <- function(id, selected_data, selected_numeric, dropped_variables,
                          scaling_method) {
   moduleServer(id, function(input, output, session) {
@@ -60,7 +60,8 @@ server_overview <- function(id, selected_data, selected_numeric, dropped_variabl
       if (input$overview_scale == TRUE) {
         df <- as.data.frame(scale_data(df, scaling_method()))
       }
-      ggplot(df, aes_string(input$overview_var)) + geom_histogram(bins = 15)
+      ggplot2::ggplot(df, ggplot2::aes_string(input$overview_var)) +
+        ggplot2::geom_histogram(bins = 15)
     })
 
   })

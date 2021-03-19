@@ -1,5 +1,3 @@
-#' @importFrom clusterCrit getCriteriaNames
-#' @noRd
 ui_evaluation <- function() {
   ns <- NS("evaluation")
   tabPanel(
@@ -24,7 +22,7 @@ ui_evaluation <- function() {
             "Global maximum" = "globalmax"
           )
         ))) %>%
-          helper(type = "markdown", content = "measures_help"),
+        shinyhelper::helper(type = "markdown", content = "measures_help"),
       plotOutput(ns("measure_over_k"))
     )
   )

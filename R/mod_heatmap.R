@@ -35,7 +35,7 @@ server_heatmap <- function(id,
       heatmap_clusters <- reorder_dendrograms(clusters(),
                                               nclusters(), cluster_colors)
 
-      cluster_heatmaps(
+      plot_cluster_heatmaps(
         top_matrix,
         bottom_matrix,
         heatmap_clusters$dendrogram,

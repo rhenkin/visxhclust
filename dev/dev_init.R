@@ -4,6 +4,7 @@
 # usethis::use_gpl3_license(name = "Rafael Henkin")
 # usethis::use_readme_rmd( open = FALSE )
 # usethis::use_news_md( open = FALSE )
+
 #
 # usethis::use_pkgdown()
 #
@@ -30,10 +31,12 @@
 #
 # usethis::use_package("shinythemes")
 # usethis::use_package("shinyhelper")
-# Bioconductor packages:
+
 # usethis::use_package("dendextend")
-# usethis::use_package("ComplexHeatmap")
 # usethis::use_package("circlize")
+# Bioconductor packages:
+# usethis::use_package("ComplexHeatmap")
+
 
 # Vignettes
 #usethis::use_vignette("clusterworkflow")

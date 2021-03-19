@@ -14,11 +14,11 @@ compute_dmat(
 \arguments{
 \item{x}{a numeric data frame or matrix}
 
-\item{dist_method}{a distance measure to apply to the scaled data. Must be those supported by \code{\link[stats:dist]{stats::dist()}}, plus 'mahalanobis' and 'cosine'.}
+\item{dist_method}{a distance measure to apply to the scaled data. Must be those supported by \code{\link[stats:dist]{stats::dist()}}, plus \code{"mahalanobis"} and \code{"cosine"}. Default is \code{"euclidean"}.}
 
-\item{scaling_method}{method to scale data frame columns. Valid values are \code{z-scores} and \code{robust}, any other will return unscaled data.}
+\item{scaling_method}{method to scale data frame columns. Valid values are \code{"z-scores"} and \code{"robust"}, any other will return unscaled data. By default does not scale data.}
 
-\item{subset_cols}{a list of columns to subset the data}
+\item{subset_cols}{(optional) a list of columns to subset the data}
 }
 \value{
 an object of class "dist" (see \code{\link[stats:dist]{stats::dist()}})
@@ -26,4 +26,8 @@ an object of class "dist" (see \code{\link[stats:dist]{stats::dist()}})
 \description{
 This function applies scaling to the columns of a data frame and
 computes and returns a distance matrix from a chosen distance measure.
+}
+\examples{
+dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+class(dmat)
 }

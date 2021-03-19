@@ -10,17 +10,20 @@
 #' @return a ggplot object
 #' @export
 #'
-#' @importFrom stats as.formula
 #'
 #' @examples
 #' facet_boxplot(iris, x = "Species", y = "Sepal.Length", facet_var = "Species")
 facet_boxplot <- function(df, x, y, facet_var = NULL,
                           boxplot_colors = NULL, plot_points = TRUE) {
   p <- ggplot2::ggplot(df, ggplot2::aes(x = .data[[x]], fill = .data[[x]])) +
-    ggplot2::geom_boxplot(aes(y = .data[[y]]),
+    ggplot2::geom_boxplot(ggplot2::aes(y = .data[[y]]),
                           alpha = 0.6,
                           outlier.shape = NA) +
-    ggplot2::theme_bw()
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(),
+    panel.grid.minor.x = ggplot2::element_blank(),
+    axis.line = ggplot2::element_line(),
+    axis.ticks = ggplot2::element_line())
 
   if (plot_points) {
     p <- p +
@@ -30,7 +33,7 @@ facet_boxplot <- function(df, x, y, facet_var = NULL,
   }
 
   if (!is.null(facet_var)) {
-    facet_formula <- as.formula(paste("~", facet_var))
+    facet_formula <- stats::as.formula(paste("~", facet_var))
     p <- p +
       ggplot2::facet_wrap(facet_formula, ncol = 4, scales = "free")
   }
@@ -42,7 +45,39 @@ facet_boxplot <- function(df, x, y, facet_var = NULL,
 
 }
 
-#' @noRd
+#' Plot boxplots with clusters
+#'
+#' This is a convenience wrapper function for `facet_boxplot()`. Combined with `annotate_clusters()`, it
+#' doesn't require specifying axes in `facet_boxplot()`.
+#'
+#' @param annotated_data data frame returned by `annotate_clusters()`
+#' @param ... arguments passed to `facet_boxplot()`
+#'
+#' @return boxplots faceted by clusters
+#' @export
+#'
+#' @examples
+#' dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+#' clusters <- compute_clusters(dmat, "complete")
+#' cluster_labels <- cut_clusters(clusters, 2)
+#' annotated_data <- annotate_clusters(iris[, c("Petal.Length", "Sepal.Length")], cluster_labels)
+#' cluster_boxplots(annotated_data, boxplot_colors = visxhclust::cluster_colors)
+cluster_boxplots <- function(annotated_data, ...)  {
+  facet_boxplot(annotated_data, "Cluster", "Value", "Measurement", ...)
+}
+
+
+#' A custom line plot with optional vertical line
+#'
+#' @param df data source
+#' @param x variable for horizontal axis
+#' @param y variable for vertical axis
+#' @param xintercept optional value in horizontal axis to highlight
+#'
+#' @return a [ggplot2::ggplot] object
+#'
+#' @export
+#'
 line_plot <- function(df, x, y, xintercept = NULL) {
   p <- ggplot2::ggplot(df) +
     ggplot2::geom_line(ggplot2::aes(x = .data[[x]], y = .data[[y]], group = 1)) +
@@ -71,7 +106,7 @@ pca_scatterplot <- function(pcres, cluster_labels, cluster_colors) {
     ggplot2::geom_point(ggplot2::aes(color = .data$Cluster)) +
     ggplot2::scale_colour_manual(values = cluster_colors) +
     ggplot2::theme_bw() +
-    ggplot2:: labs(title = "PCA") +
+    ggplot2::labs(title = "PCA") +
     ggplot2::xlab(pc_labels[1]) +
     ggplot2::ylab(pc_labels[2]) +
     ggplot2::theme(legend.position = "bottom")
@@ -121,7 +156,7 @@ silhouette_plot <- function(points, clusters, sil_widths, cluster_colors) {
     ggplot2::theme_bw() +
     ggplot2::facet_wrap(~ cluster, ncol = 1, scales = "free_y") +
     ggplot2::scale_fill_manual(values = cluster_colors) +
-    ggplot2::scale_y_reordered() +
+    scale_y_reordered() +
     ggplot2::scale_x_continuous(expand = c(0,0))+
     ggplot2::theme(axis.text.y = ggplot2::element_blank(),
           axis.ticks.y = ggplot2::element_blank(),
@@ -161,4 +196,20 @@ dmat_projection <- function(dmat, point_colors = NULL, point_palette = NULL) {
   if (!is.null(point_palette))
     p <- p + ggplot2::scale_colour_manual(values = point_palette)
   p
+}
+
+plot_compare <- function(compare_df) {
+  ggplot2::ggplot(
+    compare_df,
+    ggplot2::aes_string(
+      x = "Config",
+      alluvium = "Subject",
+      stratum = "Cluster",
+      fill = "Cluster",
+      label = "Cluster"
+    )
+  ) +
+    ggalluvial::geom_flow() +
+    ggalluvial::geom_stratum() +
+    ggplot2::geom_text(stat = "stratum", size = 4)
 }

@@ -1,4 +1,3 @@
-#' @importFrom DT DTOutput
 ui_params <- function() {
   ns <- NS("params")
   tabPanel(
@@ -10,7 +9,7 @@ ui_params <- function() {
                actionButton(ns("configs_save"), "Save parameters")),
         column(2, style = "margin-top: 25px; margin-bottom: 25px",
                actionButton(ns("configs_load"), "Load selected"))
-      ) %>% helper(type = "markdown", content = "params_help"),
+      ) %>% shinyhelper::helper(type = "markdown", content = "params_help"),
       fluidRow(DT::DTOutput(ns("configs_table")))
     )
   )
@@ -46,8 +45,8 @@ server_params <- function(id, distance_method, linkage_method, nclusters) {
     # Reload parameters from the selected row on the table
     selected_config <- eventReactive(input$configs_load, {
       req(input$configs_table_rows_selected)
-
       saved_configurations()[[input$configs_table_rows_selected]]
     })
+    selected_config
   })
 }

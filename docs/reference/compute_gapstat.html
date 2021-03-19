@@ -95,7 +95,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/clusterevaluation.html">clusterevaluation</a>
+      <a href="../articles/clusterevaluation.html">Documenting evaluation</a>
     </li>
     <li>
       <a href="../articles/clusterworkflow.html">Documenting a workflow</a>
@@ -145,31 +145,31 @@
     </tr>
     <tr>
       <th>gap_B</th>
-      <td><p>number of bootstrap samples for <code>clustGap()</code> function</p></td>
+      <td><p>number of bootstrap samples for <code><a href='https://rdrr.io/pkg/cluster/man/clusGap.html'>cluster::clusGap()</a></code> function. Default is 50.</p></td>
     </tr>
     <tr>
       <th>max_k</th>
-      <td><p>maximum number of clusters to compute the statistic</p></td>
+      <td><p>maximum number of clusters to compute the statistic. Default is 14.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data frame with the Tab component of <code>clustGap()</code> results</p>
+    <p>a data frame with the Tab component of <code><a href='https://rdrr.io/pkg/cluster/man/clusGap.html'>cluster::clusGap()</a></code> results</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>data_to_cluster</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>]</span>
 <span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_dmat.html'>compute_dmat</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span>, <span class='st'>"euclidean"</span>, <span class='st'>"z-scores"</span><span class='op'>)</span>
 <span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_clusters.html'>compute_clusters</a></span><span class='op'>(</span><span class='va'>dmat</span>, <span class='st'>"complete"</span><span class='op'>)</span>
-<span class='va'>gap_results</span> <span class='op'>&lt;-</span> <span class='fu'>compute_gapstat</span><span class='op'>(</span><span class='va'>data_to_cluster</span>, <span class='va'>clusters</span><span class='op'>)</span>
+<span class='va'>gap_results</span> <span class='op'>&lt;-</span> <span class='fu'>compute_gapstat</span><span class='op'>(</span><span class='fu'><a href='scale_data.html'>scale_data</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span><span class='op'>)</span>, <span class='va'>clusters</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>gap_results</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;       logW   E.logW        gap     SE.sim k
-#&gt; 1 4.437065 4.508272 0.07120719 0.03147173 1
-#&gt; 2 4.005984 4.500793 0.49480841 0.03254356 2
-#&gt; 3 3.323239 4.493365 1.17012570 0.03229721 3
-#&gt; 4 3.144333 4.486081 1.34174792 0.03225282 4
-#&gt; 5 3.068723 4.479214 1.41049087 0.03182598 5
-#&gt; 6 2.986203 4.473488 1.48728542 0.03199689 6</div></pre>
+</div><div class='output co'>#&gt;       logW   E.logW       gap     SE.sim k
+#&gt; 1 4.134552 4.302067 0.1675156 0.02897045 1
+#&gt; 2 3.671650 4.294508 0.6228583 0.02999569 2
+#&gt; 3 3.177399 4.287220 1.1098216 0.02967695 3
+#&gt; 4 2.983790 4.279840 1.2960498 0.02939649 4
+#&gt; 5 2.865874 4.272817 1.4069434 0.02915626 5
+#&gt; 6 2.758752 4.267031 1.5082783 0.02931610 6</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

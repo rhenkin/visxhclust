@@ -36,12 +36,11 @@ ui_gapstat <- function() {
                  )
                )
              )
-           ) %>% helper(type = "markdown", content = "gap_help"),
+           ) %>% shinyhelper::helper(type = "markdown", content = "gap_help"),
            plotOutput(ns("gap_plot")) %>% withSpinner()
            )
   )
 }
-#' @importFrom cluster maxSE
 server_gapstat <- function(id, selected_data, clusters) {
   moduleServer(id, function(input, output, session) {
     # Wait for user input instead of computing automatically
@@ -50,17 +49,24 @@ server_gapstat <- function(id, selected_data, clusters) {
         df <- selected_data()
         clustered_data <- clusters()
       })
+      validate(need(input$gap_B > 0, "Bootstrap samples must be greater than 0."))
       compute_gapstat(df, clustered_data, input$gap_B)
     })
 
     output$gap_plot <- renderPlot({
       req(gap_result())
+
       gap_table <- gap_result()
-      optimal_k <- cluster::maxSE(gap_table$gap,
-                                  gap_table$SE.sim,
-                                  method = input$gap_method)
+      if (isTruthy(input$gap_method)) {
+        optimal_k <- cluster::maxSE(gap_table$gap,
+                                    gap_table$SE.sim,
+                                    method = input$gap_method)
+      } else {
+        optimal_k <- NULL
+      }
+
       line_plot(gap_table, "k", "gap", xintercept = optimal_k) +
-        labs(y = "Gap statistic")
+        ggplot2::labs(y = "Gap statistic")
     })
   })
 }

@@ -6,7 +6,7 @@ ui_sidebar <- function() {
       multiple = FALSE,
       accept = c(".rds", ".csv", ".tsv", ".txt")
     ) %>%
-      helper(type = "markdown", content = "sidebar_help"),
+      shinyhelper::helper(type = "markdown", content = "sidebar_help"),
     radioButtons(
       "scaling",
       "Scaling:",

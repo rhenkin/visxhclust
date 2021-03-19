@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Compute an internal evaluation metric for clustered data — compute_metric" />
-<meta property="og:description" content="Compute an internal evaluation metric for clustered data" />
+<meta property="og:description" content="Metric will be computed from 2 to max_k clusters. Note that the row number in results will be different from k." />
 
 
 
@@ -95,7 +95,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/clusterevaluation.html">clusterevaluation</a>
+      <a href="../articles/clusterevaluation.html">Documenting evaluation</a>
     </li>
     <li>
       <a href="../articles/clusterworkflow.html">Documenting a workflow</a>
@@ -127,7 +127,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Compute an internal evaluation metric for clustered data</p>
+    <p>Metric will be computed from 2 to max_k clusters. Note that the row number in results will be different from k.</p>
     </div>
 
     <pre class="usage"><span class='fu'>compute_metric</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>clusters</span>, <span class='va'>metric_name</span>, max_k <span class='op'>=</span> <span class='fl'>14</span><span class='op'>)</span></pre>
@@ -149,7 +149,7 @@
     </tr>
     <tr>
       <th>max_k</th>
-      <td><p>maximum number of clusters to cut using <code><a href='http://talgalili.github.io/dendextend/reference/cutree-methods.html'>dendextend::cutree()</a></code></p></td>
+      <td><p>maximum number of clusters to cut using <code><a href='http://talgalili.github.io/dendextend/reference/cutree-methods.html'>dendextend::cutree()</a></code>. Default is 14.</p></td>
     </tr>
     </table>
 

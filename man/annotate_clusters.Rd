@@ -4,16 +4,16 @@
 \alias{annotate_clusters}
 \title{Annotate data frame with clusters}
 \usage{
-annotate_clusters(df, clusters, long = TRUE, selected_clusters = NULL)
+annotate_clusters(df, cluster_labels, long = TRUE, selected_clusters = NULL)
 }
 \arguments{
 \item{df}{a data frame}
 
+\item{long}{if \code{TRUE}, returned data frame will be in long format. See details for spec. Default is \code{TRUE}.}
+
+\item{selected_clusters}{optional cluster labels to filter}
+
 \item{clusters}{list of cluster labels, automatically converted to factor.}
-
-\item{long}{if TRUE, returned data frame will be in long format. See details for spec.}
-
-\item{selected_clusters}{optional labels to filter}
 }
 \value{
 a wide or long data frame
@@ -25,7 +25,8 @@ Annotate data frame with clusters
 Long data frame will have columns: \code{Cluster}, \code{Measurement} and \code{Value}.
 }
 \examples{
-res <- compute_clusters(dist(iris[, c("Petal.Length", "Sepal.Length")]), "complete")
+dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+res <- compute_clusters(dmat, "complete")
 cluster_labels <- cut_clusters(res, 2)
 annotated_data <- annotate_clusters(iris[, c("Petal.Length", "Sepal.Length")], cluster_labels)
 head(annotated_data)

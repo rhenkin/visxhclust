@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Draw two heatmaps — cluster_heatmaps • visxhclust</title>
+<title>Plot heatmap with cluster results and dendrogram — cluster_heatmaps • visxhclust</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Draw two heatmaps — cluster_heatmaps" />
-<meta property="og:description" content="Draw two heatmaps" />
+<meta property="og:title" content="Plot heatmap with cluster results and dendrogram — cluster_heatmaps" />
+<meta property="og:description" content="Plot heatmap with cluster results and dendrogram" />
 
 
 
@@ -95,7 +95,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/clusterevaluation.html">clusterevaluation</a>
+      <a href="../articles/clusterevaluation.html">Documenting evaluation</a>
     </li>
     <li>
       <a href="../articles/clusterworkflow.html">Documenting a workflow</a>
@@ -121,20 +121,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Draw two heatmaps</h1>
+    <h1>Plot heatmap with cluster results and dendrogram</h1>
     
     <div class="hidden name"><code>cluster_heatmaps.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Draw two heatmaps</p>
+    <p>Plot heatmap with cluster results and dendrogram</p>
     </div>
 
     <pre class="usage"><span class='fu'>cluster_heatmaps</span><span class='op'>(</span>
-  <span class='va'>top_matrix</span>,
-  <span class='va'>bottom_matrix</span>,
-  <span class='va'>dendrograms</span>,
-  <span class='va'>clusters_set</span>,
+  <span class='va'>scaled_selected_data</span>,
+  <span class='va'>clusters</span>,
+  <span class='va'>k</span>,
+  <span class='va'>cluster_colors</span>,
+  scaled_unselected_data <span class='op'>=</span> <span class='cn'>NULL</span>,
   annotation <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -142,31 +143,45 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>top_matrix</th>
-      <td><p>matrix with selected variables</p></td>
+      <th>scaled_selected_data</th>
+      <td><p>scaled matrix or data frame with variables used for clustering</p></td>
     </tr>
     <tr>
-      <th>bottom_matrix</th>
-      <td><p>matrix with unselected variables</p></td>
+      <th>clusters</th>
+      <td><p>hierarchical cluster results produced by <code><a href='https://rdrr.io/pkg/fastcluster/man/hclust.html'>fastcluster::hclust()</a></code></p></td>
     </tr>
     <tr>
-      <th>dendrograms</th>
-      <td><p>to draw above top matrix</p></td>
+      <th>k</th>
+      <td><p>targeted number of clusters</p></td>
     </tr>
     <tr>
-      <th>clusters_set</th>
-      <td><p>list of cluster indices</p></td>
+      <th>cluster_colors</th>
+      <td><p>list of cluster colors to match with boxplots</p></td>
+    </tr>
+    <tr>
+      <th>scaled_unselected_data</th>
+      <td><p>(optional) scaled matrix or data frame with variables not used for clustering</p></td>
     </tr>
     <tr>
       <th>annotation</th>
-      <td><p>any kind of annotation object to draw as top_annotation</p></td>
+      <td><p>(optional) <a href='https://rdrr.io/pkg/ComplexHeatmap/man/columnAnnotation.html'>ComplexHeatmap::columnAnnotation</a> object</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>two concatenated heatmaps drawn with ComplexHeatmap::draw</p>
+    <p>a <a href='https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html'>ComplexHeatmap::Heatmap</a></p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_dmat.html'>compute_dmat</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"euclidean"</span>, <span class='st'>"z-scores"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_clusters.html'>compute_clusters</a></span><span class='op'>(</span><span class='va'>dmat</span>, <span class='st'>"complete"</span><span class='op'>)</span>
+<span class='va'>species_annotation</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create_annotations.html'>create_annotations</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"Species"</span><span class='op'>)</span>
+<span class='fu'>cluster_heatmaps</span><span class='op'>(</span><span class='fu'><a href='scale_data.html'>scale_data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>,
+                 <span class='va'>clusters</span>,
+                 <span class='fl'>3</span>,
+                 <span class='fu'>visxhclust</span><span class='fu'>::</span><span class='va'><a href='cluster_colors.html'>cluster_colors</a></span>,
+                 annotation <span class='op'>=</span> <span class='va'>species_annotation</span><span class='op'>)</span>
+</div><div class='img'><img src='cluster_heatmaps-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

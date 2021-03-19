@@ -54,7 +54,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/clusterevaluation.html">clusterevaluation</a>
+      <a href="articles/clusterevaluation.html">Documenting evaluation</a>
     </li>
     <li>
       <a href="articles/clusterworkflow.html">Documenting a workflow</a>
@@ -77,35 +77,39 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="visxhclust-visual-exploration-for-hierarchical-clustering" class="section level1">
+<div id="visxhclust-visual-exploration-of-hierarchical-clustering" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#visxhclust-visual-exploration-for-hierarchical-clustering" class="anchor"></a>visxhclust: visual exploration for hierarchical clustering</h1></div>
+<a href="#visxhclust-visual-exploration-of-hierarchical-clustering" class="anchor"></a>visxhclust: visual exploration of hierarchical clustering</h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>visxhclust is a Shiny application that facilitates <strong>v</strong>isual e<strong>x</strong>ploration for <strong>h</strong>ierarchical <strong>c</strong>lustering. It implements hierarchical clustering for numeric data and includes a various plots and interactions to facilitate iterative workflows. Further features include:</p>
+<p>visxhclust is a package that consists mainly of a Shiny application for <strong>vis</strong>ual e<strong>x</strong>ploration of <strong>h</strong>ierarchical <strong>clust</strong>ering. It implements hierarchical clustering for numeric data and includes various plots and interactions to facilitate iterative workflows. Features include:</p>
 <ul>
-<li>Automatic selection of variables by a t-test validated correlation threshold</li>
+<li>Selection of variables supported by a correlation-driven t-test</li>
 <li>Visual inspection of MDS and PCA projections</li>
-<li>Visualisation of results through heatmap and boxplots</li>
+<li>Visualisation of results with dendrogram, heatmap and boxplots</li>
 <li>Validation by significance testing, internal validation scores and indices and computation of Gap statistic</li>
-<li>Comparison of multiple cluster computations with Sankey plots</li>
-<li>Management of results by saving and loading parameters and exporting data annotated with clusters</li>
+<li>Comparison of multiple clustering results with Sankey plots</li>
+<li>Saving and loading of settings and results</li>
 </ul>
-<p>The app includes multiple help points – look for the question marks – to explain and guide some of the more advanced features. The package additionally exports some functions to help documenting a clustering workflow in R Markdown files – check <code><a href="articles/clusterworkflow.html">vignette("clusterworkflow")</a></code></p>
+<p>The app includes multiple help points in the interface, and the package additionally exports various functions to help with documenting and reproducing a clustering workflow in R Markdown – check <code><a href="articles/clusterworkflow.html">vignette("clusterworkflow")</a></code> for an example.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>The package can be installed from github using:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"rhenkin/visxchlust"</span><span class="op">)</span></code></pre></div>
+<p>Most packages are from CRAN. However, the heatmap drawing package is part of <a href="http://www.bioconductor.org/">Bioconductor</a> and may require a separate installation:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"ComplexHeatmap"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="requirements-and-usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#requirements-and-usage" class="anchor"></a>Requirements and usage</h2>
-<p>Basic usage of the tool has one single requirement: a column named <code>ID</code> to identify each data point. The tool supports loading RDS, CSV and TSV (or TXT tab-delimited) files. It will automatically treat text fields as columns used to annotate the heatmap.</p>
-<p>Clustering requires complete datasets with no empty values, NULLs or NAs. If any column contains missing values, it will be set aside to be used as a heatmap annotation. Imputation packages can be used to fill missing data or the faulty rows should be removed before loading the file into the tool.</p>
+<p>To use your data with the tool, you can save a data frame or tibble in an RDS file, or use comma or tab-delimited files, with .csv, .tsv or .txt extensions. The clustering in the tool is done on numeric values; columns containing text will be listed under possible heatmap annotations. If an ID column exists, it will be used as an internal identifier for rows, as the app support removing rows through the table view.</p>
+<p>Clustering requires complete datasets with no empty values, NULLs or NAs. If any column contains missing values, it will be set aside to be used as a heatmap annotation. Badly formatted data will also lead to unexpected results in the tool. Imputation packages can be used to fill missing data and faulty rows should be removed before loading the file into the tool. The tool is not intended to help with this stage of data processing.</p>
 <p>To run the app once the package is installed:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">visxhclust</span><span class="op">)</span>
 <span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>

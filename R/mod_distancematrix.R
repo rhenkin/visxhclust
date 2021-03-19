@@ -18,7 +18,7 @@ ui_distancematrix <- function() {
                             height = "15cm"
                  ) %>% withSpinner()
                )
-             ) %>% helper(type = "markdown", content = "dmat_help")
+             ) %>% shinyhelper::helper(type = "markdown", content = "dmat_help")
   )
 }
 

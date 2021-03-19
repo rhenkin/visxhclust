@@ -1,9 +1,8 @@
 #' @noRd
-#' @importFrom stats cov dist
 cholMaha <- function(df) {
-  dec <- chol( cov(df) )
+  dec <- chol(stats::cov(df))
   tmp <- forwardsolve(t(dec), t(df) )
-  dist(t(tmp))
+  stats::dist(t(tmp))
 }
 
 #' Compute a distance matrix from scaled data
@@ -12,15 +11,17 @@ cholMaha <- function(df) {
 #' computes and returns a distance matrix from a chosen distance measure.
 #'
 #' @param x a numeric data frame or matrix
-#' @param scaling_method method to scale data frame columns. Valid values are `z-scores` and `robust`, any other will return unscaled data.
-#' @param dist_method a distance measure to apply to the scaled data. Must be those supported by [stats::dist()], plus 'mahalanobis' and 'cosine'.
-#' @param subset_cols a list of columns to subset the data
+#' @param dist_method a distance measure to apply to the scaled data. Must be those supported by [stats::dist()], plus `"mahalanobis"` and `"cosine"`. Default is `"euclidean"`.
+#' @param scaling_method method to scale data frame columns. Valid values are `"z-scores"` and `"robust"`, any other will return unscaled data. By default does not scale data.
+#' @param subset_cols (optional) a list of columns to subset the data
 #'
 #' @return an object of class "dist" (see [stats::dist()])
 #'
 #' @export
 #'
-#' @importFrom stats dist as.dist
+#' @examples
+#' dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+#' class(dmat)
 compute_dmat <- function(x,
                          dist_method = "euclidean",
                          scaling_method = NULL,
@@ -30,22 +31,24 @@ compute_dmat <- function(x,
   dist_method <- match.arg(tolower(dist_method), methods)
   if (dist_method == -1)
     stop("Unsupported distance method")
+
   if (!is.null(subset_cols))
     x <- x[, subset_cols]
+
   if (dist_method == "cosine") {
     # https://stats.stackexchange.com/a/367216
     numeric_mat <- as.matrix(x)
     sim <- numeric_mat / sqrt(rowSums(numeric_mat * numeric_mat))
     sim <- sim %*% t(sim)
-    as.dist(1 - sim)
+    stats::as.dist(1 - sim)
   } else if (dist_method == "mahalanobis") {
     cholMaha(x)
   } else if (dist_method %in% c("euclidean", "maximum", "manhattan",
                                 "canberra", "minkowski")) {
     if (missing(scaling_method)) {
-      dist(x, method = dist_method)
+      stats::dist(x, method = dist_method)
     } else {
-      dist(scale_data(x, scaling_method), method = dist_method)
+      stats::dist(scale_data(x, scaling_method), method = dist_method)
     }
   }
 }
@@ -85,11 +88,10 @@ cut_clusters <- function(clusters, k) {
 }
 
 #' @noRd
-#' @importFrom stats aggregate median
 relabel_clusters <- function(list_of_labels, df, rank_variable) {
   lapply(list_of_labels, function(x) {
     df[,"Cluster"] <- x[[2]]
-    medians <- aggregate(. ~ Cluster, df, median)
+    medians <- stats::aggregate(. ~ Cluster, df, stats::median)
     medians <- medians[order(medians[rank_variable]),]
     factor(x[[2]], levels = medians$Cluster)
   })
@@ -97,10 +99,12 @@ relabel_clusters <- function(list_of_labels, df, rank_variable) {
 
 #' Compute an internal evaluation metric for clustered data
 #'
+#' @description Metric will be computed from 2 to max_k clusters. Note that the row number in results will be different from k.
+#'
 #' @param df data frame used to compute clusters
 #' @param clusters output of [compute_clusters()] or [fastcluster::hclust()]
 #' @param metric_name valid metric name from [clusterCrit::getCriteriaNames()] (with TRUE argument)
-#' @param max_k maximum number of clusters to cut using [dendextend::cutree()]
+#' @param max_k maximum number of clusters to cut using [dendextend::cutree()]. Default is 14.
 #'
 #' @return a data frame with columns `k` and `score`
 #' @export
@@ -133,20 +137,17 @@ compute_metric <- function(df, clusters, metric_name, max_k = 14) {
 #'
 #' @param df the data used to compute clusters
 #' @param clusters output of [compute_clusters()] or [fastcluster::hclust()]
-#' @param gap_B number of bootstrap samples for [clustGap()] function
-#' @param max_k maximum number of clusters to compute the statistic
+#' @param gap_B number of bootstrap samples for [cluster::clusGap()] function. Default is 50.
+#' @param max_k maximum number of clusters to compute the statistic. Default is 14.
 #'
-#' @return a data frame with the Tab component of [clustGap()] results
+#' @return a data frame with the Tab component of [cluster::clusGap()] results
 #' @export
-#'
-#' @importFrom cluster clusGap
-#' @importFrom dendextend cutree
 #'
 #' @examples
 #' data_to_cluster <- iris[, c("Petal.Length", "Sepal.Length")]
 #' dmat <- compute_dmat(data_to_cluster, "euclidean", "z-scores")
 #' clusters <- compute_clusters(dmat, "complete")
-#' gap_results <- compute_gapstat(data_to_cluster, clusters)
+#' gap_results <- compute_gapstat(scale_data(data_to_cluster), clusters)
 #' head(gap_results)
 compute_gapstat <- function(df, clusters, gap_B = 50, max_k = 14) {
   FUN_gap <- function(clusters, k) {
@@ -154,11 +155,12 @@ compute_gapstat <- function(df, clusters, gap_B = 50, max_k = 14) {
                                       k = k,
                                       order_clusters_as_data = TRUE))
   }
-  res <- clusGap(df,
+  res <- cluster::clusGap(df,
                  function(x, k, clusters) FUN_gap(clusters, k),
                  B = gap_B,
                  K.max = max_k,
-                 clusters = clusters)
+                 clusters = clusters,
+                 verbose = FALSE)
   gap_table <- res$Tab
   gap_table <- as.data.frame(gap_table)
   gap_table$k <- as.factor(1:max_k)
@@ -214,8 +216,8 @@ optimal_score <- function(x,
 #'
 #' @param df a data frame
 #' @param clusters list of cluster labels, automatically converted to factor.
-#' @param long if TRUE, returned data frame will be in long format. See details for spec.
-#' @param selected_clusters optional labels to filter
+#' @param long if `TRUE`, returned data frame will be in long format. See details for spec. Default is `TRUE`.
+#' @param selected_clusters optional cluster labels to filter
 #'
 #' @details Long data frame will have columns: `Cluster`, `Measurement` and `Value`.
 #'
@@ -223,18 +225,19 @@ optimal_score <- function(x,
 #' @export
 #'
 #' @examples
-#' res <- compute_clusters(dist(iris[, c("Petal.Length", "Sepal.Length")]), "complete")
+#' dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+#' res <- compute_clusters(dmat, "complete")
 #' cluster_labels <- cut_clusters(res, 2)
 #' annotated_data <- annotate_clusters(iris[, c("Petal.Length", "Sepal.Length")], cluster_labels)
 #' head(annotated_data)
-annotate_clusters <- function(df, clusters, long = TRUE,
+annotate_clusters <- function(df, cluster_labels, long = TRUE,
                              selected_clusters = NULL) {
-  df$Cluster <- as.factor(clusters)
+  df$Cluster <- as.factor(cluster_labels)
   if (!is.null(selected_clusters)) {
     df <- df[df$Cluster %in% selected_clusters, ]
   }
   if (long) {
-    pivot_longer(df,
+    tidyr::pivot_longer(df,
                 c(-.data$Cluster),
                 names_to = "Measurement",
                 values_to = "Value")

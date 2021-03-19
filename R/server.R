@@ -3,29 +3,13 @@ utils::globalVariables(c("where"))
 #'
 #' @param input,output,session Internal parameters for {shiny}.
 #'
-#' @importFrom utils write.csv packageName
-#' @importFrom shinyhelper observe_helpers
-#' @importFrom fastcluster hclust
 #' @noRd
 app_server <- function(input, output, session) {
 
-  observe_helpers(help_dir = system.file("helpfiles", package = packageName()))
+  shinyhelper::observe_helpers(help_dir = system.file("helpfiles",
+                                              package = utils::packageName()))
 
-  cluster_colors <-
-    c(
-      "#4c78a8",
-      "#f58518",
-      "#e45756",
-      "#72b7b2",
-      "#54a24b",
-      "#eeca3b",
-      "#b07aa1",
-      "#FF9DA7",
-      "#9c755f",
-      "#bab0ab",
-      "#4c78a8",
-      "#f58518",
-      "#e45756")
+
 
   session_values <- reactiveValues(numeric_vars = list(),
                                    annotation_vars = list())
@@ -42,20 +26,16 @@ app_server <- function(input, output, session) {
   observeEvent(loaded_data(), {
 
     new_data <- loaded_data()
-
     # Check if there is a column with ID
-    subjectColExists <- "ID" %in% names(new_data)
-    if (!subjectColExists) {
-      showNotification("Data must contain a ID column",
-                       type = "error",
-                       duration = NULL)
+    idColExists <- "ID" %in% names(new_data)
+    if (!idColExists) {
+      showNotification("Using rownames as ID column.",
+                       type = "warning")
+      new_data$ID <- rownames(new_data)
     }
-    req(subjectColExists)
-
-    new_data$ID <- as.character(new_data$ID)
     # Convert any character to factor, except ID
     new_data <- dplyr::mutate(new_data,
-        across(!any_of("ID") & where(is.character), as.factor))
+        dplyr::across(!tidyselect::any_of("ID") & where(is.character), as.factor))
 
     # Find columns with missing values (i.e. NA)
     cols_with_na <- names(which(sapply(new_data, anyNA)))
@@ -74,13 +54,13 @@ app_server <- function(input, output, session) {
     # Go through removal of strongly correlated variables
     vars_to_remove <- get_correlated_variables(new_data[, numeric_vars], 0.9)
     dropped_variables(vars_to_remove)
-    lv_num_vars <- !numeric_vars %in% vars_to_remove[["Var2"]]
+    subset_numeric_vars <- !numeric_vars %in% vars_to_remove[["Var2"]]
 
     # Update main UI lists (variable selection, overview and comparison tabs)
     updateCheckboxGroupInput(session,
                              "selected_numeric",
                              choices = numeric_vars,
-                             selected = numeric_vars[lv_num_vars])
+                             selected = numeric_vars[subset_numeric_vars])
     updateCheckboxGroupInput(session,
                              "selected_annotation",
                              choices = annotation_vars)
@@ -97,18 +77,6 @@ app_server <- function(input, output, session) {
   # Update UI ----
   selected_numeric <- reactive({
     input$selected_numeric
-  })
-
-  # Maintain list of variables allowed for significance testing
-  # Only allow those that were not selected for clustering
-  observeEvent(selected_numeric(), {
-
-    updateSelectInput(session,
-                      "labels_rank",
-                      choices = input$selected_numeric)
-
-    # numeric_vars <- session_values$numeric_vars
-    # lv <- !(numeric_vars %in% selected_numeric())
   })
 
   unselected_vars <- reactive({

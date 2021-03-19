@@ -2,8 +2,6 @@
 #'
 #' @param request internal
 #'
-#' @importFrom shinythemes shinytheme
-#' @importFrom utils packageName
 #' @noRd
 app_ui <- function(request) {
   fluidPage(theme = shinythemes::shinytheme("cosmo"),
@@ -17,7 +15,7 @@ app_ui <- function(request) {
     )
   )),
   # Application title
-  titlePanel(paste(packageName(), ": visual exploration of hierarchical clustering")),
+  titlePanel(paste(utils::packageName(), ": visual exploration of hierarchical clustering")),
   # Sidebar -----------------------------------------------------------
   sidebarLayout(
     sidebarPanel(
@@ -52,7 +50,7 @@ app_ui <- function(request) {
         href = "https://www.qmul.ac.uk/c4tb/",
         target = "blank"
       ),
-      ", Queen Mary, University of London. For new updates check",
+      ", Queen Mary, University of London. For updates check",
       a("here",
         href = "http://rhenkin.github.io/visxhclust/", target = "blank")
     )

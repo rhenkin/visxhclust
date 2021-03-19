@@ -5,17 +5,19 @@
 #' @return a data frame
 #' @noRd
 #'
-#' @importFrom readr read_csv read_delim cols
-#' @importFrom tools file_ext
 #'
 load_data <- function(filepath) {
   ext <- tools::file_ext(filepath)
-  switch(ext,
+  loaded_data <- switch(ext,
          rds = readRDS(filepath),
          csv = readr::read_csv(filepath, col_types = readr::cols()),
          tsv = readr::read_delim(filepath, delim = "\t", col_types = readr::cols()),
          txt = readr::read_delim(filepath, delim = "\t", col_types = readr::cols())
   )
+  if (!is.data.frame(loaded_data)) {
+    loaded_data <- as.data.frame(loaded_data)
+  }
+  loaded_data
 }
 #' Apply a specified scaling method
 #'
@@ -66,13 +68,11 @@ scale_rzs <- function(df) {
 #' @param df data frame
 #' @param threshold correlation threshold
 #'
-#' @importFrom stats cor pt p.adjust
 #' @importFrom rlang .data
-#' @importFrom tidyr pivot_longer
 #' @noRd
 get_correlated_variables <- function(df, threshold) {
 
-  corr_df <- as.data.frame(cor(df, method="spearman"))
+  corr_df <- as.data.frame(stats::cor(df, method="spearman"))
   corr_df$Var1 <- rownames(corr_df)
   corr_df <- tidyr::pivot_longer(corr_df,
                             -.data$Var1, names_to="Var2", values_to="Corr")
@@ -96,12 +96,12 @@ get_correlated_variables <- function(df, threshold) {
   #Besides calculating the p-value (and adjusted), the code below also look
   #for duplicate rows of combinations of variables and remove them
   corr_df <- corr_df %>%
-    mutate(pval = pt(t1, df = dof, ncp = t0),
-           padj = p.adjust(.data$pval, method="fdr")) %>%
-    group_by(grp = paste(pmax(.data$Var1, .data$Var2),
+    dplyr::mutate(pval = stats::pt(t1, df = dof, ncp = t0),
+           padj = stats::p.adjust(.data$pval, method="fdr")) %>%
+    dplyr::group_by(grp = paste(pmax(.data$Var1, .data$Var2),
                          pmin(.data$Var1, .data$Var2), sep="_")) %>%
     dplyr::slice(1) %>%
-    ungroup() %>%
+    dplyr::ungroup() %>%
     dplyr::select(-.data$grp)
   #Look for those that are not significantly lower
   corr_df[corr_df$padj > 0.05, ]
@@ -135,7 +135,7 @@ scale_y_reordered <- function(..., sep = "___") {
 #' @noRd
 remove_selected_rows <- function(df, clusters, selected_cluster, row_numbers) {
   to_remove <- df %>%
-    mutate(Cluster = as.factor(clusters)) %>%
+    dplyr::mutate(Cluster = as.factor(clusters)) %>%
     dplyr::filter(.data$Cluster == selected_cluster) %>%
     dplyr::filter(dplyr::row_number() %in% row_numbers)
   df[!(df$ID %in% to_remove$ID) ,]
@@ -148,9 +148,8 @@ remove_selected_rows <- function(df, clusters, selected_cluster, row_numbers) {
 #' @param ... additional arguments to cor.test
 #'
 #' @noRd
-#' @importFrom stats cor.test
 compute_pvalues <- function(x, y = NULL, ...) {
-  FUN <- function(x, y, ...) cor.test(x, y, ...)[["p.value"]]
+  FUN <- function(x, y, ...) stats::cor.test(x, y, ...)[["p.value"]]
   if (missing(y)) {
     y <- t(x)
   }
@@ -174,9 +173,8 @@ compute_pvalues <- function(x, y = NULL, ...) {
 #' @param ... additional arguments to cor.test
 #'
 #' @noRd
-#' @importFrom stats cor.test
 compute_corr <- function(x, y = NULL, ...) {
-  FUN <- function(x, y, ...) cor.test(x, y, ...)[["estimate"]]
+  FUN <- function(x, y, ...) stats::cor.test(x, y, ...)[["estimate"]]
   if (missing(y)) {
     y <- t(x)
   }
@@ -197,13 +195,11 @@ compute_corr <- function(x, y = NULL, ...) {
 #'
 #' @param df main data frame
 #' @param pcres raw PCA results
-#' @param max_pc maximum number of PCs to keep. Default value is 10
-#' @param adjust adjust p-values? Default true includes column `q` in results
+#' @param max_pc maximum number of PCs to keep. Default value is 8
+#' @param adjust adjust p-values? Default `TRUE` includes column `q` in results
 #'
 #' @noRd
 #'
-#' @importFrom tidyr pivot_longer
-#' @importFrom stats p.adjust
 pca_drivers_df <- function(df, pcres, max_pc = 8, adjust = TRUE) {
   pc_df <- as.data.frame(pcres$x)
 
@@ -223,15 +219,16 @@ pca_drivers_df <- function(df, pcres, max_pc = 8, adjust = TRUE) {
   pvalues <- pvalues[, 1:min(max_pc, ncol(pc_df))]
   pvalues$Variable <- as.factor(rownames(pvalues))
 
-  corr_long <- pivot_longer(corr, -.data$Variable,
+  corr_long <- tidyr::pivot_longer(corr, -.data$Variable,
                             names_to = "PC", values_to = "Association")
-  pvalues_long <- pivot_longer(pvalues, -.data$Variable, names_to = "PC")
+  pvalues_long <- tidyr::pivot_longer(pvalues, -.data$Variable,
+                            names_to = "PC")
   pvalues_long$Association <- corr_long$Association ^ 2
   pvalues_long$Significant <-
     ifelse(pvalues_long$value <= 0.05, TRUE, FALSE )
   pvalues_long$p <- -log10(pvalues_long$value)
   if (adjust)
-    pvalues_long$q <- -log10(p.adjust(pvalues_long$value, method = "fdr"))
+    pvalues_long$q <- -log10(stats::p.adjust(pvalues_long$value, method = "fdr"))
   pvalues_long
 }
 

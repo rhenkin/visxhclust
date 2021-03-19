@@ -96,7 +96,7 @@ computes and returns a distance matrix from a chosen distance measure." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/clusterevaluation.html">clusterevaluation</a>
+      <a href="../articles/clusterevaluation.html">Documenting evaluation</a>
     </li>
     <li>
       <a href="../articles/clusterworkflow.html">Documenting a workflow</a>
@@ -148,15 +148,15 @@ computes and returns a distance matrix from a chosen distance measure.</p>
     </tr>
     <tr>
       <th>dist_method</th>
-      <td><p>a distance measure to apply to the scaled data. Must be those supported by <code><a href='https://rdrr.io/r/stats/dist.html'>stats::dist()</a></code>, plus 'mahalanobis' and 'cosine'.</p></td>
+      <td><p>a distance measure to apply to the scaled data. Must be those supported by <code><a href='https://rdrr.io/r/stats/dist.html'>stats::dist()</a></code>, plus <code>"mahalanobis"</code> and <code>"cosine"</code>. Default is <code>"euclidean"</code>.</p></td>
     </tr>
     <tr>
       <th>scaling_method</th>
-      <td><p>method to scale data frame columns. Valid values are <code>z-scores</code> and <code>robust</code>, any other will return unscaled data.</p></td>
+      <td><p>method to scale data frame columns. Valid values are <code>"z-scores"</code> and <code>"robust"</code>, any other will return unscaled data. By default does not scale data.</p></td>
     </tr>
     <tr>
       <th>subset_cols</th>
-      <td><p>a list of columns to subset the data</p></td>
+      <td><p>(optional) a list of columns to subset the data</p></td>
     </tr>
     </table>
 
@@ -164,6 +164,10 @@ computes and returns a distance matrix from a chosen distance measure.</p>
 
     <p>an object of class "dist" (see <code><a href='https://rdrr.io/r/stats/dist.html'>stats::dist()</a></code>)</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'>compute_dmat</span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"euclidean"</span>, <span class='st'>"z-scores"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>dmat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "dist"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

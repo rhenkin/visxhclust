@@ -1,4 +1,3 @@
-#' @importFrom DT DTOutput
 ui_table <- function() {
   ns <- NS("table")
   tabPanel(
@@ -22,7 +21,7 @@ ui_table <- function() {
         offset = 1,
         actionButton(ns("remove_subjects"), "Remove selected subjects")
       )
-    ) %>% helper(type = "markdown", content = "table_help"),
+    ) %>% shinyhelper::helper(type = "markdown", content = "table_help"),
     fluidRow(DT::DTOutput(ns("clusters_table")))
   )
 }

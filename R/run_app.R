@@ -1,18 +1,17 @@
 #' @importFrom magrittr %>%
 #' @import shiny
-#' @import ggplot2
-#' @import dplyr
-#' @import tidyselect
 #' @importFrom shinycssloaders withSpinner
 #' @importFrom bsplus bs_append bs_set_opts bs_accordion
-#' @importFrom shinyhelper helper
-#'
-#'
 NULL
 
-#' Function to run app
+#' Runs the Shiny app
 #'
 #' @export
+#' @examples
+#' \dontrun{
+#' library(visxhclust)
+#' run_app()
+#' }
 run_app <- function() {
   shiny::shinyApp(app_ui, app_server)
 }

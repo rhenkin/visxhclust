@@ -1,6 +1,5 @@
 # Cluster results comparison module
 
-#' @importFrom DT DTOutput
 ui_compare <- function() {
   ns <- NS("compare")
   tabPanel(
@@ -34,11 +33,9 @@ ui_compare <- function() {
           plotOutput(ns("labels_sankey"))
         )
       ) %>%
-      helper(type = "markdown", content = "compare_help")
+      shinyhelper::helper(type = "markdown", content = "compare_help")
   )
 }
-
-#' @import ggalluvial
 server_compare <- function(id, all_data, selected_data, cluster_labels) {
   moduleServer(id, function(input, output, session) {
 
@@ -91,7 +88,7 @@ server_compare <- function(id, all_data, selected_data, cluster_labels) {
         paste0(input$labels_name, "_clusters.csv")
       },
       content = function(file) {
-        write.csv(subject_clusters_df(), file, row.names = FALSE)
+        utils::write.csv(subject_clusters_df(), file, row.names = FALSE)
       }
     )
 
@@ -105,25 +102,13 @@ server_compare <- function(id, all_data, selected_data, cluster_labels) {
       compare_df <- as.data.frame(do.call(cbind, relabels))
       names(compare_df) <- lapply(saved_labels(), function(x) x[[1]])
       compare_df$Subject <- rownames(compare_df)
-      compare_df <- pivot_longer(compare_df,
+      compare_df <- tidyr::pivot_longer(compare_df,
                             -.data$Subject,
                             names_to="Config",
                             values_to="Cluster")
       compare_df$Cluster = as.factor(compare_df$Cluster)
 
-      ggplot(
-        compare_df,
-        aes_string(
-          x = "Config",
-          alluvium = "Subject",
-          stratum = "Cluster",
-          fill = "Cluster",
-          label = "Cluster"
-        )
-      ) +
-        geom_flow() +
-        geom_stratum() +
-        geom_text(stat = "stratum", size = 4)
+      plot_compare(compare_df)
 
     })
 

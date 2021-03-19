@@ -6,11 +6,10 @@ ui_pca <- function() {
       plotOutput(ns("pca_plot"), width = "100%", height = "400px"),
       plotOutput(ns("drivers_plot"), width = "100%", height = "auto"),
       cellWidths = c("40%", "60%")
-    ) %>% helper(type = "markdown", content = "pca_help")
+    ) %>% shinyhelper::helper(type = "markdown", content = "pca_help")
   )
 }
 
-#' @importFrom stats prcomp
 server_pca <- function(id, selected_data, cluster_labels, cluster_colors) {
   moduleServer(id, function(input, output, session) {
 

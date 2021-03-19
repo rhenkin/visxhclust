@@ -14,7 +14,7 @@ ui_boxplots <- function() {
         width = "100%",
         height = "auto"
       ) %>% withSpinner()
-    ) %>% helper(type = "markdown", content = "boxplots_help")
+    ) %>% shinyhelper::helper(type = "markdown", content = "boxplots_help")
   )
 }
 

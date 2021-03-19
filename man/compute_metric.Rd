@@ -13,13 +13,13 @@ compute_metric(df, clusters, metric_name, max_k = 14)
 
 \item{metric_name}{valid metric name from \code{\link[clusterCrit:getCriteriaNames]{clusterCrit::getCriteriaNames()}} (with TRUE argument)}
 
-\item{max_k}{maximum number of clusters to cut using \code{\link[dendextend:cutree-methods]{dendextend::cutree()}}}
+\item{max_k}{maximum number of clusters to cut using \code{\link[dendextend:cutree-methods]{dendextend::cutree()}}. Default is 14.}
 }
 \value{
 a data frame with columns \code{k} and \code{score}
 }
 \description{
-Compute an internal evaluation metric for clustered data
+Metric will be computed from 2 to max_k clusters. Note that the row number in results will be different from k.
 }
 \examples{
 data_to_cluster <- iris[, c("Petal.Length", "Sepal.Length")]

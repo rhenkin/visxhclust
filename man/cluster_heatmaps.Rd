@@ -2,31 +2,43 @@
 % Please edit documentation in R/plot_heatmaps.R
 \name{cluster_heatmaps}
 \alias{cluster_heatmaps}
-\title{Draw two heatmaps}
+\title{Plot heatmap with cluster results and dendrogram}
 \usage{
 cluster_heatmaps(
-  top_matrix,
-  bottom_matrix,
-  dendrograms,
-  clusters_set,
+  scaled_selected_data,
+  clusters,
+  k,
+  cluster_colors,
+  scaled_unselected_data = NULL,
   annotation = NULL
 )
 }
 \arguments{
-\item{top_matrix}{matrix with selected variables}
+\item{scaled_selected_data}{scaled matrix or data frame with variables used for clustering}
 
-\item{bottom_matrix}{matrix with unselected variables}
+\item{clusters}{hierarchical cluster results produced by \code{\link[fastcluster:hclust]{fastcluster::hclust()}}}
 
-\item{dendrograms}{to draw above top matrix}
+\item{k}{targeted number of clusters}
 
-\item{clusters_set}{list of cluster indices}
+\item{cluster_colors}{list of cluster colors to match with boxplots}
 
-\item{annotation}{any kind of annotation object to draw as top_annotation}
+\item{scaled_unselected_data}{(optional) scaled matrix or data frame with variables not used for clustering}
+
+\item{annotation}{(optional) \link[ComplexHeatmap:columnAnnotation]{ComplexHeatmap::columnAnnotation} object}
 }
 \value{
-two concatenated heatmaps drawn with ComplexHeatmap::draw
+a \link[ComplexHeatmap:Heatmap]{ComplexHeatmap::Heatmap}
 }
 \description{
-Draw two heatmaps
+Plot heatmap with cluster results and dendrogram
 }
-\keyword{internal}
+\examples{
+dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+clusters <- compute_clusters(dmat, "complete")
+species_annotation <- create_annotations(iris, "Species")
+cluster_heatmaps(scale_data(iris[, c("Petal.Length", "Sepal.Length")]),
+                 clusters,
+                 3,
+                 visxhclust::cluster_colors,
+                 annotation = species_annotation)
+}
