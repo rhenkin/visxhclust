@@ -24,7 +24,8 @@ ui_sidebar <- function() {
           "Cosine",
           "Maximum",
           "Canberra",
-          "Minkowski"
+          "Minkowski",
+          "Binary"
         ),
         selected = "Euclidean"
       ),
