@@ -32,6 +32,9 @@ server_evaluation <- function(id, selected_data, clusters) {
   moduleServer(id, function(input, output, session) {
     output$measure_over_k <- renderPlot({
       req(input$evaluation_selected)
+
+      validate(need(!all(sapply(selected_data(), is.integer)),
+                    "Internal evaluation works only for continuous data"))
       metric_results <- compute_metric(selected_data(),
                                        clusters(),
                                        input$evaluation_selected)

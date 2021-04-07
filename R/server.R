@@ -203,7 +203,8 @@ app_server <- function(input, output, session) {
     reactive(input$nclusters),
     cluster_colors,
     scaled_data,
-    scaled_unselected_data
+    scaled_unselected_data,
+    reactive(input$distance_method)
   )
 
   # Boxplots tab ----

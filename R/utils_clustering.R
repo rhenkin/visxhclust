@@ -27,7 +27,7 @@ compute_dmat <- function(x,
                          scaling_method = NULL,
                          subset_cols = NULL) {
   methods <- c("euclidean", "cosine", "mahalanobis", "manhattan", "maximum",
-               "canberra", "minkowski")
+               "canberra", "minkowski", "binary")
   dist_method <- match.arg(tolower(dist_method), methods)
   if (dist_method == -1)
     stop("Unsupported distance method")
@@ -43,6 +43,8 @@ compute_dmat <- function(x,
     stats::as.dist(1 - sim)
   } else if (dist_method == "mahalanobis") {
     cholMaha(x)
+  } else if (dist_method == "binary") {
+    stats::dist(x, method = "binary")
   } else if (dist_method %in% c("euclidean", "maximum", "manhattan",
                                 "canberra", "minkowski")) {
     if (missing(scaling_method)) {

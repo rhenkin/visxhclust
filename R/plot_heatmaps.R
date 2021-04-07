@@ -68,6 +68,7 @@ cluster_heatmaps <- function(scaled_selected_data,
 #' @param dendrograms to draw above top matrix
 #' @param clusters_set list of cluster indices
 #' @param annotation (optional) any kind of annotation object to draw as top_annotation
+#' @param distance_method (optional) if "Binary", use discrete colors for heatmap
 #'
 #'
 #' @return two concatenated heatmaps drawn with ComplexHeatmap::draw
@@ -77,11 +78,13 @@ cluster_heatmaps <- function(scaled_selected_data,
 #' @importFrom RColorBrewer brewer.pal
 #'
 plot_cluster_heatmaps <- function(top_matrix, bottom_matrix, dendrograms,
-                                      clusters_set, annotation = NULL) {
+                                      clusters_set, annotation = NULL, distance_method = NULL) {
 
   col_fun <- circlize::colorRamp2(c(-4,-2,-1,0,1,2,4),
                                   rev(RColorBrewer::brewer.pal(7, "RdBu")))
-
+  if (distance_method == "Binary") {
+    col_fun <- structure(c("#97c354", "#935fd1"), names = 0:1)
+  }
   col_split <- if (length(clusters_set) == 1) {
     NULL
   } else {

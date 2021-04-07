@@ -9,7 +9,8 @@ plot_cluster_heatmaps(
   bottom_matrix,
   dendrograms,
   clusters_set,
-  annotation = NULL
+  annotation = NULL,
+  distance_method = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ plot_cluster_heatmaps(
 \item{clusters_set}{list of cluster indices}
 
 \item{annotation}{(optional) any kind of annotation object to draw as top_annotation}
+
+\item{distance_method}{(optional) if "Binary", use discrete colors for heatmap}
 }
 \value{
 two concatenated heatmaps drawn with ComplexHeatmap::draw
