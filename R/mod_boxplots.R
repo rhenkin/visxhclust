@@ -3,6 +3,9 @@ ui_boxplots <- function() {
   tabPanel(
     "Boxplots",
     value = "boxplots",
+    h5("Use the checkbox to hide clusters in the plots.
+       For datasets witih more than 500 rows,
+       a violin plot will be rendered instead of a boxplot"),
     verticalLayout(
       checkboxGroupInput(
         ns("boxplots_selection"),
@@ -44,7 +47,10 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors) {
                                    cluster_labels(),
                                    TRUE,
                                    input$boxplots_selection)
-      facet_boxplot(df_long, "Cluster", "Value", "Measurement", cluster_colors)
+      shape <- if (nrow(df_long) < selected_data()) "boxplot" else "violin"
+      facet_boxplot(
+        df_long, "Cluster", "Value", "Measurement", cluster_colors, shape
+      )
     }, height = function() {
       ncol(selected_data()) %/% 4 * 225
     })

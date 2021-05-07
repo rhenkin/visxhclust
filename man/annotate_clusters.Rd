@@ -9,11 +9,11 @@ annotate_clusters(df, cluster_labels, long = TRUE, selected_clusters = NULL)
 \arguments{
 \item{df}{a data frame}
 
+\item{cluster_labels}{list of cluster labels, automatically converted to factor.}
+
 \item{long}{if \code{TRUE}, returned data frame will be in long format. See details for spec. Default is \code{TRUE}.}
 
 \item{selected_clusters}{optional cluster labels to filter}
-
-\item{clusters}{list of cluster labels, automatically converted to factor.}
 }
 \value{
 a wide or long data frame

@@ -3,6 +3,7 @@ ui_significance <- function() {
   tabPanel(
     "Significance testing",
     value = "signific",
+    h5("Test significance for variables not used in clustering"),
     verticalLayout(
       selectizeInput(
         ns("signif_var"),

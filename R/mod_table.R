@@ -3,6 +3,9 @@ ui_table <- function() {
   tabPanel(
     "Table view",
     value = "table",
+    h5("Choose clusters to filter out rows or keep only one cluster.
+       Clusters will be recomputed automatically after clicking on one
+       of the buttons"),
     fluidRow(
       column(
         4,
@@ -16,10 +19,12 @@ ui_table <- function() {
         )
       ),
       column(
-        4,
+        8,
         style = "margin-top: 25px",
-        offset = 1,
-        actionButton(ns("remove_subjects"), "Remove selected subjects")
+        offset = 0,
+        flowLayout(
+        actionButton(ns("remove_rows"), "Remove selected rows"),
+        actionButton(ns("keep_subjects"), "Keep only this cluster"))
       )
     ) %>% shinyhelper::helper(type = "markdown", content = "table_help"),
     fluidRow(DT::DTOutput(ns("clusters_table")))
@@ -48,22 +53,55 @@ server_table <- function(id, all_data, selected_data, cluster_labels, nclusters)
                           long = FALSE,
                           input$clusters_selection)
       },
+      caption = "Click on rows to select",
       selection = "multiple",
       options = list(scrollX = TRUE, scrollCollapse = TRUE)
     )
 
-
-    new_data <- eventReactive(input$remove_subjects, {
+    new_data <- reactiveVal(NULL)
+    observeEvent(input$remove_rows, {
       isolate({
         all_df <- all_data()
       })
-      new_data <-
-        remove_selected_rows(all_df,
-                             cluster_labels(),
-                             input$clusters_selection,
-                             input$clusters_table_rows_selected)
-      # this updates all_data after removing rows
+      updated_data <- remove_selected_rows(all_df,
+                                       cluster_labels(),
+                                       input$clusters_selection,
+                                       input$clusters_table_rows_selected)
+      new_data(updated_data)
+
     })
+
+    observeEvent(input$keep_subjects, {
+      isolate({
+        all_df <- all_data()
+      })
+      updated_data <- keep_selected_rows(all_df,
+                                         cluster_labels(),
+                                         input$clusters_selection)
+      new_data(updated_data)
+
+    })
+    # new_data <- eventReactive(input$remove_subjects, {
+    #   isolate({
+    #     all_df <- all_data()
+    #   })
+    #   browser()
+    #   remove_selected_rows(all_df,
+    #                          cluster_labels(),
+    #                          input$clusters_selection,
+    #                          input$clusters_table_rows_selected)
+    #   # this updates all_data after removing rows
+    # })
+    #
+    # new_data <- eventReactive(input$keep_subjects, {
+    #   isolate({
+    #     all_df <- all_data()
+    #   })
+    #   keep_selected_rows(all_df,
+    #                      cluster_labels(),
+    #                      input$clusters_selection)
+    # })
+
 
     new_data
 

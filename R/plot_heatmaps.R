@@ -80,8 +80,16 @@ cluster_heatmaps <- function(scaled_selected_data,
 plot_cluster_heatmaps <- function(top_matrix, bottom_matrix, dendrograms,
                                       clusters_set, annotation = NULL, distance_method = NULL) {
 
-  col_fun <- circlize::colorRamp2(c(-4,-2,-1,0,1,2,4),
-                                  rev(RColorBrewer::brewer.pal(7, "RdBu")))
+  if (!is.null(bottom_matrix)) {
+    abs_min_both <- abs(min(min(top_matrix), min(bottom_matrix)))
+    max_both <- max(max(top_matrix), max(bottom_matrix))
+    scale_end <- max(max_both, abs_min_both)
+  } else {
+    scale_end <- max(abs(min(top_matrix)), max(top_matrix))
+  }
+  col_fun <- circlize::colorRamp2(c(-scale_end, 0, scale_end),
+                                  rev(RColorBrewer::brewer.pal(3, "RdBu")))
+  if (!is.null(distance_method))
   if (distance_method == "Binary") {
     col_fun <- structure(c("#97c354", "#935fd1"), names = 0:1)
   }

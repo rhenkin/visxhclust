@@ -21,7 +21,7 @@ cholMaha <- function(df) {
 #'
 #' @examples
 #' dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
-#' class(dmat)
+#' print(class(dmat))
 compute_dmat <- function(x,
                          dist_method = "euclidean",
                          scaling_method = NULL,
@@ -29,11 +29,11 @@ compute_dmat <- function(x,
   methods <- c("euclidean", "cosine", "mahalanobis", "manhattan", "maximum",
                "canberra", "minkowski", "binary")
   dist_method <- match.arg(tolower(dist_method), methods)
-  if (dist_method == -1)
-    stop("Unsupported distance method")
 
   if (!is.null(subset_cols))
     x <- x[, subset_cols]
+
+  validate_dataset(x)
 
   if (dist_method == "cosine") {
     # https://stats.stackexchange.com/a/367216
@@ -89,6 +89,8 @@ cut_clusters <- function(clusters, k) {
                      order_clusters_as_data = TRUE)
 }
 
+
+# nocov start
 #' @noRd
 relabel_clusters <- function(list_of_labels, df, rank_variable) {
   lapply(list_of_labels, function(x) {
@@ -98,6 +100,7 @@ relabel_clusters <- function(list_of_labels, df, rank_variable) {
     factor(x[[2]], levels = medians$Cluster)
   })
 }
+# nocov end
 
 #' Compute an internal evaluation metric for clustered data
 #'
@@ -121,9 +124,11 @@ compute_metric <- function(df, clusters, metric_name, max_k = 14) {
     stop("Invalid metric name. Please check
          clusterCrit::getCriteriaNames(TRUE) for a valid argument")
   }
+  stopifnot(length(dim(df)) == 2, max_k > 2)
+  df <- as.matrix(df)
   calc_measure <- as.vector(unlist(lapply(2:max_k, function(k)  {
     clusterCrit::intCriteria(
-      as.matrix(df),
+      df,
       dendextend::cutree(
         clusters,
         k = k,
@@ -157,6 +162,8 @@ compute_gapstat <- function(df, clusters, gap_B = 50, max_k = 14) {
                                       k = k,
                                       order_clusters_as_data = TRUE))
   }
+  if (max_k <= 2)
+    stop("max_k must be greater than 2")
   res <- cluster::clusGap(df,
                  function(x, k, clusters) FUN_gap(clusters, k),
                  B = gap_B,
@@ -200,14 +207,14 @@ optimal_score <- function(x,
   switch(method,
          "firstmin" = { ## the first local minimum
            decr <- diff(x) <= 0 # length K-1
-           if(any(decr)) which.min(decr) else K # the first TRUE, or K
+           if (!all(decr) & any(decr)) which.min(decr) else K # the first TRUE, or K
          },
          "globalmin" = {
            which.min(x)
          },
          "firstmax" = { ## the first local maximum
            decr <- diff(x) < 0 # length K-1
-           if(any(decr)) which.max(decr) else K # the first TRUE, or K
+           if (!all(decr) & any(decr)) which.max(decr) else 1 # the first TRUE, or K
          },
          "globalmax" = {
            which.max(x)
@@ -217,7 +224,7 @@ optimal_score <- function(x,
 #' Annotate data frame with clusters
 #'
 #' @param df a data frame
-#' @param clusters list of cluster labels, automatically converted to factor.
+#' @param cluster_labels list of cluster labels, automatically converted to factor.
 #' @param long if `TRUE`, returned data frame will be in long format. See details for spec. Default is `TRUE`.
 #' @param selected_clusters optional cluster labels to filter
 #'
@@ -234,9 +241,10 @@ optimal_score <- function(x,
 #' head(annotated_data)
 annotate_clusters <- function(df, cluster_labels, long = TRUE,
                              selected_clusters = NULL) {
+  stopifnot(is.data.frame(df), selected_clusters %in% cluster_labels)
   df$Cluster <- as.factor(cluster_labels)
   if (!is.null(selected_clusters)) {
-    df <- df[df$Cluster %in% selected_clusters, ]
+    df <- df[which(df$Cluster %in% selected_clusters), ]
   }
   if (long) {
     tidyr::pivot_longer(df,

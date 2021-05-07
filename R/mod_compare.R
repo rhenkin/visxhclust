@@ -57,6 +57,7 @@ server_compare <- function(id, all_data, selected_data, cluster_labels) {
     },
     rownames = TRUE,
     selection = "single",
+    caption = "Click on row to select results to download",
     width = "20cm",
     options = list(scrollX = TRUE, scrollCollapse = TRUE, ordering = FALSE)
     )

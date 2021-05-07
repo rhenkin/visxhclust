@@ -29,5 +29,5 @@ computes and returns a distance matrix from a chosen distance measure.
 }
 \examples{
 dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
-class(dmat)
+print(class(dmat))
 }

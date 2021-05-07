@@ -66,7 +66,7 @@ server_gapstat <- function(id, selected_data, clusters) {
       }
 
       line_plot(gap_table, "k", "gap", xintercept = optimal_k) +
-        ggplot2::labs(y = "Gap statistic")
+        labs(y = "Gap statistic")
     })
   })
 }
