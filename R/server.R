@@ -204,6 +204,7 @@ app_server <- function(input, output, session) {
     cluster_colors,
     scaled_data,
     scaled_unselected_data,
+    reactive({ input$scaling == "None" }),
     reactive(input$distance_method)
   )
 

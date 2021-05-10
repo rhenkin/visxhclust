@@ -30,7 +30,7 @@ reproducing a clustering workflow in R Markdown – check
 The package can be installed from github using:
 
 ``` r
-remotes::install_github("rhenkin/visxchlust")
+remotes::install_github("rhenkin/visxhclust")
 ```
 
 Most packages are from CRAN. However, the heatmap drawing package is

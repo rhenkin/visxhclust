@@ -19,6 +19,7 @@ server_heatmap <- function(id,
                            cluster_colors,
                            scaled_data,
                            scaled_unselected_data,
+                           scale_flag,
                            distance_method) {
 
   moduleServer(id, function(input, output, session) {
@@ -42,6 +43,7 @@ server_heatmap <- function(id,
         heatmap_clusters$dendrogram,
         heatmap_clusters$ids,
         heatmap_annotation(),
+        scale_flag(),
         distance_method()
       )
     }, height = 800)
