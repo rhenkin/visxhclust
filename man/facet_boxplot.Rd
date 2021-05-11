@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{facet_boxplot}
 \alias{facet_boxplot}
-\title{Faceted boxplots with points}
+\title{Faceted boxplots with points or violin plots}
 \usage{
 facet_boxplot(
   df,
@@ -10,6 +10,7 @@ facet_boxplot(
   y,
   facet_var = NULL,
   boxplot_colors = NULL,
+  shape = c("boxplot", "violin"),
   plot_points = TRUE
 )
 }
@@ -27,10 +28,10 @@ facet_boxplot(
 \item{plot_points}{boolean variable to overlay jittered points or not. Default is \code{TRUE}}
 }
 \value{
-a ggplot object
+a \link[ggplot2:ggplot]{ggplot2::ggplot} object
 }
 \description{
-Faceted boxplots with points
+Faceted boxplots with points or violin plots
 }
 \examples{
 facet_boxplot(iris, x = "Species", y = "Sepal.Length", facet_var = "Species")

@@ -12,7 +12,7 @@ ui_overview <- function() {
                "Highly correlated variables",
                DT::DTOutput(ns("dropped_vars_table"))) %>%
              bs_append(
-               "Unscaled data histogram",
+               "Raw data histogram",
                verticalLayout(
                  selectInput(
                    ns("overview_var"),
@@ -60,8 +60,8 @@ server_overview <- function(id, selected_data, selected_numeric, dropped_variabl
       if (input$overview_scale == TRUE) {
         df <- as.data.frame(scale_data(df, scaling_method()))
       }
-      ggplot2::ggplot(df, ggplot2::aes_string(input$overview_var)) +
-        ggplot2::geom_histogram(bins = 15)
+      ggplot(df, aes_string(input$overview_var)) +
+        geom_histogram(bins = 15)
     })
 
   })

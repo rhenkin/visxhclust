@@ -24,7 +24,11 @@ server_params <- function(id, distance_method, linkage_method, nclusters) {
     output$configs_table <- DT::renderDT({
       validate(need(length(saved_configurations()) > 0, "No states saved"))
       do.call(rbind, saved_configurations())
-    }, rownames = TRUE, selection = "single", options = list(ordering = FALSE))
+    },
+    rownames = TRUE,
+    caption = "Click on a row to select parameters to load them again",
+    selection = "single",
+    options = list(ordering = FALSE))
 
     # State saving
     # Save current key parameters to table.

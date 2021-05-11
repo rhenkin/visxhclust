@@ -1,4 +1,4 @@
-#' Faceted boxplots with points
+#' Faceted boxplots with points or violin plots
 #'
 #' @param df a data frame containing all the variables matching the remaining arguments
 #' @param x categorical variable
@@ -7,27 +7,37 @@
 #' @param boxplot_colors list of colors to use as fill for boxplots
 #' @param plot_points boolean variable to overlay jittered points or not. Default is `TRUE`
 #'
-#' @return a ggplot object
+#' @return a [ggplot2::ggplot] object
 #' @export
-#'
 #'
 #' @examples
 #' facet_boxplot(iris, x = "Species", y = "Sepal.Length", facet_var = "Species")
 facet_boxplot <- function(df, x, y, facet_var = NULL,
-                          boxplot_colors = NULL, plot_points = TRUE) {
-  p <- ggplot2::ggplot(df, ggplot2::aes(x = .data[[x]], fill = .data[[x]])) +
-    ggplot2::geom_boxplot(ggplot2::aes(y = .data[[y]]),
-                          alpha = 0.6,
-                          outlier.shape = NA) +
-    ggplot2::theme_bw() +
-    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank(),
-    panel.grid.minor.x = ggplot2::element_blank(),
-    axis.line = ggplot2::element_line(),
-    axis.ticks = ggplot2::element_line())
+                          boxplot_colors = NULL, shape = c("boxplot", "violin"),
+                          plot_points = TRUE) {
 
+  shape <- match.arg(shape)
+  p <- ggplot(df, aes(x = .data[[x]], fill = .data[[x]])) +
+    theme_bw() +
+    theme(panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    axis.line = element_line(),
+    axis.ticks = element_line())
+
+  if (shape == "boxplot") {
+    p <- p +
+      geom_boxplot(aes(y = .data[[y]]),
+                          alpha = 0.6,
+                          outlier.shape = NA)
+  } else {
+    p <- p +
+      geom_violin(aes(y = .data[[y]]))
+  }
+
+  if (shape == "boxplot")
   if (plot_points) {
     p <- p +
-      ggplot2::geom_point(ggplot2::aes(y = .data[[y]]),
+      geom_point(aes(y = .data[[y]]),
                           size = 0.2,
                           position = "jitter")
   }
@@ -35,11 +45,11 @@ facet_boxplot <- function(df, x, y, facet_var = NULL,
   if (!is.null(facet_var)) {
     facet_formula <- stats::as.formula(paste("~", facet_var))
     p <- p +
-      ggplot2::facet_wrap(facet_formula, ncol = 4, scales = "free")
+      facet_wrap(facet_formula, ncol = 4, scales = "free")
   }
   if (!is.null(boxplot_colors)) {
     p <- p +
-      ggplot2::scale_fill_manual(values = boxplot_colors)
+      scale_fill_manual(values = boxplot_colors)
   }
   p
 
@@ -79,11 +89,11 @@ cluster_boxplots <- function(annotated_data, ...)  {
 #' @export
 #'
 line_plot <- function(df, x, y, xintercept = NULL) {
-  p <- ggplot2::ggplot(df) +
-    ggplot2::geom_line(ggplot2::aes(x = .data[[x]], y = .data[[y]], group = 1)) +
-    ggplot2::theme_bw()
+  p <- ggplot(df) +
+    geom_line(aes(x = .data[[x]], y = .data[[y]], group = 1)) +
+    theme_bw()
   if (!is.null(xintercept)) {
-    p <- p + ggplot2::geom_vline(xintercept = xintercept, linetype = "dashed")
+    p <- p + geom_vline(xintercept = xintercept, linetype = "dashed")
   }
   p
 }
@@ -102,14 +112,14 @@ pca_scatterplot <- function(pcres, cluster_labels, cluster_colors) {
                       "(", as.character(var_explained), "%)")
   pc_df$Cluster <- as.factor(cluster_labels)
 
-  ggplot2::ggplot(pc_df, ggplot2::aes(.data$PC1, .data$PC2)) +
-    ggplot2::geom_point(ggplot2::aes(color = .data$Cluster)) +
-    ggplot2::scale_colour_manual(values = cluster_colors) +
-    ggplot2::theme_bw() +
-    ggplot2::labs(title = "PCA") +
-    ggplot2::xlab(pc_labels[1]) +
-    ggplot2::ylab(pc_labels[2]) +
-    ggplot2::theme(legend.position = "bottom")
+  ggplot(pc_df, aes(.data$PC1, .data$PC2)) +
+    geom_point(aes(color = .data$Cluster)) +
+    scale_colour_manual(values = cluster_colors) +
+    theme_bw() +
+    labs(title = "PCA") +
+    xlab(pc_labels[1]) +
+    ylab(pc_labels[2]) +
+    theme(legend.position = "bottom")
 }
 
 #' Plot a drivers plot
@@ -123,23 +133,23 @@ pca_driversplot <- function(df, adjusted = TRUE) {
 
   p_value_var <- if (adjusted) "q" else "p"
   ylimits <- rev(levels(df$Variable))
-  ggplot2::ggplot(df,
-                ggplot2::aes(
+  ggplot(df,
+                aes(
                   x = .data$PC,
                   y= .data$Variable,
                   fill = .data$Association,
                   color = .data$Significant)) +
-    ggplot2::geom_tile(size = 1L, width = 0.9, height = 0.9) +
-    ggplot2::scale_color_manual(values = c('grey90', 'black')) +
-    ggplot2::scale_fill_gradientn(colors = c('white', 'pink', 'orange',
+    geom_tile(size = 1L, width = 0.9, height = 0.9) +
+    scale_color_manual(values = c('grey90', 'black')) +
+    scale_fill_gradientn(colors = c('white', 'pink', 'orange',
                                     'red', 'darkred'),
                          limits = c(0, 1)) +
     # To consider again: name = bquote(~-log(italic(.(p_value_var))))) +
-    ggplot2::scale_x_discrete(labels = as.character(df$PC),
-                     expand = ggplot2::expansion(add = .5)) +
-    ggplot2::scale_y_discrete(limits = ylimits) +
-    ggplot2::theme(panel.grid = ggplot2::element_blank()) +
-    ggplot2::labs(title = "Drivers plot", y = NULL, x= NULL)
+    scale_x_discrete(labels = as.character(df$PC),
+                     expand = expansion(add = .5)) +
+    scale_y_discrete(limits = ylimits) +
+    theme(panel.grid = element_blank()) +
+    labs(title = "Drivers plot", y = NULL, x= NULL)
 }
 
 #' @noRd
@@ -150,21 +160,21 @@ silhouette_plot <- function(points, clusters, sil_widths, cluster_colors) {
   points[, "id"] <- reorder_within(factor(1:nrow(points)),
                                    .data$sil_width,
                                    .data$cluster)
-  ggplot2::ggplot(points,
-                  ggplot2::aes_string(y = "id", x = "sil_width", fill = "cluster")) +
-    ggplot2::geom_col(orientation = "y") +
-    ggplot2::theme_bw() +
-    ggplot2::facet_wrap(~ cluster, ncol = 1, scales = "free_y") +
-    ggplot2::scale_fill_manual(values = cluster_colors) +
+  ggplot(points,
+                  aes_string(y = "id", x = "sil_width", fill = "cluster")) +
+    geom_col(orientation = "y") +
+    theme_bw() +
+    facet_wrap(~ cluster, ncol = 1, scales = "free_y") +
+    scale_fill_manual(values = cluster_colors) +
     scale_y_reordered() +
-    ggplot2::scale_x_continuous(expand = c(0,0))+
-    ggplot2::theme(axis.text.y = ggplot2::element_blank(),
-          axis.ticks.y = ggplot2::element_blank(),
-          strip.background = ggplot2::element_blank(),
-          strip.text = ggplot2::element_blank(),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank()) +
-    ggplot2::ggtitle("Silhouette widths per cluster")
+    scale_x_continuous(expand = c(0,0))+
+    theme(axis.text.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          strip.background = element_blank(),
+          strip.text = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
+    ggtitle("Silhouette widths per cluster")
 }
 
 #' Plot a 2D MDS projection of a distance matrix
@@ -186,22 +196,22 @@ dmat_projection <- function(dmat, point_colors = NULL, point_palette = NULL) {
   point_aes <- NULL
   if (!is.null(point_colors)) {
     proj$color <- as.factor(point_colors)
-    point_aes <- ggplot2::aes(color = .data$color)
+    point_aes <- aes(color = .data$color)
   }
-  p <- ggplot2::ggplot(proj, ggplot2::aes(.data$V1, .data$V2)) +
-    ggplot2::theme_bw() +
-    ggplot2::labs(x = "D1", y = "D2") +
-    ggplot2::theme(legend.position = "bottom") +
-    ggplot2::geom_point(point_aes)
+  p <- ggplot(proj, aes(.data$V1, .data$V2)) +
+    theme_bw() +
+    labs(x = "D1", y = "D2") +
+    theme(legend.position = "bottom") +
+    geom_point(point_aes)
   if (!is.null(point_palette))
-    p <- p + ggplot2::scale_colour_manual(values = point_palette)
+    p <- p + scale_colour_manual(values = point_palette)
   p
 }
 
 plot_compare <- function(compare_df) {
-  ggplot2::ggplot(
+  ggplot(
     compare_df,
-    ggplot2::aes_string(
+    aes_string(
       x = "Config",
       alluvium = "Subject",
       stratum = "Cluster",
@@ -209,7 +219,8 @@ plot_compare <- function(compare_df) {
       label = "Cluster"
     )
   ) +
-    ggalluvial::geom_flow() +
-    ggalluvial::geom_stratum() +
-    ggplot2::geom_text(stat = "stratum", size = 4)
+    geom_flow() +
+    geom_stratum() +
+    geom_text(stat = "stratum", size = 4) +
+    theme_bw()
 }

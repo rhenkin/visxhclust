@@ -4,7 +4,6 @@
 # usethis::use_gpl3_license(name = "Rafael Henkin")
 # usethis::use_readme_rmd( open = FALSE )
 # usethis::use_news_md( open = FALSE )
-
 #
 # usethis::use_pkgdown()
 #
@@ -41,6 +40,8 @@
 # Vignettes
 #usethis::use_vignette("clusterworkflow")
 #usethis::use_vignette("clusterevaluation")
+
+#usethis::use_testthat()
 
 devtools::document()
 pkgdown::build_site()

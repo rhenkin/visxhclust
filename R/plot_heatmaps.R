@@ -68,6 +68,7 @@ cluster_heatmaps <- function(scaled_selected_data,
 #' @param dendrograms to draw above top matrix
 #' @param clusters_set list of cluster indices
 #' @param annotation (optional) any kind of annotation object to draw as top_annotation
+#' @param scaled (optional) boolean to modify colour scale if data has already been scaled
 #' @param distance_method (optional) if "Binary", use discrete colors for heatmap
 #'
 #'
@@ -77,11 +78,41 @@ cluster_heatmaps <- function(scaled_selected_data,
 #' @importFrom ComplexHeatmap Heatmap %v% draw
 #' @importFrom RColorBrewer brewer.pal
 #'
-plot_cluster_heatmaps <- function(top_matrix, bottom_matrix, dendrograms,
-                                      clusters_set, annotation = NULL, distance_method = NULL) {
+plot_cluster_heatmaps <-
+  function(top_matrix,
+           bottom_matrix,
+           dendrograms,
+           clusters_set,
+           annotation = NULL,
+           scaled = FALSE,
+           distance_method = NULL) {
 
-  col_fun <- circlize::colorRamp2(c(-4,-2,-1,0,1,2,4),
-                                  rev(RColorBrewer::brewer.pal(7, "RdBu")))
+  if (scaled) {
+    if (!is.null(bottom_matrix)) {
+      min_both <- min(min(top_matrix), min(bottom_matrix))
+      max_both <- max(max(top_matrix), max(bottom_matrix))
+      scale_values <- c(min_both, (max_both + min_both)/2 , max_both)
+    } else {
+      scale_values <- c(min(top_matrix),
+                        (max(top_matrix)+min(top_matrix))/2,
+                        max(top_matrix))
+    }
+    col_fun <- circlize::colorRamp2(scale_values,
+                                    rev(RColorBrewer::brewer.pal(3, "RdBu")))
+
+  } else {
+    if (!is.null(bottom_matrix)) {
+      abs_min_both <- abs(min(min(top_matrix), min(bottom_matrix)))
+      max_both <- max(max(top_matrix), max(bottom_matrix))
+      scale_end <- max(max_both, abs_min_both)
+    } else {
+      scale_end <- max(abs(min(top_matrix)), max(top_matrix))
+    }
+    col_fun <- circlize::colorRamp2(c(-scale_end, 0, scale_end),
+                                    rev(RColorBrewer::brewer.pal(3, "RdBu")))
+  }
+
+  if (!is.null(distance_method))
   if (distance_method == "Binary") {
     col_fun <- structure(c("#97c354", "#935fd1"), names = 0:1)
   }

@@ -33,7 +33,7 @@ The app includes multiple help points in the interface, and the package addition
 The package can be installed from github using:
 
 ```{r installation, eval = FALSE}
-remotes::install_github("rhenkin/visxchlust")
+remotes::install_github("rhenkin/visxhclust")
 ```
 
 Most packages are from CRAN. However, the heatmap drawing package is part of [Bioconductor](http://www.bioconductor.org/) and may require a separate installation:

@@ -4,7 +4,7 @@
 #'
 #' @noRd
 app_ui <- function(request) {
-  fluidPage(theme = shinythemes::shinytheme("cosmo"),
+  fluidPage(theme = "bootstrap.min.css",
   tags$head(tags$style(
     HTML(
       ".shiny-input-container-inline .shiny-options-group div { display: contents; }
@@ -50,9 +50,7 @@ app_ui <- function(request) {
         href = "https://www.qmul.ac.uk/c4tb/",
         target = "blank"
       ),
-      ", Queen Mary, University of London. For updates check",
-      a("here",
-        href = "http://rhenkin.github.io/visxhclust/", target = "blank")
+      "at Queen Mary, University of London."
     )
   )
 )

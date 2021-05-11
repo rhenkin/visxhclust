@@ -10,6 +10,7 @@ plot_cluster_heatmaps(
   dendrograms,
   clusters_set,
   annotation = NULL,
+  scaled = FALSE,
   distance_method = NULL
 )
 }

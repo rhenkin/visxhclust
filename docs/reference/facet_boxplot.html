@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Faceted boxplots with points — facet_boxplot • visxhclust</title>
+<title>Faceted boxplots with points or violin plots — facet_boxplot • visxhclust</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Faceted boxplots with points — facet_boxplot" />
-<meta property="og:description" content="Faceted boxplots with points" />
+<meta property="og:title" content="Faceted boxplots with points or violin plots — facet_boxplot" />
+<meta property="og:description" content="Faceted boxplots with points or violin plots" />
 
 
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rhenkin/visxhclust/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -126,13 +126,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Faceted boxplots with points</h1>
+    <h1>Faceted boxplots with points or violin plots</h1>
     <small class="dont-index">Source: <a href='https://github.com/rhenkin/visxhclust/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
     <div class="hidden name"><code>facet_boxplot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Faceted boxplots with points</p>
+    <p>Faceted boxplots with points or violin plots</p>
     </div>
 
     <pre class="usage"><span class='fu'>facet_boxplot</span><span class='op'>(</span>
@@ -141,6 +141,7 @@
   <span class='va'>y</span>,
   facet_var <span class='op'>=</span> <span class='cn'>NULL</span>,
   boxplot_colors <span class='op'>=</span> <span class='cn'>NULL</span>,
+  shape <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"boxplot"</span>, <span class='st'>"violin"</span><span class='op'>)</span>,
   plot_points <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
@@ -175,7 +176,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a ggplot object</p>
+    <p>a <a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot2::ggplot</a> object</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>facet_boxplot</span><span class='op'>(</span><span class='va'>iris</span>, x <span class='op'>=</span> <span class='st'>"Species"</span>, y <span class='op'>=</span> <span class='st'>"Sepal.Length"</span>, facet_var <span class='op'>=</span> <span class='st'>"Species"</span><span class='op'>)</span>
