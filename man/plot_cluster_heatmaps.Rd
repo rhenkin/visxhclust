@@ -25,6 +25,8 @@ plot_cluster_heatmaps(
 
 \item{annotation}{(optional) any kind of annotation object to draw as top_annotation}
 
+\item{scaled}{(optional) boolean to modify colour scale if data has already been scaled}
+
 \item{distance_method}{(optional) if "Binary", use discrete colors for heatmap}
 }
 \value{
