@@ -195,8 +195,9 @@ create_annotations <- function(df, selected_variables) {
     if (!is.numeric(values)) {
       values <- ifelse(is.na(values), 99, values)
       max_values <- length(unique(values))
+      pal_n <- min(max(3, max_values + 1), 12)
       anno_colors <-
-        brewer.pal(max(3, max_values + 1), "Set3")[1:max_values]
+        brewer.pal(pal_n, "Set3")[1:max_values]
       names(anno_colors) <- levels(as.factor(values))
     } else {
       if (all(values >= 0)) {

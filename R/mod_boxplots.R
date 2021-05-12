@@ -12,11 +12,15 @@ ui_boxplots <- function() {
         NULL,
         inline = TRUE
       ),
-      plotOutput(
+      bs_accordion(ns("cboxplots")) %>%
+        bs_append("Boxplots",
+                  plotOutput(
         ns("boxplots"),
         width = "100%",
         height = "auto"
-      ) %>% withSpinner()
+      ) %>% withSpinner()) %>%
+        bs_append("Summary table",
+                  htmlOutput(ns("summary_table")))
     ) %>% shinyhelper::helper(type = "markdown", content = "boxplots_help")
   )
 }
@@ -47,12 +51,39 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors) {
                                    cluster_labels(),
                                    TRUE,
                                    input$boxplots_selection)
-      shape <- if (nrow(df_long) < selected_data()) "boxplot" else "violin"
+      shape <- if (nrow(selected_data()) < 500) "boxplot" else "violin"
       facet_boxplot(
         df_long, "Cluster", "Value", "Measurement", cluster_colors, shape
       )
     }, height = function() {
       ncol(selected_data()) %/% 4 * 225
+    })
+
+    output$summary_table <- renderText({
+      validate(need(
+        length(input$boxplots_selection) > 0,
+        "No clusters were selected."
+      ))
+      df_wide <- annotate_clusters(selected_data(),
+                                   cluster_labels(),
+                                   FALSE,
+                                   input$boxplots_selection)
+      iqr_fn <- function(x) { qt <- quantile(x, c(.25, .5, .75))
+      paste0(round(qt[2], 2), " (", round(qt[1], 2), "-", round(qt[3],2), ")" )}
+      agg_data <- aggregate(df_wide %>% dplyr::select(-Cluster),
+                            by = list(df_wide$Cluster),
+                            iqr_fn)
+      colnames(agg_data)[1] <- "Cluster"
+      t(agg_data) %>%
+        knitr::kable(caption = "Unscaled median, Q1 and Q3 per cluster",
+                      align = "r",
+                     "html") %>%
+        kableExtra::kable_styling(full_width = T,
+                                  position = "left",
+                                  font_size = 12) %>%
+        kableExtra::column_spec(1, bold = TRUE, extra_css = "position: sticky; background: #FFF") %>%
+        kableExtra::scroll_box(width = "900px")
+
     })
 
   })

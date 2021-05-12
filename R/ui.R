@@ -11,7 +11,9 @@ app_ui <- function(request) {
          pre { white-space: break-spaces; }
         .shiny-notification-error { position: fixed; width: 250px; top: 50% ;left: 50%; }
         div.shinyhelper-container { right: 25px; }
-        .shiny-output-error-validation { min-height: 50px }"
+        .shiny-output-error-validation { min-height: 50px }
+        .table { white-space: nowrap; }
+        tbody td:first-child { left:0; z-index: 1  }"
     )
   )),
   # Application title
