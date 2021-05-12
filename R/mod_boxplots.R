@@ -81,7 +81,7 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors) {
         kableExtra::kable_styling(full_width = T,
                                   position = "left",
                                   font_size = 12) %>%
-        kableExtra::column_spec(1, bold = TRUE, extra_css = "position: sticky") %>%
+        kableExtra::column_spec(1, bold = TRUE, extra_css = "position: sticky; background: #FFF") %>%
         kableExtra::scroll_box(width = "900px")
 
     })
