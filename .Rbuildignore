@@ -2,9 +2,7 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
-dev_history.R
 ^dev$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^data-raw$
