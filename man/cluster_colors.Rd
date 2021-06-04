@@ -5,7 +5,7 @@
 \alias{cluster_colors}
 \title{List of colors used in the Shiny app for clusters}
 \format{
-An object of class \code{character} of length 13.
+An object of class \code{character} of length 39.
 }
 \usage{
 cluster_colors

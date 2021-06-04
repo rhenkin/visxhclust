@@ -1,0 +1,37 @@
+---
+title: "Visual introduction to the visxhclust Shiny app"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visual introduction the visxhclust Shiny app}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This is a visual introduction to the visxhclust Shiny app -- note that almost every tab in the application has a corresponding help icon with more information and tips. If you're here within RStudio you might have loaded the package. If not, you can start from:
+
+```{r setup, eval=FALSE}
+library(visxhclust)
+```
+
+To open the Shiny app you just have to:
+
+```{r run, eval=FALSE}
+run_app()
+```
+
+## Steps for simple iteration
+
+### Step 1: Loading data
+
+![Step 1](vh_loading.gif)
+
+### Step 2: View heatmap
+
+
