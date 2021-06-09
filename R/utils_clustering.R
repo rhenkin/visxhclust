@@ -241,10 +241,12 @@ optimal_score <- function(x,
 #' head(annotated_data)
 annotate_clusters <- function(df, cluster_labels, long = TRUE,
                              selected_clusters = NULL) {
-  stopifnot(is.data.frame(df), selected_clusters %in% cluster_labels)
+  stopifnot(is.data.frame(df),
+            "Selected clusters are not valid" =
+              all(selected_clusters %in% cluster_labels))
   df$Cluster <- as.factor(cluster_labels)
   if (!is.null(selected_clusters)) {
-    df <- df[which(df$Cluster %in% selected_clusters), ]
+    df <- df[df$Cluster %in% selected_clusters, ]
   }
   if (long) {
     tidyr::pivot_longer(df,

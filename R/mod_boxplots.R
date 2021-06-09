@@ -41,23 +41,35 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors) {
       )
     })
 
-    # Calculate boxplots for each cluster, faceting by all_data variables
-    output$boxplots <- renderPlot({
+    df_long <- reactive({
       validate(need(
         length(input$boxplots_selection) > 0,
-        "No clusters were selected."
+        "No clusters selected."
       ))
-      df_long <- annotate_clusters(selected_data(),
-                                   cluster_labels(),
-                                   TRUE,
-                                   input$boxplots_selection)
-      shape <- if (nrow(selected_data()) < 500) "boxplot" else "violin"
-      facet_boxplot(
-        df_long, "Cluster", "Value", "Measurement", cluster_colors, shape
-      )
-    }, height = function() {
+      isolate({
+        c_labels <- cluster_labels()
+        s_data <- selected_data()
+      })
+      req(all(input$boxplots_selection %in% c_labels))
+      annotate_clusters(s_data,
+                        c_labels,
+                        TRUE,
+                        input$boxplots_selection)
+    })
+
+    boxplots_height <- reactive({
       ncol(selected_data()) %/% 4 * 225
     })
+
+    # Calculate boxplots for each cluster, faceting by all_data variables
+    output$boxplots <- renderPlot({
+      isolate({
+        shape <- if (nrow(selected_data()) < 500) "boxplot" else "violin"
+      })
+      facet_boxplot(
+        df_long(), "Cluster", "Value", "Measurement", cluster_colors, shape
+      )
+    }, height = function() boxplots_height())
 
     output$summary_table <- renderText({
       validate(need(
@@ -81,7 +93,9 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors) {
         kableExtra::kable_styling(full_width = T,
                                   position = "left",
                                   font_size = 12) %>%
-        kableExtra::column_spec(1, bold = TRUE, extra_css = "position: sticky; background: #FFF") %>%
+        kableExtra::column_spec(1,
+                          bold = TRUE,
+                          extra_css = "position: sticky; background: #FFF") %>%
         kableExtra::scroll_box(width = "900px")
 
     })

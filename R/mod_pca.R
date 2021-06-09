@@ -25,7 +25,7 @@ server_pca <- function(id, selected_data, cluster_labels, cluster_colors) {
     output$drivers_plot <- renderPlot({
       drivers_df <- pca_drivers_df(selected_data(), pca_data())
       pca_driversplot(drivers_df)
-    }, height = function() ncol(selected_data()) * 25)
+    }, height = function() max(300, ncol(selected_data()) * 25))
 
   })
 }
