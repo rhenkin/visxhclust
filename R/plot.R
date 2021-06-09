@@ -148,7 +148,8 @@ pca_driversplot <- function(df, adjusted = TRUE) {
     scale_x_discrete(labels = as.character(df$PC),
                      expand = expansion(add = .5)) +
     scale_y_discrete(limits = ylimits) +
-    theme(panel.grid = element_blank()) +
+    theme(panel.grid = element_blank(),
+          plot.margin = margin(1, 0, 0, 0, "cm"),) +
     labs(title = "Drivers plot", y = NULL, x= NULL)
 }
 

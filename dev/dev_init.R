@@ -40,6 +40,7 @@
 # Vignettes
 #usethis::use_vignette("clusterworkflow")
 #usethis::use_vignette("clusterevaluation")
+#usethis::use_vignette("visxhclust")
 
 #usethis::use_testthat()
 
