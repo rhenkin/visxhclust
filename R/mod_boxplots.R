@@ -58,7 +58,7 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors) {
     })
 
     boxplots_height <- reactive({
-      ncol(selected_data()) %/% 4 * 225
+      max(225, ncol(selected_data()) %/% 4 * 225)
     })
 
     # Calculate boxplots for each cluster, faceting by all_data variables
