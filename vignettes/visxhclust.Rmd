@@ -2,7 +2,7 @@
 title: "Visual introduction to the visxhclust Shiny app"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Visual introduction the visxhclust Shiny app}
+  %\VignetteIndexEntry{Visual introduction to the visxhclust Shiny app}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
