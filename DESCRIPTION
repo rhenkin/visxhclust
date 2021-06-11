@@ -14,8 +14,6 @@ Encoding: UTF-8
 LazyData: true
 biocViews:
 Imports: 
-    rlang,
-    magrittr,
     shiny,
     shinyhelper,
     shinycssloaders,
@@ -25,7 +23,6 @@ Imports:
     dplyr,
     readr,
     tidyr,
-    tidyselect,
     cluster,
     fastcluster,
     clusterCrit,
@@ -34,7 +31,8 @@ Imports:
     ggalluvial,
     dendextend,
     ComplexHeatmap,
-    circlize
+    circlize,
+    patchwork
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests: 

@@ -35,7 +35,7 @@ app_server <- function(input, output, session) {
     }
     # Convert any character to factor, except ID
     new_data <- dplyr::mutate(new_data,
-        dplyr::across(!tidyselect::any_of("ID") & where(is.character), as.factor))
+        dplyr::across(!dplyr::any_of("ID") & where(is.character), as.factor))
 
     # Find columns with missing values (i.e. NA)
     cols_with_na <- names(which(sapply(new_data, anyNA)))
@@ -209,11 +209,20 @@ app_server <- function(input, output, session) {
   )
 
   # Boxplots tab ----
+  boxplot_annotation <- reactive({
+    if (isTruthy(input$selected_annotation)) {
+      all_data()[input$selected_annotation]
+    } else {
+      NULL
+    }
+  })
+
   server_boxplots(
     "boxplots",
     selected_data,
     cluster_labels,
-    cluster_colors
+    cluster_colors,
+    boxplot_annotation
   )
 
   # Cluster table tab ----

@@ -123,8 +123,8 @@ plot_cluster_heatmaps <-
                         (max(top_matrix)+min(top_matrix))/2,
                         max(top_matrix))
     }
-    col_fun <- circlize::colorRamp2(scale_values,
-                                    rev(RColorBrewer::brewer.pal(3, "RdBu")))
+    col_fun <- circlize::colorRamp2(pretty(scale_values, 11),
+                                    rev(RColorBrewer::brewer.pal(11, "RdBu")))
 
   } else {
     if (!is.null(bottom_matrix)) {
@@ -213,7 +213,7 @@ reorder_dendrograms <- function(clustered_data, k, color_list) {
 #' @importFrom circlize colorRamp2
 create_annotations <- function(df, selected_variables) {
   scaled_annotation <- df %>%
-    dplyr::select(tidyselect::all_of(selected_variables)) %>%
+    dplyr::select(dplyr::all_of(selected_variables)) %>%
     dplyr::mutate(dplyr::across(where(is.numeric), scale))
   cat_annot_df <- as.data.frame(scaled_annotation)
   cat_annot_colors <- lapply(names(cat_annot_df), function(x) {
