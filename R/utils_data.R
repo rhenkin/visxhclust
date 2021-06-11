@@ -78,7 +78,6 @@ scale_rzs <- function(df) {
 #' @param df data frame
 #' @param threshold correlation threshold
 #'
-#' @importFrom rlang .data
 #' @noRd
 get_correlated_variables <- function(df, threshold) {
 

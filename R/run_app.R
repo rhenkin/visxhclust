@@ -1,4 +1,4 @@
-#' @importFrom magrittr %>%
+#' @importFrom dplyr %>%
 #' @import shiny
 #' @import ggplot2
 #' @import ggalluvial

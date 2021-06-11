@@ -20,12 +20,16 @@ ui_boxplots <- function() {
         height = "auto"
       ) %>% withSpinner()) %>%
         bs_append("Summary table",
-                  htmlOutput(ns("summary_table")))
+                  htmlOutput(ns("summary_table"))) %>%
+      bs_append("Annotation distribution across clusters",
+                  plotOutput(ns("annotation_summary"), height = "auto")
+                )
     ) %>% shinyhelper::helper(type = "markdown", content = "boxplots_help")
   )
 }
 
-server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors) {
+server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors,
+                            boxplot_annotation) {
   moduleServer(id, function(input, output, session) {
     ns <- NS(id)
     # Check if the clusters change to keep the boxplot UI updated
@@ -71,6 +75,14 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors) {
       )
     }, height = function() boxplots_height())
 
+    output$annotation_summary <- renderPlot({
+      validate(need(ncol(boxplot_annotation()) > 0,
+                    "No annotations were selected"))
+      plot_annotation_dist(boxplot_annotation(),
+                           cluster_labels(),
+                           input$boxplots_selection)
+    }, height = function() max(200, ncol(boxplot_annotation()) * 150 + 200) )
+
     output$summary_table <- renderText({
       validate(need(
         length(input$boxplots_selection) > 0,
@@ -97,7 +109,6 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors) {
                           bold = TRUE,
                           extra_css = "position: sticky; background: #FFF") %>%
         kableExtra::scroll_box(width = "900px")
-
     })
 
   })

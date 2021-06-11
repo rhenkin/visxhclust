@@ -225,3 +225,38 @@ plot_compare <- function(compare_df) {
     geom_text(stat = "stratum", size = 4) +
     theme_bw()
 }
+
+plot_annotation_dist <- function(annotations_df,
+                                 cluster_labels,
+                                 selected_clusters = NULL) {
+
+  if (!all(selected_clusters %in% cluster_labels)) {
+    return(NULL)
+  }
+
+  annot <-
+    annotate_clusters(annotations_df, cluster_labels, FALSE, selected_clusters)
+  plots <- lapply(colnames(annotations_df), function(var_name) {
+    if (is.numeric(annot[[var_name]])) {
+      ggplot(na.omit(annot), aes(x = .data[[var_name]])) +
+        geom_histogram(bins = 20) +
+        facet_wrap(~ Cluster, nrow = 1) +
+        theme_bw() +
+        theme(panel.grid.major.x = element_blank(),
+              aspect.ratio = 1,
+              axis.title.x = element_text(face = "bold", size = 12))
+    } else
+      ggplot(annot, aes(x = .data[[var_name]], fill = .data[[var_name]])) +
+      geom_bar(stat = "count") +
+      facet_wrap(~ Cluster, nrow = 1) +
+      scale_fill_brewer(palette = "Set3")  + theme_bw() +
+      theme(panel.grid.major.x = element_blank(),
+            axis.text.x  = element_blank(),
+            axis.ticks.x = element_blank(),
+            aspect.ratio = 1,
+            axis.title.x = element_text(face = "bold", size = 12))
+  })
+  do.call(patchwork::wrap_plots,
+          list(plots, ncol = 1))
+
+}
