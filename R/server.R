@@ -6,11 +6,10 @@ utils::globalVariables(c("where"))
 #' @noRd
 app_server <- function(input, output, session) {
 
+
+
   shinyhelper::observe_helpers(help_dir = system.file("helpfiles",
                                               package = utils::packageName()))
-
-
-
   session_values <- reactiveValues(numeric_vars = list(),
                                    annotation_vars = list())
   dropped_variables <- reactiveVal(NULL)

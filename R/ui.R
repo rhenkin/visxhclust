@@ -13,11 +13,21 @@ app_ui <- function(request) {
         div.shinyhelper-container { right: 25px; }
         .shiny-output-error-validation { min-height: 50px }
         .table { white-space: nowrap; }
-        tbody td:first-child { left:0; z-index: 1  }"
+        tbody td:first-child { left:0; z-index: 1  }
+        .align-right { margin-right: 5; float: right }
+        .align-right img { vertical-align: middle;}
+        .header-panel { margin-top: 5px;  margin-bottom: 5px }
+      "
     )
-  )),
+  ),
   # Application title
-  titlePanel(paste(utils::packageName(), ": visual exploration of hierarchical clustering")),
+  tags$title(paste(utils::packageName(), ": visual exploration of hierarchical clustering"))),
+  tags$div(
+    span(paste(utils::packageName(), ": visual exploration of hierarchical clustering"), class = "h2"),
+    span(a(img(src = "assets/github.png", height = "20px", width = "20px"), href = "http://github.com/rhenkin/visxhclust"),
+         class = "align-right"),
+    class = "header-panel"
+  ),
   # Sidebar -----------------------------------------------------------
   sidebarLayout(
     sidebarPanel(
@@ -41,18 +51,6 @@ app_ui <- function(request) {
         ui_params()
       ),
       type = "hidden"
-    )
-  ),
-  fluidRow(
-    div(
-      style = "margin: 15px",
-      "Created at the",
-      a(
-        "Centre for Translational Bioinformatics",
-        href = "https://www.qmul.ac.uk/c4tb/",
-        target = "blank"
-      ),
-      "at Queen Mary, University of London."
     )
   )
 )
