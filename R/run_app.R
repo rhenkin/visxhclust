@@ -16,5 +16,6 @@ NULL
 #' run_app()
 #' }
 run_app <- function() {
+  addResourcePath("assets", system.file("www", package = "visxhclust") )
   shiny::shinyApp(app_ui, app_server,options = list(launch.browser = TRUE))
 }
