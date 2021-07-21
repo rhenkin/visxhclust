@@ -96,7 +96,8 @@ cluster_heatmaps <- function(scaled_selected_data,
 #' @param annotation (optional) any kind of annotation object to draw as top_annotation
 #' @param scaled (optional) boolean to modify colour scale if data has already been scaled
 #' @param distance_method (optional) if "Binary", use discrete colors for heatmap
-#'
+#' @param cluster_features (optional) If FALSE, row order does not change
+#' @param show_col_names (optional) If FALSE, does not show column names at base of heatmap
 #'
 #' @return two concatenated heatmaps drawn with ComplexHeatmap::draw
 #' @keywords internal
@@ -111,7 +112,9 @@ plot_cluster_heatmaps <-
            clusters_set,
            annotation = NULL,
            scaled = FALSE,
-           distance_method = NULL) {
+           distance_method = NULL,
+           cluster_features = TRUE,
+           show_col_names = TRUE) {
 
   if (scaled) {
     if (!is.null(bottom_matrix)) {
@@ -123,8 +126,7 @@ plot_cluster_heatmaps <-
                         (max(top_matrix)+min(top_matrix))/2,
                         max(top_matrix))
     }
-    col_fun <- circlize::colorRamp2(pretty(scale_values, 11),
-                                    rev(RColorBrewer::brewer.pal(11, "RdBu")))
+    col_fun <- colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(256)
 
   } else {
     if (!is.null(bottom_matrix)) {
@@ -134,8 +136,10 @@ plot_cluster_heatmaps <-
     } else {
       scale_end <- max(abs(min(top_matrix)), max(top_matrix))
     }
-    col_fun <- circlize::colorRamp2(c(-scale_end, 0, scale_end),
-                                    rev(RColorBrewer::brewer.pal(3, "RdBu")))
+    #scale_values <- pretty(c(-scale_end, 0, scale_end), 11)
+    scale_values <- seq(as.integer(-scale_end), as.integer(scale_end), length.out = 11)
+    col_fun <- circlize::colorRamp2(scale_values,
+                                    rev(RColorBrewer::brewer.pal(length(scale_values), "RdBu")))
   }
 
   if (!is.null(distance_method))
@@ -147,16 +151,19 @@ plot_cluster_heatmaps <-
   } else {
     length(clusters_set)
   }
-
   htmp <- ComplexHeatmap::Heatmap(top_matrix,
             name="Selected variables",
             col = col_fun,
             cluster_columns = dendrograms,
+            cluster_rows = cluster_features,
             column_split = col_split,
             column_title = as.character(clusters_set),
+            show_column_names = show_col_names,
+            row_names_gp = grid::gpar(fontsize = 8),
+            column_names_side = "bottom",
+            column_names_gp = grid::gpar(fontsize = 8),
             cluster_column_slices = FALSE,
-            column_dend_height = grid::unit(5, "cm"),
-            clustering_distance_rows = "pearson",
+            column_dend_height = grid::unit(3, "cm"),
             top_annotation = if (is.null(annotation)) NULL else annotation
   )
   if (!is.null(bottom_matrix)) {
@@ -164,17 +171,20 @@ plot_cluster_heatmaps <-
                      col = col_fun,
                      cluster_columns = dendrograms,
                      column_split = col_split,
+                     #show_column_names = TRUE,
+                     row_names_gp = grid::gpar(fontsize = 8),
+                     column_names_gp = grid::gpar(fontsize = 8),
                      cluster_column_slices = FALSE,
                      show_column_dend = FALSE,
                      cluster_rows = FALSE,
-                     clustering_distance_rows = "pearson")
+                     show_heatmap_legend = FALSE)
 
     ComplexHeatmap::draw(htmp %v% htmp2,
-                         padding = grid::unit(c(0,0,0,0),"mm"),
-                         annotation_legend_side = "bottom")
+                     #    padding = grid::unit(c(0,0,0,0),"mm"),
+                       annotation_legend_side = "bottom")
   } else {
     ComplexHeatmap::draw(htmp,
-                         padding = grid::unit(c(0,0,0,0),"mm"),
+                        # padding = grid::unit(c(2,0,0,0),"mm"),
                          annotation_legend_side = "bottom")
   }
 

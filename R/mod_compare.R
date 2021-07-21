@@ -63,9 +63,9 @@ server_compare <- function(id, all_data, selected_data, cluster_labels) {
     )
 
     # Combine subject IDs with current cluster labels
-    subject_clusters_df <- reactive({
+    items_clusters_df <- reactive({
       all_df  <- all_data()
-      cbind(all_df$ID, cluster_labels())
+      cbind(all_df, cluster_labels())
     })
 
     # Save current labels
@@ -89,7 +89,7 @@ server_compare <- function(id, all_data, selected_data, cluster_labels) {
         paste0(input$labels_name, "_clusters.csv")
       },
       content = function(file) {
-        utils::write.csv(subject_clusters_df(), file, row.names = FALSE)
+        utils::write.csv(items_clusters_df(), file, row.names = FALSE)
       }
     )
 
@@ -102,9 +102,9 @@ server_compare <- function(id, all_data, selected_data, cluster_labels) {
 
       compare_df <- as.data.frame(do.call(cbind, relabels))
       names(compare_df) <- lapply(saved_labels(), function(x) x[[1]])
-      compare_df$Subject <- rownames(compare_df)
+      compare_df$ID <- rownames(compare_df)
       compare_df <- tidyr::pivot_longer(compare_df,
-                            -.data$Subject,
+                            -.data$ID,
                             names_to="Config",
                             values_to="Cluster")
       compare_df$Cluster = as.factor(compare_df$Cluster)
