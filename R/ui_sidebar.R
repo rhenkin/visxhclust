@@ -42,12 +42,17 @@ ui_sidebar <- function() {
         min = 1,
         step = 1
       ),
+      downloadButton("download_clusters",
+                   "Download data with clusters"),
+      tags$br(),tags$br(),
       bs_accordion(id = "cluster_variable_selection") %>%
         bs_set_opts(panel_type = "default") %>%
         bs_append(
-          title = "Numeric selection",
+          title = "Numeric features",
           content = tagList(
+          tags$span(
             actionButton("flip_numeric", "Flip selection"),
+            actionButton("select_all", "Select all")),
             checkboxGroupInput(
               "selected_numeric",
               NULL,
@@ -57,7 +62,7 @@ ui_sidebar <- function() {
           )
         ) %>%
         bs_append(
-          title = "Heatmap annotations",
+          title = "Heatmap features",
           content = checkboxGroupInput("selected_annotation",
             NULL,
             choices = NULL

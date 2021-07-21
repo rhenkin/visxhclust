@@ -75,6 +75,7 @@ app_server <- function(input, output, session) {
 
   # Update UI ----
   selected_numeric <- reactive({
+    validate(need(!is.null(input$selected_numeric), "No features have been selected"))
     input$selected_numeric
   })
 
@@ -91,11 +92,25 @@ app_server <- function(input, output, session) {
                              "selected_numeric",
                              selected = numeric_vars[lv])
   })
+
+  observeEvent(input$select_all, {
+    if (input$select_all %% 2 == 0) {
+      updateCheckboxGroupInput(session,
+                               "selected_numeric",
+                               choices = session_values$numeric_vars)
+    } else {
+      updateCheckboxGroupInput(session,
+                               "selected_numeric",
+                               choices = session_values$numeric_vars,
+                               selected = session_values$numeric_vars)
+    }
+  }, ignoreNULL = TRUE)
+
   # Selecting data and clustering ----
   # When user changes numeric or categorical selection, triggers a chain reaction
   # Any visible output that depends on selected_data() will be updated
   selected_data <- reactive({
-    validate(need(!is.null(all_data()), "No data loaded"))
+    validate(need(!is.null(all_data()), "No data has been loaded"))
     validCondition <- all(selected_numeric() %in% session_values$numeric_vars)
     validate(need(validCondition, "Updating"))
     isolate({ all_df <- all_data() })
@@ -103,7 +118,9 @@ app_server <- function(input, output, session) {
   })
 
   scaled_data <- reactive({
-    scale_data(selected_data(), input$scaling)
+    scaled_mat <- scale_data(selected_data(), input$scaling)
+    isolate({ rownames(scaled_mat) <- all_data()$ID })
+    scaled_mat
   })
 
   unselected_data <- reactive({
@@ -115,7 +132,9 @@ app_server <- function(input, output, session) {
 
   scaled_unselected_data <- reactive({
     if (ncol(unselected_data()) > 0) {
-      scale_data(unselected_data(), input$scaling)
+      scaled_mat <- scale_data(unselected_data(), input$scaling)
+      isolate({ rownames(scaled_mat) <- all_data()$ID })
+      scaled_mat
     } else {
       NULL
     }
@@ -159,6 +178,21 @@ app_server <- function(input, output, session) {
   cluster_labels <- reactive({
     cut_clusters(clusters(), k = input$nclusters)
   })
+
+  all_data_with_clusters <- reactive({
+    all_df  <- all_data()
+    cbind(all_df, cluster_labels())
+  })
+
+  # Download all_data with cluster annotations
+  output$download_clusters <- downloadHandler(
+    filename = function() {
+      paste(input$distance_method,input$linkage_method,input$nclusters,"clusters.csv", sep = "_")
+    },
+    content = function(file) {
+      utils::write.csv(all_data_with_clusters(), file, row.names = FALSE)
+    }
+  )
   # end clustering methods
 
   # Overview tab ----

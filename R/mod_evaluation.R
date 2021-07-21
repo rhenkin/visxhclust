@@ -38,6 +38,7 @@ server_evaluation <- function(id, selected_data, clusters) {
       metric_results <- compute_metric(selected_data(),
                                        clusters(),
                                        input$evaluation_selected)
+      validate(need(all(!is.na(metric_results)), "Metric not evaluated for current data"))
       optimal_k <- optimal_score(metric_results$score,
                                  method = input$evaluation_highlight)
 
