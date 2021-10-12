@@ -47,7 +47,6 @@ app_ui <- function(request) {
         ui_significance(),
         ui_evaluation(),
         ui_gapstat(),
-        ui_compare(),
         ui_params()
       ),
       type = "hidden"

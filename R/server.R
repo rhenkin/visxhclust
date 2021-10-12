@@ -294,14 +294,6 @@ app_server <- function(input, output, session) {
     clusters
   )
 
-  # Compare and export clustering results tab ----
-  server_compare(
-    "compare",
-    all_data,
-    selected_data,
-    cluster_labels
-  )
-
   # Parameter state management tab ----
   new_params <- server_params(
                   "params",

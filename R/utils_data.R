@@ -17,6 +17,7 @@ load_data <- function(filepath) {
   if (!is.data.frame(loaded_data)) {
     loaded_data <- as.data.frame(loaded_data)
   }
+  colnames(loaded_data) <- make.names(colnames(loaded_data))
   loaded_data
 }
 

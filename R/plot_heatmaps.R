@@ -171,7 +171,7 @@ plot_cluster_heatmaps <-
                      col = col_fun,
                      cluster_columns = dendrograms,
                      column_split = col_split,
-                     #show_column_names = TRUE,
+                     show_column_names = show_col_names,
                      row_names_gp = grid::gpar(fontsize = 8),
                      column_names_gp = grid::gpar(fontsize = 8),
                      cluster_column_slices = FALSE,
