@@ -72,6 +72,6 @@ To run the app once the package is installed:
 ``` r
 library(visxhclust)
 # Increases max file size to 30 MB
-options(shiny.maxRequestSize = 30*1024^2
+options(shiny.maxRequestSize = 30*1024^2)
 run_app()
 ```
