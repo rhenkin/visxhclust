@@ -1,6 +1,5 @@
 ### Boxplots
 
-#This tab shows boxplots with points for the original unscaled data (if the loaded file contains unscaled data). If too many clusters were computed, it is possible to define a subselection of clusters to show in the boxplots.
 This tab contains three views for analysing the clustered data in more detail:
 
 1. **Boxplots/violin plots**: for the variables selected for clustering, this view shows the distribution of the original loaded data (that is, unscaled) across clusters. For small datasets, boxplots overlaid with points are used. For larger datasets, violin plots are used instead. 
