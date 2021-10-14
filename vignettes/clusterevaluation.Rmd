@@ -18,7 +18,6 @@ The other vignette focuses on reproducing a single clustering workflow that assu
 
 ```{r setup, message=FALSE, warning=FALSE}
 library(visxhclust)
-library(magrittr)
 library(dplyr)
 ```
 
@@ -26,7 +25,7 @@ library(dplyr)
 
 ```{r prep}
 numeric_data <- iris %>% select(Sepal.Length, Sepal.Width, Petal.Width)
-dmat <- compute_dmat(numeric_data, "euclidean", "z-scores")
+dmat <- compute_dmat(numeric_data, "euclidean", TRUE)
 clusters <- compute_clusters(dmat, "complete")
 ```
 
@@ -35,7 +34,7 @@ clusters <- compute_clusters(dmat, "complete")
 For Gap statistic, the optimal number of clusters depends on the method use to compare cluster solutions. The package cluster includes the function `cluster::maxSE()` to help with that.
 
 ```{r gapstat}
-gap_results <- compute_gapstat(scale_data(numeric_data), clusters)
+gap_results <- compute_gapstat(scale(numeric_data), clusters)
 optimal_k <- cluster::maxSE(gap_results$gap, gap_results$SE.sim)
 line_plot(gap_results, "k", "gap", xintercept = optimal_k)
 ```
@@ -45,7 +44,7 @@ line_plot(gap_results, "k", "gap", xintercept = optimal_k)
 The Shiny app also includes various other measures computed by [clusterCrit::intCriteria()]. The function `compute_metric` works similarly to `compute_gapstat`, whereas `optimal_score` is similar to maxSE. However, `optimal_score` varies only between first and global minimum and maximum.
 
 ```{r dunn}
-res <- compute_metric(scale_data(numeric_data), clusters, "Dunn")
+res <- compute_metric(scale(numeric_data), clusters, "Dunn")
 optimal_k <- optimal_score(res$score)
 line_plot(res, "k", "score", optimal_k)
 ```

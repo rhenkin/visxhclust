@@ -18,7 +18,7 @@ cluster labels
 Cut a hierarchical tree targeting k clusters
 }
 \examples{
-dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 clusters <- compute_clusters(dmat, "complete")
 cluster_labels <- cut_clusters(clusters, 2)
 head(cluster_labels)

@@ -101,7 +101,6 @@
 <p>This document shows how to use some functions included in the package to document and reproduce a clustering workflow from the app. Although these functions do not cover all the steps such as selecting features, they allow users of the Shiny app to show the resulting heatmaps and boxplots. The example dataset used here is the <code>iris</code> dataset.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rhenkin/visxhclust">visxhclust</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></code></pre></div>
 <div id="preparing" class="section level3">
@@ -122,16 +121,16 @@
 <div id="clustering" class="section level3">
 <h3 class="hasAnchor">
 <a href="#clustering" class="anchor"></a>Clustering</h3>
-<p>The clustering itself takes three steps: computing a distance matrix, computing the hierarchical clusters and cutting the tree to find the desired number of clusters. In the app, each of these steps has matching parameters: choice of scaling and distance/similarity metric, linkage method and the number of clusters.</p>
+<p>The clustering itself takes three steps: computing a distance matrix, computing the hierarchical clusters and cutting the tree to find the desired number of clusters. In the app, each of these steps has matching parameters: apply scaling and distance/similarity metric, linkage method and the number of clusters.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">scaling_method</span> <span class="op">&lt;-</span> <span class="st">"z-scores"</span>
+<code class="sourceCode R"><span class="va">scaling</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span>
 <span class="va">distance_method</span> <span class="op">&lt;-</span> <span class="st">"euclidean"</span>
 <span class="va">linkage_method</span> <span class="op">&lt;-</span> <span class="st">"ward.D2"</span>
 <span class="co"># this assumes that, in the app, we identified 3 as the optimal number of clusters</span>
 <span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">3</span> </code></pre></div>
 <p>These parameters are used in three functions that the app also uses: <code>compute_dmat</code>, <code>compute_clusters</code> and <code>cut_clusters</code>. You can check the documentation for each function in the package website, or interactively through <code><a href="../reference/compute_dmat.html">?compute_dmat</a></code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_dmat.html">compute_dmat</a></span><span class="op">(</span><span class="va">subset_data</span>, <span class="va">distance_method</span>, <span class="va">scaling_method</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">dmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_dmat.html">compute_dmat</a></span><span class="op">(</span><span class="va">subset_data</span>, <span class="va">distance_method</span>, <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_clusters.html">compute_clusters</a></span><span class="op">(</span><span class="va">dmat</span>, <span class="va">linkage_method</span><span class="op">)</span>
 <span class="va">cluster_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cut_clusters.html">cut_clusters</a></span><span class="op">(</span><span class="va">clusters</span>, <span class="va">k</span><span class="op">)</span></code></pre></div>
 </div>
@@ -141,7 +140,7 @@
 <p>Now we can check both the heatmap+dendrogram and boxplots. A function that covers most steps to produce the heatmap is included in the package, with the name: <code><a href="../reference/cluster_heatmaps.html">cluster_heatmaps()</a></code>. It plots the dendrogram, the annotation layer, the clustered data heatmap and the heatmap with the rest of the data not used for clustering. In the Shiny app this is done automatically, but outside, plotting the annotation and the unselected data are optional steps; the annotations require an extra step with the function <code><a href="../reference/create_annotations.html">create_annotations()</a></code>. The colors used in the app are also exported by the package as the variable <code>cluster_colors</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">species_annotation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_annotations.html">create_annotations</a></span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/cluster_heatmaps.html">cluster_heatmaps</a></span><span class="op">(</span><span class="fu"><a href="../reference/scale_data.html">scale_data</a></span><span class="op">(</span><span class="va">subset_data</span><span class="op">)</span>, 
+<span class="fu"><a href="../reference/cluster_heatmaps.html">cluster_heatmaps</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">subset_data</span><span class="op">)</span>, 
                  <span class="va">clusters</span>,
                  <span class="va">k</span>,
                  <span class="va">cluster_colors</span>,

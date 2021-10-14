@@ -12,7 +12,7 @@ cholMaha <- function(df) {
 #'
 #' @param x a numeric data frame or matrix
 #' @param dist_method a distance measure to apply to the scaled data. Must be those supported by [stats::dist()], plus `"mahalanobis"` and `"cosine"`. Default is `"euclidean"`.
-#' @param scaling_method method to scale data frame columns. Valid values are `"z-scores"` and `"robust"`, any other will return unscaled data. By default does not scale data.
+#' @param apply_scaling use TRUE to apply [base::scale()]. By default does not scale data.
 #' @param subset_cols (optional) a list of columns to subset the data
 #'
 #' @return an object of class "dist" (see [stats::dist()])
@@ -20,11 +20,11 @@ cholMaha <- function(df) {
 #' @export
 #'
 #' @examples
-#' dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+#' dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 #' print(class(dmat))
 compute_dmat <- function(x,
                          dist_method = "euclidean",
-                         scaling_method = NULL,
+                         apply_scaling = FALSE,
                          subset_cols = NULL) {
   methods <- c("euclidean", "cosine", "mahalanobis", "manhattan", "maximum",
                "canberra", "minkowski", "binary")
@@ -47,11 +47,7 @@ compute_dmat <- function(x,
     stats::dist(x, method = "binary")
   } else if (dist_method %in% c("euclidean", "maximum", "manhattan",
                                 "canberra", "minkowski")) {
-    if (missing(scaling_method)) {
-      stats::dist(x, method = dist_method)
-    } else {
-      stats::dist(scale_data(x, scaling_method), method = dist_method)
-    }
+    stats::dist(scale_data(x, apply_scaling), method = dist_method)
   }
 }
 
@@ -64,7 +60,7 @@ compute_dmat <- function(x,
 #' @export
 #'
 #' @examples
-#' dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+#' dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 #' res <- compute_clusters(dmat, "complete")
 compute_clusters <- function(dmat, linkage_method) {
   fastcluster::hclust(dmat, method = linkage_method)
@@ -79,7 +75,7 @@ compute_clusters <- function(dmat, linkage_method) {
 #' @export
 #'
 #' @examples
-#' dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+#' dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 #' clusters <- compute_clusters(dmat, "complete")
 #' cluster_labels <- cut_clusters(clusters, 2)
 #' head(cluster_labels)
@@ -115,10 +111,10 @@ relabel_clusters <- function(list_of_labels, df, rank_variable) {
 #' @export
 #'
 #' @examples
-#' data_to_cluster <- iris[, c("Petal.Length", "Sepal.Length")]
-#' dmat <- compute_dmat(data_to_cluster, "euclidean", "z-scores")
+#' data_to_cluster <- iris[c("Petal.Length", "Sepal.Length")]
+#' dmat <- compute_dmat(data_to_cluster, "euclidean", TRUE)
 #' clusters <- compute_clusters(dmat, "complete")
-#' compute_metric(scale_data(data_to_cluster), clusters, "Dunn")
+#' compute_metric(scale(data_to_cluster), clusters, "Dunn")
 compute_metric <- function(df, clusters, metric_name, max_k = 14) {
   if (!metric_name %in% clusterCrit::getCriteriaNames(TRUE)) {
     stop("Invalid metric name. Please check
@@ -151,10 +147,10 @@ compute_metric <- function(df, clusters, metric_name, max_k = 14) {
 #' @export
 #'
 #' @examples
-#' data_to_cluster <- iris[, c("Petal.Length", "Sepal.Length")]
-#' dmat <- compute_dmat(data_to_cluster, "euclidean", "z-scores")
+#' data_to_cluster <- iris[c("Petal.Length", "Sepal.Length")]
+#' dmat <- compute_dmat(data_to_cluster, "euclidean", TRUE)
 #' clusters <- compute_clusters(dmat, "complete")
-#' gap_results <- compute_gapstat(scale_data(data_to_cluster), clusters)
+#' gap_results <- compute_gapstat(scale(data_to_cluster), clusters)
 #' head(gap_results)
 compute_gapstat <- function(df, clusters, gap_B = 50, max_k = 14) {
   FUN_gap <- function(clusters, k) {
@@ -188,10 +184,10 @@ compute_gapstat <- function(df, clusters, gap_B = 50, max_k = 14) {
 #' @export
 #'
 #' @examples
-#' data_to_cluster <- iris[, c("Petal.Length", "Sepal.Length")]
-#' dmat <- compute_dmat(data_to_cluster, "euclidean", "z-scores")
+#' data_to_cluster <- iris[c("Petal.Length", "Sepal.Length")]
+#' dmat <- compute_dmat(data_to_cluster, "euclidean", TRUE)
 #' clusters <- compute_clusters(dmat, "complete")
-#' res <- compute_metric(scale_data(data_to_cluster), clusters, "Dunn")
+#' res <- compute_metric(scale(data_to_cluster), clusters, "Dunn")
 #' optimal_score(res$score, method = "firstmax")
 optimal_score <- function(x,
                            method = c(
@@ -234,7 +230,7 @@ optimal_score <- function(x,
 #' @export
 #'
 #' @examples
-#' dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+#' dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 #' res <- compute_clusters(dmat, "complete")
 #' cluster_labels <- cut_clusters(res, 2)
 #' annotated_data <- annotate_clusters(iris[, c("Petal.Length", "Sepal.Length")], cluster_labels)

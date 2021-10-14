@@ -7,7 +7,7 @@
 compute_dmat(
   x,
   dist_method = "euclidean",
-  scaling_method = NULL,
+  apply_scaling = FALSE,
   subset_cols = NULL
 )
 }
@@ -16,7 +16,7 @@ compute_dmat(
 
 \item{dist_method}{a distance measure to apply to the scaled data. Must be those supported by \code{\link[stats:dist]{stats::dist()}}, plus \code{"mahalanobis"} and \code{"cosine"}. Default is \code{"euclidean"}.}
 
-\item{scaling_method}{method to scale data frame columns. Valid values are \code{"z-scores"} and \code{"robust"}, any other will return unscaled data. By default does not scale data.}
+\item{apply_scaling}{use TRUE to apply \code{\link[base:scale]{base::scale()}}. By default does not scale data.}
 
 \item{subset_cols}{(optional) a list of columns to subset the data}
 }
@@ -28,6 +28,6 @@ This function applies scaling to the columns of a data frame and
 computes and returns a distance matrix from a chosen distance measure.
 }
 \examples{
-dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 print(class(dmat))
 }

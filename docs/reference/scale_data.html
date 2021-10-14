@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Apply a specified scaling method — scale_data • visxhclust</title>
+<title>Conditional scaling — scale_data • visxhclust</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Apply a specified scaling method — scale_data" />
-<meta property="og:description" content="Apply a specified scaling method" />
+<meta property="og:title" content="Conditional scaling — scale_data" />
+<meta property="og:description" content="Conditional scaling" />
 
 
 
@@ -129,16 +129,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Apply a specified scaling method</h1>
+    <h1>Conditional scaling</h1>
     <small class="dont-index">Source: <a href='https://github.com/rhenkin/visxhclust/blob/master/R/utils_data.R'><code>R/utils_data.R</code></a></small>
     <div class="hidden name"><code>scale_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Apply a specified scaling method</p>
+    <p>Conditional scaling</p>
     </div>
 
-    <pre class="usage"><span class='fu'>scale_data</span><span class='op'>(</span><span class='va'>x</span>, method <span class='op'>=</span> <span class='st'>"z-scores"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>scale_data</span><span class='op'>(</span><span class='va'>x</span>, flag <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,8 +148,8 @@
       <td><p>a numeric data frame or matrix</p></td>
     </tr>
     <tr>
-      <th>method</th>
-      <td><p>the scaling method. Currently supported are <code>"z-scores"</code> or <code>"robust"</code></p></td>
+      <th>flag</th>
+      <td><p>scale or not? Default is TRUE</p></td>
     </tr>
     </table>
 
@@ -161,15 +161,9 @@
     <p>Robust scaling is done via median absolute deviation</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>scaled_data</span> <span class='op'>&lt;-</span> <span class='fu'>scale_data</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>]</span>, method <span class='op'>=</span> <span class='st'>"z-scores"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>scaled_data</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      Petal.Length Sepal.Length
-#&gt; [1,]    -1.335752   -0.8976739
-#&gt; [2,]    -1.335752   -1.1392005
-#&gt; [3,]    -1.392399   -1.3807271
-#&gt; [4,]    -1.279104   -1.5014904
-#&gt; [5,]    -1.335752   -1.0184372
-#&gt; [6,]    -1.165809   -0.5353840</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>scaled_data</span> <span class='op'>&lt;-</span> <span class='fu'>scale_data</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in scale_data(iris[, c("Petal.Length", "Sepal.Length")]): could not find function "scale_data"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>scaled_data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in head(scaled_data): object 'scaled_data' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

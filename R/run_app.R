@@ -1,7 +1,6 @@
 #' @importFrom dplyr %>%
 #' @import shiny
 #' @import ggplot2
-#' @import ggalluvial
 #' @importFrom shinycssloaders withSpinner
 #' @importFrom bsplus bs_append bs_set_opts bs_accordion
 #' @importFrom shinyhelper helper observe_helpers

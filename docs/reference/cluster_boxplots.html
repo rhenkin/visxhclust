@@ -40,7 +40,8 @@
 
 
 <meta property="og:title" content="Plot boxplots with clusters — cluster_boxplots" />
-<meta property="og:description" content="This is a convenience wrapper function for facet_boxplot(). Combined with annotate_clusters(), it
+<meta property="og:description" content="This is a convenience wrapper function for facet_boxplot().
+Combined with annotate_clusters(), it
 doesn't require specifying axes in facet_boxplot()." />
 
 
@@ -136,7 +137,8 @@ doesn't require specifying axes in facet_boxplot()." />
     </div>
 
     <div class="ref-description">
-    <p>This is a convenience wrapper function for <code><a href='facet_boxplot.html'>facet_boxplot()</a></code>. Combined with <code><a href='annotate_clusters.html'>annotate_clusters()</a></code>, it
+    <p>This is a convenience wrapper function for <code><a href='facet_boxplot.html'>facet_boxplot()</a></code>.
+Combined with <code><a href='annotate_clusters.html'>annotate_clusters()</a></code>, it
 doesn't require specifying axes in <code><a href='facet_boxplot.html'>facet_boxplot()</a></code>.</p>
     </div>
 
@@ -160,7 +162,7 @@ doesn't require specifying axes in <code><a href='facet_boxplot.html'>facet_boxp
     <p>boxplots faceted by clusters</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_dmat.html'>compute_dmat</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"euclidean"</span>, <span class='st'>"z-scores"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_dmat.html'>compute_dmat</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"euclidean"</span>, <span class='cn'>TRUE</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_clusters.html'>compute_clusters</a></span><span class='op'>(</span><span class='va'>dmat</span>, <span class='st'>"complete"</span><span class='op'>)</span>
 <span class='va'>cluster_labels</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cut_clusters.html'>cut_clusters</a></span><span class='op'>(</span><span class='va'>clusters</span>, <span class='fl'>2</span><span class='op'>)</span>
 <span class='va'>annotated_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='annotate_clusters.html'>annotate_clusters</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>]</span>, <span class='va'>cluster_labels</span><span class='op'>)</span>

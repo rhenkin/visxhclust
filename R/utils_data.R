@@ -17,6 +17,7 @@ load_data <- function(filepath) {
   if (!is.data.frame(loaded_data)) {
     loaded_data <- as.data.frame(loaded_data)
   }
+  colnames(loaded_data) <- make.names(colnames(loaded_data))
   loaded_data
 }
 
@@ -26,53 +27,27 @@ validate_dataset <- function(x) {
   }
 }
 
-#' Apply a specified scaling method
-#'
+#' Conditional scaling
 #'
 #' @param x a numeric data frame or matrix
-#' @param method the scaling method. Currently supported are `"z-scores"` or `"robust"`
+#' @param flag scale or not? Default is TRUE
 #'
 #' @details Robust scaling is done via median absolute deviation
 #'
 #' @return a scaled data frame
-#' @export
 #'
+#' @noRd
 #' @examples
-#' scaled_data <- scale_data(iris[, c("Petal.Length", "Sepal.Length")], method = "z-scores")
+#' scaled_data <- scale_data(iris[, c("Petal.Length", "Sepal.Length")])
 #' head(scaled_data)
-scale_data <- function(x, method = "z-scores") {
+scale_data <- function(x, flag = TRUE) {
   validate_dataset(x)
-  if (tolower(method) == "z-scores") {
+  if (flag) {
     scale(x)
-  } else if (tolower(method) == "robust") {
-    scale_rzs(x)
   } else {
     x
   }
 }
-
-#' Scale by robust z-scores
-#' From: https://gist.github.com/esebesty/7022760
-#' @noRd
-#' @importFrom stats median mad
-scale_rzs <- function(df) {
-  med <- apply(df, 1, function(x) median(x, na.rm = TRUE))
-  mad_ <- apply(df, 1,function(x) mad(x, na.rm = TRUE))
-  mnd <- apply(df, 1, function(x) mad(x, center = mean(x),
-                                      constant = 1.253314, na.rm = TRUE))
-
-  div <- vapply(1:length(mad_),
-                function(i) if (mad_[i] == 0) mnd[i] else mad_[i],
-                double(1))
-
-  rzs_ <- sweep(df, 1, med, "-")
-  if (all(div == 0)) {
-    return (rzs_)
-  } else {
-    return(sweep(rzs_, 1, div, "/"))
-  }
-}
-
 #' Get list of correlated variables
 #'
 #' @param df data frame
@@ -140,7 +115,7 @@ scale_y_reordered <- function(..., sep = "___") {
 #' @param selected_cluster number of the selected cluster
 #' @param row_numbers row numbers within the selected cluster subset
 #'
-#' @return subset of dataframe with the selected rows
+#' @return subset of data frame with the selected rows
 #' @noRd
 remove_selected_rows <- function(df, clusters, selected_cluster, row_numbers) {
   to_remove <- df %>%
@@ -150,13 +125,13 @@ remove_selected_rows <- function(df, clusters, selected_cluster, row_numbers) {
   df[!(df$ID %in% to_remove$ID) ,]
 }
 
-#' Remove selected rows by cluster
+#' Keep selected rows by cluster
 #'
 #' @param df data frame with Cluster column
 #' @param selected_cluster number of the selected cluster
 #' @param row_numbers row numbers within the selected cluster subset
 #'
-#' @return subset of dataframe with the selected rows
+#' @return subset of data frame with the selected rows
 #' @noRd
 keep_selected_rows <- function(df, clusters, selected_cluster) {
   df %>%

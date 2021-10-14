@@ -81,27 +81,6 @@ server_table <- function(id, all_data, selected_data, cluster_labels, nclusters)
       new_data(updated_data)
 
     })
-    # new_data <- eventReactive(input$remove_subjects, {
-    #   isolate({
-    #     all_df <- all_data()
-    #   })
-    #   browser()
-    #   remove_selected_rows(all_df,
-    #                          cluster_labels(),
-    #                          input$clusters_selection,
-    #                          input$clusters_table_rows_selected)
-    #   # this updates all_data after removing rows
-    # })
-    #
-    # new_data <- eventReactive(input$keep_subjects, {
-    #   isolate({
-    #     all_df <- all_data()
-    #   })
-    #   keep_selected_rows(all_df,
-    #                      cluster_labels(),
-    #                      input$clusters_selection)
-    # })
-
 
     new_data
 

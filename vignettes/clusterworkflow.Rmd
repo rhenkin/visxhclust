@@ -19,7 +19,6 @@ This document shows how to use some functions included in the package to documen
 
 ```{r setup, message=FALSE, warning=FALSE}
 library(visxhclust)
-library(magrittr)
 library(dplyr)
 library(ggplot2)
 ```
@@ -47,10 +46,10 @@ subset_data <- numeric_data %>% select(Sepal.Length, Sepal.Width, Petal.Width)
 
 ### Clustering
 
-The clustering itself takes three steps: computing a distance matrix, computing the hierarchical clusters and cutting the tree to find the desired number of clusters. In the app, each of these steps has matching parameters: choice of scaling and distance/similarity metric, linkage method and the number of clusters. 
+The clustering itself takes three steps: computing a distance matrix, computing the hierarchical clusters and cutting the tree to find the desired number of clusters. In the app, each of these steps has matching parameters: apply scaling and distance/similarity metric, linkage method and the number of clusters. 
 
 ```{r params}
-scaling_method <- "z-scores"
+scaling <- TRUE
 distance_method <- "euclidean"
 linkage_method <- "ward.D2"
 # this assumes that, in the app, we identified 3 as the optimal number of clusters
@@ -60,7 +59,7 @@ k <- 3
 These parameters are used in three functions that the app also uses: `compute_dmat`, `compute_clusters` and `cut_clusters`. You can check the documentation for each function in the package website, or interactively through `?compute_dmat`.
 
 ```{r computation}
-dmat <- compute_dmat(subset_data, distance_method, scaling_method)
+dmat <- compute_dmat(subset_data, distance_method, TRUE)
 clusters <- compute_clusters(dmat, linkage_method)
 cluster_labels <- cut_clusters(clusters, k)
 ```
@@ -71,7 +70,7 @@ Now we can check both the heatmap+dendrogram and boxplots. A function that cover
 
 ```{r heatmap}
 species_annotation <- create_annotations(iris, "Species")
-cluster_heatmaps(scale_data(subset_data), 
+cluster_heatmaps(scale(subset_data), 
                  clusters,
                  k,
                  cluster_colors,

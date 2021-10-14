@@ -25,6 +25,8 @@ facet_boxplot(
 
 \item{boxplot_colors}{list of colors to use as fill for boxplots}
 
+\item{shape}{either "boxplot" or "violin"}
+
 \item{plot_points}{boolean variable to overlay jittered points or not. Default is \code{TRUE}}
 }
 \value{

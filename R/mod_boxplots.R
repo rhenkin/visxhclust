@@ -83,6 +83,8 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors,
                            input$boxplots_selection)
     }, height = function() max(200, ncol(boxplot_annotation()) * 150 + 200) )
 
+
+    # Create table showing summary for unscaled data across clusters
     output$summary_table <- renderText({
       validate(need(
         length(input$boxplots_selection) > 0,
@@ -92,9 +94,13 @@ server_boxplots <- function(id, selected_data, cluster_labels, cluster_colors,
                                    cluster_labels(),
                                    FALSE,
                                    input$boxplots_selection)
-      iqr_fn <- function(x) { qt <- quantile(x, c(.25, .5, .75))
-      paste0(round(qt[2], 2), " (", round(qt[1], 2), "-", round(qt[3],2), ")" )}
-      agg_data <- aggregate(df_wide %>% dplyr::select(-Cluster),
+      # Compute IQR and get median, lower and upper
+      iqr_fn <- function(x) {
+        qt <- stats::quantile(x, c(.25, .5, .75))
+        paste0(round(qt[2], 2), " (", round(qt[1], 2), "-", round(qt[3],2), ")")
+      }
+      # Compute across all variables grouped by clusters
+      agg_data <- stats::aggregate(df_wide %>% dplyr::select(-.data$Cluster),
                             by = list(df_wide$Cluster),
                             iqr_fn)
       colnames(agg_data)[1] <- "Cluster"

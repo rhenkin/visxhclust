@@ -12,10 +12,10 @@ ui_heatmap <- function() {
                     label = "Cluster features on heatmap?",
                     value = TRUE),
       checkboxInput(ns("hide_unselected"),
-                    label = "Show unselected features?",
+                    label = "Display unselected features?",
                     value = TRUE),
       checkboxInput(ns("show_col_names"),
-                    label = "Show item IDs as columns?",
+                    label = "Display record IDs labels?",
                     value = FALSE)
     )
   )

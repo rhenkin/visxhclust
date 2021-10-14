@@ -29,7 +29,7 @@ ui_overview <- function() {
   )
 }
 server_overview <- function(id, selected_data, selected_numeric, dropped_variables,
-                         scaling_method) {
+                         apply_scaling) {
   moduleServer(id, function(input, output, session) {
     # Correlation heatmap of the selected numeric variables
     output$corr_heatmap <- renderCachedPlot({
@@ -58,7 +58,7 @@ server_overview <- function(id, selected_data, selected_numeric, dropped_variabl
                     "Variable does not exist"))
       df <- df[, input$overview_var]
       if (input$overview_scale == TRUE) {
-        df <- as.data.frame(scale_data(df, scaling_method()))
+        df <- as.data.frame(scale_data(df, apply_scaling()))
       }
       ggplot(df, aes_string(input$overview_var)) +
         geom_histogram(bins = 15)

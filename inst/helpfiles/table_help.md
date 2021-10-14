@@ -1,3 +1,3 @@
-### Removing rows
+### Filtering objects
 
-This tab enables removal of rows from the current dataset, e.g. to remove outliers. To do that, select a cluster to inspect and select the rows you want to remove, then click on the button. When you do that, the clusters will be recomputed with the new dataset. You can also click on "Keep only this cluster" to remove all data except the currently selected cluster.  **Note: this operation cannot be undone. Reload the file to begin again.**
+In this tab you can select one cluster to inspect its objects in more detail. You can use Shift or Control/Cmd click to select multiple rows to remove. Note that when you do that, the clusters will be automatically recomputed with the updated dataset. You can also click on "Keep only this cluster" to remove all other objects in dataset that were assigned to the other clusters. **Note: none of these operations can be undone. Reload the file to start again.**

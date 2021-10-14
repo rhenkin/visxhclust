@@ -33,10 +33,10 @@ a \link[ComplexHeatmap:Heatmap]{ComplexHeatmap::Heatmap}
 Plot heatmap with cluster results and dendrogram
 }
 \examples{
-dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 clusters <- compute_clusters(dmat, "complete")
 species_annotation <- create_annotations(iris, "Species")
-cluster_heatmaps(scale_data(iris[, c("Petal.Length", "Sepal.Length")]),
+cluster_heatmaps(scale(iris[c("Petal.Length", "Sepal.Length")]),
                  clusters,
                  3,
                  visxhclust::cluster_colors,
