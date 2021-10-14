@@ -58,7 +58,8 @@ server_significance <- function(id, all_data, cluster_labels, cluster_colors,
       }
       else {
         all_df$Cluster <- clusters
-        t_test_formula <- stats::as.formula(paste(input$signif_var, " ~ Cluster"))
+        t_test_formula <-
+          stats::as.formula(paste(input$signif_var, " ~ Cluster"))
         stats::t.test(t_test_formula, data = all_df)
       }
     })

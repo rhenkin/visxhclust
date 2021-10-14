@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute clusters hierarchically from distance matrix — compute_clusters • visxhclust</title>
+<title>Simulated normal data with annotations — normal_annotated • visxhclust</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Compute clusters hierarchically from distance matrix — compute_clusters" />
-<meta property="og:description" content="Compute clusters hierarchically from distance matrix" />
+<meta property="og:title" content="Simulated normal data with annotations — normal_annotated" />
+<meta property="og:description" content="Simulated normal data with annotations" />
 
 
 
@@ -129,38 +129,39 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute clusters hierarchically from distance matrix</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rhenkin/visxhclust/blob/master/R/utils_clustering.R'><code>R/utils_clustering.R</code></a></small>
-    <div class="hidden name"><code>compute_clusters.Rd</code></div>
+    <h1>Simulated normal data with annotations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rhenkin/visxhclust/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>normal_annotated.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute clusters hierarchically from distance matrix</p>
+    <p>Simulated normal data with annotations</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compute_clusters</span><span class='op'>(</span><span class='va'>dmat</span>, <span class='va'>linkage_method</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>normal_annotated</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>dmat</th>
-      <td><p>a distance matrix</p></td>
-    </tr>
-    <tr>
-      <th>linkage_method</th>
-      <td><p>a linkage method supported by <code><a href='https://rdrr.io/pkg/fastcluster/man/hclust.html'>fastcluster::hclust()</a></code></p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>clusters computed by <code><a href='https://rdrr.io/pkg/fastcluster/man/hclust.html'>fastcluster::hclust()</a></code></p>
+    <p>A data frame with 200 rows and 10 variables:</p><dl>
+<dt>a</dt><dd><p>variable a</p></dd>
+<dt>b</dt><dd><p>variable b</p></dd>
+<dt>c</dt><dd><p>variable c</p></dd>
+<dt>d</dt><dd><p>variable d</p></dd>
+<dt>e</dt><dd><p>variable e</p></dd>
+<dt>f</dt><dd><p>variable f</p></dd>
+<dt>g</dt><dd><p>variable g</p></dd>
+<dt>h</dt><dd><p>variable h</p></dd>
+<dt>i</dt><dd><p>variable i</p></dd>
+<dt>j</dt><dd><p>variable j</p></dd>
+<dt>annot</dt><dd><p>annotation column</p></dd>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_dmat.html'>compute_dmat</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"euclidean"</span>, <span class='cn'>TRUE</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>compute_clusters</span><span class='op'>(</span><span class='va'>dmat</span>, <span class='st'>"complete"</span><span class='op'>)</span>
-</div></pre>
+</dl>
+
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>package author</p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

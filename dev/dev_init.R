@@ -41,7 +41,7 @@
 #usethis::use_vignette("visxhclust")
 
 #usethis::use_testthat()
-usethis::use_github_actions()
+#usethis::use_github_actions()
 
 devtools::document()
 pkgdown::build_site()

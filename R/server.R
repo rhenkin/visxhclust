@@ -75,7 +75,8 @@ app_server <- function(input, output, session) {
 
   # Update UI ----
   selected_numeric <- reactive({
-    validate(need(!is.null(input$selected_numeric), "No features have been selected"))
+    validate(need(!is.null(input$selected_numeric),
+                  "No features have been selected"))
     input$selected_numeric
   })
 
@@ -118,8 +119,10 @@ app_server <- function(input, output, session) {
   })
 
   scaled_data <- reactive({
-    scaled_mat <- scale_data(selected_data(), input$scaling)
-    isolate({ rownames(scaled_mat) <- all_data()$ID })
+    if (input$distance_method != "Binary") {
+      scaled_mat <- scale_data(selected_data(), input$scaling)
+      isolate({ rownames(scaled_mat) <- all_data()$ID })
+    } else scaled_mat <- selected_data()
     scaled_mat
   })
 

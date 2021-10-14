@@ -49,7 +49,8 @@ server_gapstat <- function(id, selected_data, clusters) {
         df <- selected_data()
         clustered_data <- clusters()
       })
-      validate(need(input$gap_B > 0, "Bootstrap samples must be greater than 0."))
+      validate(need(input$gap_B > 0,
+                    "Bootstrap samples must be greater than 0."))
       compute_gapstat(df, clustered_data, input$gap_B)
     })
 

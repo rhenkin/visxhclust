@@ -1,8 +1,8 @@
 ---
-title: "Visual introduction to the visxhclust Shiny app"
+title: "visxhclust Shiny app tutorial"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Visual introduction to the visxhclust Shiny app}
+  %\VignetteIndexEntry{visxhclust Shiny app tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This is a visual introduction to the visxhclust Shiny app -- note that almost every tab in the application has a corresponding help icon with more information and tips. To open the Shiny app you just have to run:
+This is a simple visual tutorial on the basic loop of the visxhclust Shiny app -- note that almost every tab in the application has a corresponding help icon with more information and tips. To open the Shiny app you need to run:
 
 ```{r run, eval=FALSE}
 library(visxhclust)
@@ -23,20 +23,21 @@ run_app()
 
 ## Steps for simple iteration
 
-### Step 1: Loading data
+### Step 1: Loading data and setting parameters
 
-![Step 1](vh_loading.gif)
+![Step 1](load_data.gif)
+### Step 2: View clustering results
 
-### Step 2: Setting parameters
+![Step 2](view_results.gif)
 
-### Step 3: View clustering results
+### Step 3: Evaluate
 
-### Step 4: Compare clusters in detail
+![Step 3](evaluate.gif)
 
-### Step 5: Evaluate number of clusters
+### Step 4: Change parameters again
 
-### Step 6: Change parameters again
+![Step 4](iterate.gif)
 
-### Step 7: Export results
+### Step 5: Review results
 
-
+![Step 5](review_results.gif)

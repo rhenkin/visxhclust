@@ -20,7 +20,8 @@ facet_boxplot <- function(df, x, y, facet_var = NULL,
   shape <- match.arg(shape)
   if (!x %in% colnames(df)) stop("x variable not found in data frame")
   if (!y %in% colnames(df)) stop("y variable not found in data frame")
-  if (!is.null(facet_var) && (!facet_var %in% colnames(df))) stop("facet_var variable not found in data frame")
+  if (!is.null(facet_var) && (!facet_var %in% colnames(df)))
+    stop("facet_var variable not found in data frame")
   p <- ggplot(df, aes(x = .data[[x]], fill = .data[[x]])) +
     theme_bw() +
     theme(panel.grid.major.x = element_blank(),
@@ -60,7 +61,8 @@ facet_boxplot <- function(df, x, y, facet_var = NULL,
 
 #' Plot boxplots with clusters
 #'
-#' This is a convenience wrapper function for `facet_boxplot()`. Combined with `annotate_clusters()`, it
+#' This is a convenience wrapper function for `facet_boxplot()`.
+#'  Combined with `annotate_clusters()`, it
 #' doesn't require specifying axes in `facet_boxplot()`.
 #'
 #' @param annotated_data data frame returned by `annotate_clusters()`
@@ -111,7 +113,8 @@ line_plot <- function(df, x, y, xintercept = NULL) {
 #' @param cluster_colors a list of colors to match the cluster labels
 #'
 #' @noRd
-pca_scatterplot <- function(pcres, cluster_labels, cluster_colors, xdim = "PC1", ydim ="PC2") {
+pca_scatterplot <-
+  function(pcres, cluster_labels, cluster_colors, xdim = "PC1", ydim ="PC2") {
   pc_df <- as.data.frame(pcres$x)
   var_explained <- round(pcres$sdev / sum(pcres$sdev) * 100, 2)
   pc_labels <- stats::setNames(paste0(colnames(pc_df),
