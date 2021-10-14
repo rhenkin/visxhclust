@@ -15,8 +15,7 @@ test_that("compute dmat tests", {
   # Invalid metric shouldn't work
   expect_error(compute_dmat(iris_numeric, "gibberish"))
   # Test scaling (any string works)
-  expect_error(compute_dmat(iris_numeric, scaling_method = "z-score"), NA)
-  expect_error(compute_dmat(iris_numeric, scaling_method = "blah"), NA)
+  expect_error(compute_dmat(iris_numeric, apply_scaling = TRUE), NA)
 })
 
 test_that("compute clusters tests", {
@@ -46,11 +45,15 @@ test_that("compute metric tests", {
   # Invalid metric name
   expect_error(compute_metric(scale_data(iris_numeric), clusters, "runn"))
   # Invalid max_k
-  expect_error(compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 0))
-  expect_error(compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 1))
-  expect_error(compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 2))
+  expect_error(
+    compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 0))
+  expect_error(
+    compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 1))
+  expect_error(
+    compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 2))
   # This should work
-  expect_error(compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 3), NA)
+  expect_error(
+    compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 3), NA)
   # This shouldn't work - invalid input
   expect_error(compute_metric(dmat, clusters, "Dunn", max_k = 3))
 })
@@ -85,11 +88,15 @@ test_that("cluster annotation tests", {
   expect_error(annotate_clusters(scaled_df, cluster_labels))
   expect_error(annotate_clusters(iris_numeric, clusters))
   # Valid clusters
-  expect_error(annotate_clusters(iris_numeric, cluster_labels, selected_clusters = c(1,2)), NA)
-  expect_error(annotate_clusters(iris_numeric, cluster_labels, selected_clusters = 2), NA)
-  expect_error(annotate_clusters(iris_numeric, cluster_labels, FALSE, selected_clusters = 2), NA)
+  expect_error(annotate_clusters(iris_numeric, cluster_labels,
+                                 selected_clusters = c(1,2)), NA)
+  expect_error(annotate_clusters(iris_numeric, cluster_labels,
+                                 selected_clusters = 2), NA)
+  expect_error(annotate_clusters(iris_numeric, cluster_labels, FALSE,
+                                 selected_clusters = 2), NA)
   # Invalid clusters
-  expect_error(annotate_clusters(iris_numeric, cluster_labels, selected_clusters = 3))
+  expect_error(annotate_clusters(iris_numeric, cluster_labels,
+                                 selected_clusters = 3))
 })
 
 

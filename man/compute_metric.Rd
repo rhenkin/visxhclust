@@ -22,8 +22,8 @@ a data frame with columns \code{k} and \code{score}
 Metric will be computed from 2 to max_k clusters. Note that the row number in results will be different from k.
 }
 \examples{
-data_to_cluster <- iris[, c("Petal.Length", "Sepal.Length")]
-dmat <- compute_dmat(data_to_cluster, "euclidean", "z-scores")
+data_to_cluster <- iris[c("Petal.Length", "Sepal.Length")]
+dmat <- compute_dmat(data_to_cluster, "euclidean", TRUE)
 clusters <- compute_clusters(dmat, "complete")
-compute_metric(scale_data(data_to_cluster), clusters, "Dunn")
+compute_metric(scale(data_to_cluster), clusters, "Dunn")
 }

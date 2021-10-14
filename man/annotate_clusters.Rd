@@ -25,7 +25,7 @@ Annotate data frame with clusters
 Long data frame will have columns: \code{Cluster}, \code{Measurement} and \code{Value}.
 }
 \examples{
-dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 res <- compute_clusters(dmat, "complete")
 cluster_labels <- cut_clusters(res, 2)
 annotated_data <- annotate_clusters(iris[, c("Petal.Length", "Sepal.Length")], cluster_labels)

@@ -12,6 +12,7 @@ URL: https://github.com/rhenkin/visxhclust
 BugReports: https://github.com/rhenkin/visxhclust/issues
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 3.5.0)
 biocViews:
 Imports: 
     shiny,
@@ -28,16 +29,16 @@ Imports:
     clusterCrit,
     dunn.test,
     RColorBrewer,
-    ggalluvial,
     dendextend,
     ComplexHeatmap,
     circlize,
-    patchwork
+    patchwork,
+    knitr,
+    kableExtra
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
     testthat (>= 3.0.0),
-    knitr,
     rmarkdown
 VignetteBuilder: knitr
 Config/testthat/edition: 3

@@ -8,7 +8,6 @@
 # usethis::use_pkgdown()
 #
 # usethis::use_package("shiny")
-# usethis::use_package("plotly")
 # usethis::use_package("bsplus")
 # usethis::use_package("shinycssloaders")
 # usethis::use_package("DT")
@@ -23,16 +22,15 @@
 # usethis::use_package("clusterCrit")
 #
 # usethis::use_package("RColorBrewer")
-# usethis::use_package("ggalluvial")
 # usethis::use_package("ggplot2")
 #
 # usethis::use_package("dunn.test")
 #
-# usethis::use_package("shinythemes")
 # usethis::use_package("shinyhelper")
 
 # usethis::use_package("dendextend")
 # usethis::use_package("circlize")
+# usethis::use_package("patchwork")
 # Bioconductor packages:
 # usethis::use_package("ComplexHeatmap")
 
@@ -43,6 +41,7 @@
 #usethis::use_vignette("visxhclust")
 
 #usethis::use_testthat()
+usethis::use_github_actions()
 
 devtools::document()
 pkgdown::build_site()

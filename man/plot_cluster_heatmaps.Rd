@@ -11,7 +11,9 @@ plot_cluster_heatmaps(
   clusters_set,
   annotation = NULL,
   scaled = FALSE,
-  distance_method = NULL
+  distance_method = NULL,
+  cluster_features = TRUE,
+  show_col_names = TRUE
 )
 }
 \arguments{
@@ -28,6 +30,10 @@ plot_cluster_heatmaps(
 \item{scaled}{(optional) boolean to modify colour scale if data has already been scaled}
 
 \item{distance_method}{(optional) if "Binary", use discrete colors for heatmap}
+
+\item{cluster_features}{(optional) If FALSE, row order does not change}
+
+\item{show_col_names}{(optional) If FALSE, does not show column names at base of heatmap}
 }
 \value{
 two concatenated heatmaps drawn with ComplexHeatmap::draw

@@ -22,9 +22,9 @@ a data frame with the Tab component of \code{\link[cluster:clusGap]{cluster::clu
 Compute Gap statistic for clustered data
 }
 \examples{
-data_to_cluster <- iris[, c("Petal.Length", "Sepal.Length")]
-dmat <- compute_dmat(data_to_cluster, "euclidean", "z-scores")
+data_to_cluster <- iris[c("Petal.Length", "Sepal.Length")]
+dmat <- compute_dmat(data_to_cluster, "euclidean", TRUE)
 clusters <- compute_clusters(dmat, "complete")
-gap_results <- compute_gapstat(scale_data(data_to_cluster), clusters)
+gap_results <- compute_gapstat(scale(data_to_cluster), clusters)
 head(gap_results)
 }

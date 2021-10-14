@@ -7,11 +7,12 @@ ui_sidebar <- function() {
       accept = c(".rds", ".csv", ".tsv", ".txt")
     ) %>%
       shinyhelper::helper(type = "markdown", content = "sidebar_help"),
-    radioButtons(
-      "scaling",
-      "Scaling:",
-      choices = c("Z-scores", "Robust", "None")
-    ),
+    checkboxInput("scaling", "Scale data?", value = TRUE),
+    #radioButtons(
+    #  "scaling",
+    #  "Scaling:",
+    #  choices = c("Z-scores", "Robust", "None")
+    #),
     div(
       id = "sidebar",
       selectInput(

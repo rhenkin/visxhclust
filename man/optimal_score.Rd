@@ -19,9 +19,9 @@ This function is meant to be used with compute_metric. For Gap statistic,
 use \code{\link[cluster:clusGap]{cluster::maxSE()}}.
 }
 \examples{
-data_to_cluster <- iris[, c("Petal.Length", "Sepal.Length")]
-dmat <- compute_dmat(data_to_cluster, "euclidean", "z-scores")
+data_to_cluster <- iris[c("Petal.Length", "Sepal.Length")]
+dmat <- compute_dmat(data_to_cluster, "euclidean", TRUE)
 clusters <- compute_clusters(dmat, "complete")
-res <- compute_metric(scale_data(data_to_cluster), clusters, "Dunn")
+res <- compute_metric(scale(data_to_cluster), clusters, "Dunn")
 optimal_score(res$score, method = "firstmax")
 }

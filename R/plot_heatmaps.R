@@ -57,10 +57,10 @@ cluster_colors <-
 #' @export
 #'
 #' @examples
-#' dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+#' dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 #' clusters <- compute_clusters(dmat, "complete")
 #' species_annotation <- create_annotations(iris, "Species")
-#' cluster_heatmaps(scale_data(iris[, c("Petal.Length", "Sepal.Length")]),
+#' cluster_heatmaps(scale(iris[c("Petal.Length", "Sepal.Length")]),
 #'                  clusters,
 #'                  3,
 #'                  visxhclust::cluster_colors,
@@ -126,7 +126,8 @@ plot_cluster_heatmaps <-
                         (max(top_matrix)+min(top_matrix))/2,
                         max(top_matrix))
     }
-    col_fun <- colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(256)
+    col_fun <-
+      grDevices::colorRampPalette(rev(RColorBrewer::brewer.pal(11, "RdBu")))(256)
 
   } else {
     if (!is.null(bottom_matrix)) {
@@ -136,21 +137,20 @@ plot_cluster_heatmaps <-
     } else {
       scale_end <- max(abs(min(top_matrix)), max(top_matrix))
     }
-    #scale_values <- pretty(c(-scale_end, 0, scale_end), 11)
-    scale_values <- seq(as.integer(-scale_end), as.integer(scale_end), length.out = 11)
-    col_fun <- circlize::colorRamp2(scale_values,
-                                    rev(RColorBrewer::brewer.pal(length(scale_values), "RdBu")))
-  }
 
+    scale_values <-
+      seq(as.integer(-scale_end), as.integer(scale_end), length.out = 11)
+    col_fun <-
+      circlize::colorRamp2(
+        scale_values,
+        rev(RColorBrewer::brewer.pal(length(scale_values), "RdBu"))
+    )
+  }
   if (!is.null(distance_method))
-  if (distance_method == "Binary") {
-    col_fun <- structure(c("#97c354", "#935fd1"), names = 0:1)
-  }
-  col_split <- if (length(clusters_set) == 1) {
-    NULL
-  } else {
-    length(clusters_set)
-  }
+    if (distance_method == "Binary") {
+      col_fun <- structure(c("#97c354", "#935fd1"), names = 0:1)
+    }
+  col_split <- ifelse(length(clusters_set) == 1, NULL, length(clusters_set))
   htmp <- ComplexHeatmap::Heatmap(top_matrix,
             name="Selected variables",
             col = col_fun,
@@ -167,7 +167,8 @@ plot_cluster_heatmaps <-
             top_annotation = if (is.null(annotation)) NULL else annotation
   )
   if (!is.null(bottom_matrix)) {
-    htmp2 <- ComplexHeatmap::Heatmap(bottom_matrix, name = "Not used in \n clustering",
+    htmp2 <- ComplexHeatmap::Heatmap(bottom_matrix,
+                     name = "Not used in \n clustering",
                      col = col_fun,
                      cluster_columns = dendrograms,
                      column_split = col_split,
@@ -180,11 +181,9 @@ plot_cluster_heatmaps <-
                      show_heatmap_legend = FALSE)
 
     ComplexHeatmap::draw(htmp %v% htmp2,
-                     #    padding = grid::unit(c(0,0,0,0),"mm"),
                        annotation_legend_side = "bottom")
   } else {
     ComplexHeatmap::draw(htmp,
-                        # padding = grid::unit(c(2,0,0,0),"mm"),
                          annotation_legend_side = "bottom")
   }
 

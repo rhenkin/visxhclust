@@ -18,6 +18,6 @@ clusters computed by \code{\link[fastcluster:hclust]{fastcluster::hclust()}}
 Compute clusters hierarchically from distance matrix
 }
 \examples{
-dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 res <- compute_clusters(dmat, "complete")
 }

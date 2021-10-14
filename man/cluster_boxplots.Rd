@@ -19,7 +19,7 @@ This is a convenience wrapper function for \code{facet_boxplot()}. Combined with
 doesn't require specifying axes in \code{facet_boxplot()}.
 }
 \examples{
-dmat <- compute_dmat(iris, "euclidean", "z-scores", c("Petal.Length", "Sepal.Length"))
+dmat <- compute_dmat(iris, "euclidean", TRUE, c("Petal.Length", "Sepal.Length"))
 clusters <- compute_clusters(dmat, "complete")
 cluster_labels <- cut_clusters(clusters, 2)
 annotated_data <- annotate_clusters(iris[, c("Petal.Length", "Sepal.Length")], cluster_labels)

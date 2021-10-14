@@ -4,12 +4,12 @@ This sidebar controls the main clustering workflow:
 
 1. Load an RDS, CSV, TSV or tab-delimited text file
 1. Select a scaling method, distance metric and linkage method
-1. Select the number of desired clusters
+1. Select the desired number of clusters
 1. Select the variables/features to use in clustering
 
-Most tabs will be updated without any additional inputs. The sidebar contains two other controls to help with the analysis:
+Most tabs will then be updated without any additional inputs. The sidebar contains two other controls to help with the analysis:
 
-*Heatmap annotations:* any categorical variable loaded with the data will be available for selection, as well as the numeric variables that contain missing values.
+*Heatmap features:* variables selected from this list will be added to the top of the heatmaps annotations. This list will automatically include any non-numeric variable loaded with the data (e.g. text) or numeric variables that contain missing values, which cannot be used for clustering.
 
 *Correlation-based feature selection:* a one-sided t-test based on the chosen threshold will be use to automatically remove highly correlated variables. You can inspect the relationship between the variables that were deselected in the *Data overview* tab, under *Highly correlated variables*.
 

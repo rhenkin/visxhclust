@@ -14,15 +14,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-This is a visual introduction to the visxhclust Shiny app -- note that almost every tab in the application has a corresponding help icon with more information and tips. If you're here within RStudio you might have loaded the package. If not, you can start from:
-
-```{r setup, eval=FALSE}
-library(visxhclust)
-```
-
-To open the Shiny app you just have to:
+This is a visual introduction to the visxhclust Shiny app -- note that almost every tab in the application has a corresponding help icon with more information and tips. To open the Shiny app you just have to run:
 
 ```{r run, eval=FALSE}
+library(visxhclust)
 run_app()
 ```
 
@@ -32,6 +27,16 @@ run_app()
 
 ![Step 1](vh_loading.gif)
 
-### Step 2: View heatmap
+### Step 2: Setting parameters
+
+### Step 3: View clustering results
+
+### Step 4: Compare clusters in detail
+
+### Step 5: Evaluate number of clusters
+
+### Step 6: Change parameters again
+
+### Step 7: Export results
 
 
