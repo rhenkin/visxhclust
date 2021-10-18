@@ -276,6 +276,8 @@ dmat_heatmap <- function(df) {
 #'
 #' @param df numeric data frame to compute correlations
 #'
+#' @return a [ComplexHeatmap::Heatmap]
+#'
 #' @export
 correlation_heatmap <- function(df) {
   corr_df <- stats::cor(df, method = "pearson")

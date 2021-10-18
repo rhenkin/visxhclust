@@ -8,9 +8,11 @@ NULL
 
 #' Runs the Shiny app
 #'
+#' @return No return value, runs the app by passing it to print
 #' @export
 #' @examples
-#' \dontrun{
+#' ## Only run this example in interactive R sessions
+#' if (interactive()) {
 #' library(visxhclust)
 #' run_app()
 #' }

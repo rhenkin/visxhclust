@@ -6,11 +6,15 @@
 \usage{
 run_app()
 }
+\value{
+No return value, runs the app by passing it to print
+}
 \description{
 Runs the Shiny app
 }
 \examples{
-\dontrun{
+## Only run this example in interactive R sessions
+if (interactive()) {
 library(visxhclust)
 run_app()
 }

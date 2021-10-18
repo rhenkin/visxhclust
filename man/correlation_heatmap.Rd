@@ -9,6 +9,9 @@ correlation_heatmap(df)
 \arguments{
 \item{df}{numeric data frame to compute correlations}
 }
+\value{
+a \link[ComplexHeatmap:Heatmap]{ComplexHeatmap::Heatmap}
+}
 \description{
 Computes pairwise Pearson correlation; if there are fewer than 15 columns, prints
 the value of the correlation coefficient inside each tile.

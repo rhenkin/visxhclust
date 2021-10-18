@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Visual introduction to the visxhclust Shiny app • visxhclust</title>
+<title>visxhclust Shiny app tutorial • visxhclust</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Visual introduction to the visxhclust Shiny app">
+<script src="../pkgdown.js"></script><meta property="og:title" content="visxhclust Shiny app tutorial">
 <meta property="og:description" content="visxhclust">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -88,7 +88,7 @@
       </header><script src="visxhclust_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Visual introduction to the visxhclust Shiny app</h1>
+      <h1 data-toc-skip>visxhclust Shiny app tutorial</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/rhenkin/visxhclust/blob/master/vignettes/visxhclust.Rmd"><code>vignettes/visxhclust.Rmd</code></a></small>
@@ -98,43 +98,41 @@
 
     
     
-<p>This is a visual introduction to the visxhclust Shiny app – note that almost every tab in the application has a corresponding help icon with more information and tips. To open the Shiny app you just have to run:</p>
+<p>This is a simple visual tutorial on the basic loop of the visxhclust Shiny app – note that almost every tab in the application has a corresponding help icon with more information and tips. To open the Shiny app you need to run:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rhenkin/visxhclust">visxhclust</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div id="steps-for-simple-iteration" class="section level2">
 <h2 class="hasAnchor">
 <a href="#steps-for-simple-iteration" class="anchor"></a>Steps for simple iteration</h2>
-<div id="step-1-loading-data" class="section level3">
+<div id="step-1-loading-data-and-setting-parameters" class="section level3">
 <h3 class="hasAnchor">
-<a href="#step-1-loading-data" class="anchor"></a>Step 1: Loading data</h3>
+<a href="#step-1-loading-data-and-setting-parameters" class="anchor"></a>Step 1: Loading data and setting parameters</h3>
+<p><img src="load_data.gif" alt="Step 1"> ### Step 2: View clustering results</p>
 <div class="figure">
-<img src="vh_loading.gif" alt=""><p class="caption">Step 1</p>
+<img src="view_results.gif" alt=""><p class="caption">Step 2</p>
 </div>
 </div>
-<div id="step-2-setting-parameters" class="section level3">
+<div id="step-3-evaluate" class="section level3">
 <h3 class="hasAnchor">
-<a href="#step-2-setting-parameters" class="anchor"></a>Step 2: Setting parameters</h3>
+<a href="#step-3-evaluate" class="anchor"></a>Step 3: Evaluate</h3>
+<div class="figure">
+<img src="evaluate.gif" alt=""><p class="caption">Step 3</p>
 </div>
-<div id="step-3-view-clustering-results" class="section level3">
-<h3 class="hasAnchor">
-<a href="#step-3-view-clustering-results" class="anchor"></a>Step 3: View clustering results</h3>
 </div>
-<div id="step-4-compare-clusters-in-detail" class="section level3">
+<div id="step-4-change-parameters-again" class="section level3">
 <h3 class="hasAnchor">
-<a href="#step-4-compare-clusters-in-detail" class="anchor"></a>Step 4: Compare clusters in detail</h3>
+<a href="#step-4-change-parameters-again" class="anchor"></a>Step 4: Change parameters again</h3>
+<div class="figure">
+<img src="iterate.gif" alt=""><p class="caption">Step 4</p>
 </div>
-<div id="step-5-evaluate-number-of-clusters" class="section level3">
-<h3 class="hasAnchor">
-<a href="#step-5-evaluate-number-of-clusters" class="anchor"></a>Step 5: Evaluate number of clusters</h3>
 </div>
-<div id="step-6-change-parameters-again" class="section level3">
+<div id="step-5-review-results" class="section level3">
 <h3 class="hasAnchor">
-<a href="#step-6-change-parameters-again" class="anchor"></a>Step 6: Change parameters again</h3>
+<a href="#step-5-review-results" class="anchor"></a>Step 5: Review results</h3>
+<div class="figure">
+<img src="review_results.gif" alt=""><p class="caption">Step 5</p>
 </div>
-<div id="step-7-export-results" class="section level3">
-<h3 class="hasAnchor">
-<a href="#step-7-export-results" class="anchor"></a>Step 7: Export results</h3>
 </div>
 </div>
   </div>
