@@ -26,6 +26,7 @@ run_app()
 ### Step 1: Loading data and setting parameters
 
 ![Step 1](load_data.gif)
+
 ### Step 2: View clustering results
 
 ![Step 2](view_results.gif)
