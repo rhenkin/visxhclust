@@ -1,9 +1,9 @@
-pandoc: 2.11.4
+pandoc: 2.16.2
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   clusterevaluation: clusterevaluation.html
   clusterworkflow: clusterworkflow.html
   visxhclust: visxhclust.html
-last_built: 2021-10-18T14:54Z
+last_built: 2022-01-11T13:02Z
 

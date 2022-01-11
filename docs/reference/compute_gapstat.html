@@ -166,18 +166,19 @@
     <p>a data frame with the Tab component of <code><a href='https://rdrr.io/pkg/cluster/man/clusGap.html'>cluster::clusGap()</a></code> results</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>data_to_cluster</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>]</span>
-<span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_dmat.html'>compute_dmat</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span>, <span class='st'>"euclidean"</span>, <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_clusters.html'>compute_clusters</a></span><span class='op'>(</span><span class='va'>dmat</span>, <span class='st'>"complete"</span><span class='op'>)</span>
-<span class='va'>gap_results</span> <span class='op'>&lt;-</span> <span class='fu'>compute_gapstat</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span><span class='op'>)</span>, <span class='va'>clusters</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>gap_results</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;       logW   E.logW       gap     SE.sim k
-#&gt; 1 4.134552 4.302067 0.1675156 0.02897045 1
-#&gt; 2 3.671650 4.294508 0.6228583 0.02999569 2
-#&gt; 3 3.177399 4.287220 1.1098216 0.02967695 3
-#&gt; 4 2.983790 4.279840 1.2960498 0.02939649 4
-#&gt; 5 2.865874 4.272817 1.4069434 0.02915626 5
-#&gt; 6 2.758752 4.267031 1.5082783 0.02931610 6</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>data_to_cluster</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_dmat.html'>compute_dmat</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span>, <span class='st'>"euclidean"</span>, <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_clusters.html'>compute_clusters</a></span><span class='op'>(</span><span class='va'>dmat</span>, <span class='st'>"complete"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>gap_results</span> <span class='op'>&lt;-</span> <span class='fu'>compute_gapstat</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span><span class='op'>)</span>, <span class='va'>clusters</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>gap_results</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       logW   E.logW       gap     SE.sim k</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 4.134552 4.303088 0.1685369 0.03090524 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 3.671650 4.295339 0.6236895 0.03080093 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 3.177399 4.288503 1.1111050 0.03168173 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 2.983790 4.281424 1.2976336 0.03163854 4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 2.865874 4.274987 1.4091131 0.03206016 5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 2.758752 4.269699 1.5109470 0.03235899 6</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

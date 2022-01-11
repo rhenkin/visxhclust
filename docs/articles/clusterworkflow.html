@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="clusterworkflow_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="clusterworkflow_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Documenting a workflow</h1>
@@ -108,15 +108,15 @@
 <a href="#preparing" class="anchor"></a>Preparing</h3>
 <p>First we split the numeric and categorical variables and scale the data.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">numeric_data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span>
-<span class="va">annotation_data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">numeric_data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span>
+<span class="va">annotation_data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Let’s check the dataset for highly correlated variables that will likely skew the clusters with redundant information:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/correlation_heatmap.html">correlation_heatmap</a></span><span class="op">(</span><span class="va">numeric_data</span><span class="op">)</span></code></pre></div>
 <p><img src="clusterworkflow_files/figure-html/correlation-1.png" width="700"></p>
 <p>As seen above, petal length and width are highly correlated, so we keep only one of them:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">subset_data</span> <span class="op">&lt;-</span> <span class="va">numeric_data</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, <span class="va">Petal.Width</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">subset_data</span> <span class="op">&lt;-</span> <span class="va">numeric_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, <span class="va">Petal.Width</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="clustering" class="section level3">
 <h3 class="hasAnchor">

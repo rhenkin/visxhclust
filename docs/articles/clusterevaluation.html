@@ -85,7 +85,7 @@
 
       
 
-      </header><script src="clusterevaluation_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="clusterevaluation_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Documenting evaluation</h1>
@@ -106,7 +106,7 @@
 <h3 class="hasAnchor">
 <a href="#preprocessing-and-clustering" class="anchor"></a>Preprocessing and clustering</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">numeric_data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, <span class="va">Petal.Width</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">numeric_data</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, <span class="va">Petal.Width</span><span class="op">)</span>
 <span class="va">dmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_dmat.html">compute_dmat</a></span><span class="op">(</span><span class="va">numeric_data</span>, <span class="st">"euclidean"</span>, <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_clusters.html">compute_clusters</a></span><span class="op">(</span><span class="va">dmat</span>, <span class="st">"complete"</span><span class="op">)</span></code></pre></div>
 </div>

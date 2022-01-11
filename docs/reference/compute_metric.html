@@ -166,24 +166,25 @@
     <p>a data frame with columns <code>k</code> and <code>score</code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>data_to_cluster</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>]</span>
-<span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_dmat.html'>compute_dmat</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span>, <span class='st'>"euclidean"</span>, <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_clusters.html'>compute_clusters</a></span><span class='op'>(</span><span class='va'>dmat</span>, <span class='st'>"complete"</span><span class='op'>)</span>
-<span class='fu'>compute_metric</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span><span class='op'>)</span>, <span class='va'>clusters</span>, <span class='st'>"Dunn"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     k      score
-#&gt; 1   2 0.04360231
-#&gt; 2   3 0.05621762
-#&gt; 3   4 0.07360085
-#&gt; 4   5 0.07065255
-#&gt; 5   6 0.10059379
-#&gt; 6   7 0.10977727
-#&gt; 7   8 0.11995125
-#&gt; 8   9 0.12115467
-#&gt; 9  10 0.12442737
-#&gt; 10 11 0.13670682
-#&gt; 11 12 0.13670682
-#&gt; 12 13 0.15281355
-#&gt; 13 14 0.15995945</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>data_to_cluster</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Petal.Length"</span>, <span class='st'>"Sepal.Length"</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>dmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_dmat.html'>compute_dmat</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span>, <span class='st'>"euclidean"</span>, <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>clusters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute_clusters.html'>compute_clusters</a></span><span class='op'>(</span><span class='va'>dmat</span>, <span class='st'>"complete"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>compute_metric</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>data_to_cluster</span><span class='op'>)</span>, <span class='va'>clusters</span>, <span class='st'>"Dunn"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     k      score</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   2 0.04360231</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   3 0.05621762</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   4 0.07360085</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   5 0.07065255</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   6 0.10059379</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   7 0.10977727</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   8 0.11995125</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   9 0.12115467</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  10 0.12442737</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 11 0.13670682</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11 12 0.13670682</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12 13 0.15281355</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13 14 0.15995945</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
