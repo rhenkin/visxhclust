@@ -73,10 +73,6 @@ question marks), and there are also three guides on how to use tool:
     using the functions exported by the package. See with
     `vignette("clusterevaluation")` in R.
 
-The app includes multiple help points in the interface and a vignette
-documenting how to load data and the basic clustering loop – see
-[vignette(“visxhclust”)](https://rhenkin.github.io/visxhclust/articles/visxhclust.html).
-
 ## Usage tips and data requirements
 
 To use your data with the tool, you can save a data frame or tibble in
