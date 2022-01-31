@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^CONTRIBUTING\.md$
 ^README\.Rmd$
 ^dev$
 ^_pkgdown\.yml$

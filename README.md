@@ -19,14 +19,8 @@ other charts. Additionally, it includes lightweight data overview plots
 such as correlation heatmaps, annotated MDS and PCA plots. On the
 evaluation side, it builds on existing packages to compute internal
 validation scores and Gap statistic, as well as Dunn’s test to evaluate
-significant differences between clusters.
-
-The app includes multiple help points in the interface and a vignette
-documenting how to load data and the basic clustering loop – see
-`vignette("visxhclust")`. The package exports various functions to help
-with documenting and reproducing a clustering workflow with R or R
-Markdown – see `vignette("clusterworkflow")` and
-`vignette("clusterevaluation")` for examples.
+significant differences between clusters. Many of the functions are also
+exported to facilitate documenting a complete analysis cycle.
 
 ## Installation
 
@@ -51,7 +45,39 @@ install.packages("BiocManager")
 BiocManager::install("ComplexHeatmap")
 ```
 
-## Usage and data requirements
+## Getting started
+
+To run the app once the package is installed, use the following
+commands:
+
+``` r
+library(visxhclust)
+# Increases max file size to 30 MB
+options(shiny.maxRequestSize = 30*1024^2)
+run_app()
+```
+
+The app includes multiple help points in the interface (look for the
+question marks), and there are also three guides on how to use tool:
+
+-   An [animated
+    guide](https://rhenkin.github.io/visxhclust/articles/visxhclust.html)
+    on loading data and the basic clustering loop. It’s also accessible
+    in R by using the command `vignette("visxhclust")`.
+-   An example of how to [reproduce an
+    analysis](https://rhenkin.github.io/visxhclust/articles/clusterworkflow.html)
+    an analysis using the functions exported by the package. See with
+    `vignette("clusterworkflow")` in R.
+-   An example of how to [reproduce the evaluation
+    workflow](https://rhenkin.github.io/visxhclust/articles/clusterevaluation.html)
+    using the functions exported by the package. See with
+    `vignette("clusterevaluation")` in R.
+
+The app includes multiple help points in the interface and a vignette
+documenting how to load data and the basic clustering loop – see
+[vignette(“visxhclust”)](https://rhenkin.github.io/visxhclust/articles/visxhclust.html).
+
+## Usage tips and data requirements
 
 To use your data with the tool, you can save a data frame or tibble in
 an RDS file, or use comma or tab-delimited files, with .csv, .tsv or
@@ -69,11 +95,8 @@ columns) should be removed before loading the file into the tool. The
 tool provides limited abilities to help with diagnosing issues and
 preprocessing data.
 
-To run the app once the package is installed:
+# Contributing
 
-``` r
-library(visxhclust)
-# Increases max file size to 30 MB
-options(shiny.maxRequestSize = 30*1024^2)
-run_app()
-```
+Please see the
+[guide](https://github.com/rhenkin/visxhclust/blob/master/CONTRIBUTING.md)
+for code contribution and suggestions.

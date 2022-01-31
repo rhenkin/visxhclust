@@ -87,13 +87,13 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
+
 <div id="visxhclust-visual-exploration-of-hierarchical-clustering" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#visxhclust-visual-exploration-of-hierarchical-clustering" class="anchor"></a>visxhclust: visual exploration of hierarchical clustering</h1></div>
 <!-- badges: start -->
 
-<p>visxhclust is a package that includes a Shiny application for <strong>vis</strong>ual e<strong>x</strong>ploration of <strong>h</strong>ierarchical <strong>clust</strong>ering. It is aimed at facilitating iterative workflows of hierarchical clustering on numeric data. For that, the app allows users to quickly change parameters and analyse and evaluate results with typical heatmaps with dendrograms and other charts. Additionally, it includes lightweight data overview plots such as correlation heatmaps, annotated MDS and PCA plots. On the evaluation side, it builds on existing packages to compute internal validation scores and Gap statistic, as well as Dunn’s test to evaluate significant differences between clusters.</p>
-<p>The app includes multiple help points in the interface and a vignette documenting how to load data and the basic clustering loop – see <code><a href="articles/visxhclust.html">vignette("visxhclust")</a></code>. The package exports various functions to help with documenting and reproducing a clustering workflow with R or R Markdown – see <code><a href="articles/clusterworkflow.html">vignette("clusterworkflow")</a></code> and <code><a href="articles/clusterevaluation.html">vignette("clusterevaluation")</a></code> for examples.</p>
+<p>visxhclust is a package that includes a Shiny application for <strong>vis</strong>ual e<strong>x</strong>ploration of <strong>h</strong>ierarchical <strong>clust</strong>ering. It is aimed at facilitating iterative workflows of hierarchical clustering on numeric data. For that, the app allows users to quickly change parameters and analyse and evaluate results with typical heatmaps with dendrograms and other charts. Additionally, it includes lightweight data overview plots such as correlation heatmaps, annotated MDS and PCA plots. On the evaluation side, it builds on existing packages to compute internal validation scores and Gap statistic, as well as Dunn’s test to evaluate significant differences between clusters. Many of the functions are also exported to facilitate documenting a complete analysis cycle.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -108,19 +108,36 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
 <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"ComplexHeatmap"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="usage-and-data-requirements" class="section level2">
+<div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage-and-data-requirements" class="anchor"></a>Usage and data requirements</h2>
-<p>To use your data with the tool, you can save a data frame or tibble in an RDS file, or use comma or tab-delimited files, with .csv, .tsv or .txt extensions. The clustering method supported by the tool works only on numeric values; columns containing text will be set aside to annotate the heatmap if so desired. If a column named <code>ID</code> exists, it will be used as an internal identifier for rows.</p>
-<p>Clustering requires complete datasets with no missing values, NULLs or NAs. If any column contains missing values, it will be set aside to be used as a heatmap annotation. Badly formatted data will also lead to unexpected results in the tool. As an alternative, imputation packages can be used to fill missing data and faulty rows (e.g. text in numeric columns) should be removed before loading the file into the tool. The tool provides limited abilities to help with diagnosing issues and preprocessing data.</p>
-<p>To run the app once the package is installed:</p>
+<a href="#getting-started" class="anchor"></a>Getting started</h2>
+<p>To run the app once the package is installed, use the following commands:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rhenkin/visxhclust">visxhclust</a></span><span class="op">)</span>
 <span class="co"># Increases max file size to 30 MB</span>
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>shiny.maxRequestSize <span class="op">=</span> <span class="fl">30</span><span class="op">*</span><span class="fl">1024</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>The app includes multiple help points in the interface (look for the question marks), and there are also three guides on how to use tool:</p>
+<ul>
+<li>An <a href="https://rhenkin.github.io/visxhclust/articles/visxhclust.html">animated guide</a> on loading data and the basic clustering loop. It’s also accessible in R by using the command <code><a href="articles/visxhclust.html">vignette("visxhclust")</a></code>.</li>
+<li>An example of how to <a href="https://rhenkin.github.io/visxhclust/articles/clusterworkflow.html">reproduce an analysis</a> an analysis using the functions exported by the package. See with <code><a href="articles/clusterworkflow.html">vignette("clusterworkflow")</a></code> in R.</li>
+<li>An example of how to <a href="https://rhenkin.github.io/visxhclust/articles/clusterevaluation.html">reproduce the evaluation workflow</a> using the functions exported by the package. See with <code><a href="articles/clusterevaluation.html">vignette("clusterevaluation")</a></code> in R.</li>
+</ul>
+<p>The app includes multiple help points in the interface and a vignette documenting how to load data and the basic clustering loop – see <a href="https://rhenkin.github.io/visxhclust/articles/visxhclust.html">vignette(“visxhclust”)</a>.</p>
+</div>
+<div id="usage-tips-and-data-requirements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage-tips-and-data-requirements" class="anchor"></a>Usage tips and data requirements</h2>
+<p>To use your data with the tool, you can save a data frame or tibble in an RDS file, or use comma or tab-delimited files, with .csv, .tsv or .txt extensions. The clustering method supported by the tool works only on numeric values; columns containing text will be set aside to annotate the heatmap if so desired. If a column named <code>ID</code> exists, it will be used as an internal identifier for rows.</p>
+<p>Clustering requires complete datasets with no missing values, NULLs or NAs. If any column contains missing values, it will be set aside to be used as a heatmap annotation. Badly formatted data will also lead to unexpected results in the tool. As an alternative, imputation packages can be used to fill missing data and faulty rows (e.g. text in numeric columns) should be removed before loading the file into the tool. The tool provides limited abilities to help with diagnosing issues and preprocessing data.</p>
 </div>
 </div>
+<div id="contributing" class="section level1">
+<h1 class="hasAnchor">
+<a href="#contributing" class="anchor"></a>Contributing</h1>
+<p>Please see the <a href="https://github.com/rhenkin/visxhclust/blob/master/CONTRIBUTING.md">guide</a> for code contribution and suggestions.</p>
+</div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -140,6 +157,12 @@
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
+</ul>
+</div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
 <div class="developers">
