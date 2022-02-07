@@ -8,6 +8,7 @@
 [![R-CMD-check](https://github.com/rhenkin/visxhclust/workflows/R-CMD-check/badge.svg)](https://github.com/rhenkin/visxhclust/actions)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/visxhclust)](https://CRAN.R-project.org/package=visxhclust)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.04074/status.svg)](https://doi.org/10.21105/joss.04074)
 <!-- badges: end -->
 
 visxhclust is a package that includes a Shiny application for **vis**ual
