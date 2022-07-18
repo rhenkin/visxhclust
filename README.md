@@ -23,6 +23,9 @@ validation scores and Gap statistic, as well as Dunn’s test to evaluate
 significant differences between clusters. Many of the functions are also
 exported to facilitate documenting a complete analysis cycle.
 
+**NEW!** A live demo of the app is running
+[here](https://rhenkin.shinyapps.io/visxhclust).
+
 ## Installation
 
 The latest release can be installed from CRAN:

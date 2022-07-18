@@ -22,6 +22,8 @@ knitr::opts_chunk$set(
 
 visxhclust is a package that includes a Shiny application for **vis**ual e**x**ploration of **h**ierarchical **clust**ering. It is aimed at facilitating iterative workflows of hierarchical clustering on numeric data. For that, the app allows users to quickly change parameters and analyse and evaluate results with typical heatmaps with dendrograms and other charts. Additionally, it includes lightweight data overview plots such as correlation heatmaps, annotated MDS and PCA plots. On the evaluation side, it builds on existing packages to compute internal validation scores and Gap statistic, as well as Dunn's test to evaluate significant differences between clusters. Many of the functions are also exported to facilitate documenting a complete analysis cycle.
 
+**NEW!** A live demo of the app is running [here](https://rhenkin.shinyapps.io/visxhclust).
+
 ## Installation
 
 The latest release can be installed from CRAN:
