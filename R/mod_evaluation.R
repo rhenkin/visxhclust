@@ -9,7 +9,7 @@ ui_evaluation <- function() {
         selectizeInput(
           ns("evaluation_selected"),
           label = "Select measure",
-          choices = clusterCrit::getCriteriaNames(TRUE)
+          choices = c("silhouette", "dunn")
         )),
         column(width = 4,
         selectizeInput(
@@ -28,14 +28,12 @@ ui_evaluation <- function() {
   )
 }
 
-server_evaluation <- function(id, selected_data, clusters) {
+server_evaluation <- function(id, distance_matrix, clusters) {
   moduleServer(id, function(input, output, session) {
     output$measure_over_k <- renderPlot({
       req(input$evaluation_selected)
 
-      validate(need(!all(sapply(selected_data(), is.integer)),
-                    "Internal evaluation works only for continuous data"))
-      metric_results <- compute_metric(selected_data(),
+      metric_results <- compute_metric(distance_matrix(),
                                        clusters(),
                                        input$evaluation_selected)
       validate(need(all(!is.na(metric_results)),

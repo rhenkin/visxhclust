@@ -1,7 +1,7 @@
 Package: visxhclust
 Type: Package
 Title: A Shiny App for Visual Exploration of Hierarchical Clustering
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(person("Rafael", "Henkin",
                     email = "r.henkin@qmul.ac.uk", 
                     role = c("aut", "cre")))
@@ -26,7 +26,7 @@ Imports:
     tidyr,
     cluster,
     fastcluster,
-    clusterCrit,
+    clValid,
     dunn.test,
     RColorBrewer,
     dendextend,
@@ -35,7 +35,7 @@ Imports:
     patchwork,
     knitr,
     kableExtra
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests: 
     testthat (>= 3.0.0),

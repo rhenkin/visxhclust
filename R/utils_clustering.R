@@ -102,9 +102,9 @@ relabel_clusters <- function(list_of_labels, df, rank_variable) {
 #'
 #' @description Metric will be computed from 2 to max_k clusters. Note that the row number in results will be different from k.
 #'
-#' @param df data frame used to compute clusters
+#' @param dmat distance matrix output of [compute_dmat()] or [stats::dist()]
 #' @param clusters output of [compute_clusters()] or [fastcluster::hclust()]
-#' @param metric_name valid metric name from [clusterCrit::getCriteriaNames()] (with TRUE argument)
+#' @param metric_name either "silhouette" and "dunn"
 #' @param max_k maximum number of clusters to cut using [dendextend::cutree()]. Default is 14.
 #'
 #' @return a data frame with columns `k` and `score`
@@ -114,24 +114,29 @@ relabel_clusters <- function(list_of_labels, df, rank_variable) {
 #' data_to_cluster <- iris[c("Petal.Length", "Sepal.Length")]
 #' dmat <- compute_dmat(data_to_cluster, "euclidean", TRUE)
 #' clusters <- compute_clusters(dmat, "complete")
-#' compute_metric(scale(data_to_cluster), clusters, "Dunn")
-compute_metric <- function(df, clusters, metric_name, max_k = 14) {
-  if (!metric_name %in% clusterCrit::getCriteriaNames(TRUE)) {
-    stop("Invalid metric name. Please check
-         clusterCrit::getCriteriaNames(TRUE) for a valid argument")
+#' compute_metric(dmat, clusters, "dunn")
+compute_metric <- function(dmat, clusters, metric_name, max_k = 14) {
+  if (!metric_name %in% c("silhouette", "dunn")) {
+    stop("Invalid metric name. metric_name should be
+         one of 'silhouette' or 'dunn'")
   }
-  stopifnot(length(dim(df)) == 2, max_k > 2)
-  df <- as.matrix(df)
+  stopifnot(max_k > 2)
   calc_measure <- as.vector(unlist(lapply(2:max_k, function(k)  {
-    clusterCrit::intCriteria(
-      df,
-      dendextend::cutree(
+    if (metric_name == "silhouette") {
+      sil <- cluster::silhouette(dendextend::cutree(
         clusters,
         k = k,
         order_clusters_as_data = TRUE
-      ),
-      metric_name
-    )
+      ), dist = dmat)
+      sil_summary <- summary(sil)
+      avw <- sil_summary$avg.width
+    } else {
+      clValid::dunn(distance = dmat, dendextend::cutree(
+        clusters,
+        k = k,
+        order_clusters_as_data = TRUE
+      ))
+    }
   })))
   data.frame(k = factor(2:max_k), score = calc_measure)
 }

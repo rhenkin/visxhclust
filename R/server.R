@@ -286,7 +286,7 @@ app_server <- function(input, output, session) {
   # Evaluation tab ----
   server_evaluation(
     "evaluation",
-    selected_data,
+    distance_matrix,
     clusters
   )
 
