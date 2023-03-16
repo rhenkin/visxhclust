@@ -41,21 +41,21 @@ test_that("cut clusters test", {
 
 test_that("compute metric tests", {
   # Missing metric name
-  expect_error(compute_metric(scale_data(iris_numeric), clusters))
+  expect_error(compute_metric(dmat, clusters))
   # Invalid metric name
-  expect_error(compute_metric(scale_data(iris_numeric), clusters, "runn"))
+  expect_error(compute_metric(dmat, clusters, "runn"))
   # Invalid max_k
   expect_error(
-    compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 0))
+    compute_metric(dmat, clusters, "dunn", max_k = 0))
   expect_error(
-    compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 1))
+    compute_metric(dmat, clusters, "dunn", max_k = 1))
   expect_error(
-    compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 2))
+    compute_metric(dmat, clusters, "dunn", max_k = 2))
   # This should work
   expect_error(
-    compute_metric(scale_data(iris_numeric), clusters, "Dunn", max_k = 3), NA)
+    compute_metric(dmat, clusters, "dunn", max_k = 3), NA)
   # This shouldn't work - invalid input
-  expect_error(compute_metric(dmat, clusters, "Dunn", max_k = 3))
+  expect_error(compute_metric(scale_data(iris_numeric), clusters, "dunn", max_k = 3))
 })
 
 test_that("compute gap stat tests", {
@@ -77,7 +77,7 @@ test_that("optimal score", {
   expect_equal(optimal_score(dunn_res$score, method = "globalmax"), 13)
   expect_equal(optimal_score(ch_res$score, method = "firstmax"), 1)
   expect_equal(optimal_score(ch_res$score, method = "globalmax"), 1)
-  expect_equal(optimal_score(ch_res$score, method = "firstmin"), 10)
+  expect_equal(optimal_score(ch_res$score, method = "firstmin"), 5)
   expect_equal(optimal_score(ch_res$score, method = "globalmin"), 10)
 })
 

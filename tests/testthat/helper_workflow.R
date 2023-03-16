@@ -6,10 +6,10 @@ clusters <- compute_clusters(dmat, "complete")
 cluster_labels <- cut_clusters(clusters, 2)
 longdata_with_labels <- annotate_clusters(iris_numeric, cluster_labels)
 widedata_with_labels <- annotate_clusters(iris_numeric, cluster_labels, long = FALSE)
-dunn_res <- compute_metric(scaled_df, clusters, "Dunn")
+dunn_res <- compute_metric(dmat, clusters, "dunn")
 
 iris_all <- iris[c("Petal.Length", "Sepal.Length", "Petal.Width", "Sepal.Width")]
 scaled_all <- scale(iris_all)
 dmat_all <- compute_dmat(scaled_all)
 clusters_all <- compute_clusters(dmat_all, "single")
-ch_res <- compute_metric(scaled_all, clusters_all, "Calinski_Harabasz", 11)
+ch_res <- compute_metric(dmat_all, clusters_all, "silhouette", 11)
