@@ -192,7 +192,7 @@ compute_gapstat <- function(df, clusters, gap_B = 50, max_k = 14) {
 #' data_to_cluster <- iris[c("Petal.Length", "Sepal.Length")]
 #' dmat <- compute_dmat(data_to_cluster, "euclidean", TRUE)
 #' clusters <- compute_clusters(dmat, "complete")
-#' res <- compute_metric(scale(data_to_cluster), clusters, "Dunn")
+#' res <- compute_metric(dmat, clusters, "dunn")
 #' optimal_score(res$score, method = "firstmax")
 optimal_score <- function(x,
                            method = c(
