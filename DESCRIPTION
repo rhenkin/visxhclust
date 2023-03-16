@@ -26,7 +26,7 @@ Imports:
     tidyr,
     cluster,
     fastcluster,
-    clusterCrit,
+    clValid,
     dunn.test,
     RColorBrewer,
     dendextend,
@@ -35,7 +35,7 @@ Imports:
     patchwork,
     knitr,
     kableExtra
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests: 
     testthat (>= 3.0.0),

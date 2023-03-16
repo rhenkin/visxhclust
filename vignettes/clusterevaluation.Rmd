@@ -41,10 +41,10 @@ line_plot(gap_results, "k", "gap", xintercept = optimal_k)
 
 ### Other measures
 
-The Shiny app also includes various other measures computed by [clusterCrit::intCriteria()]. The function `compute_metric` works similarly to `compute_gapstat`, whereas `optimal_score` is similar to maxSE. However, `optimal_score` varies only between first and global minimum and maximum.
+The Shiny app also includes the option to compute average silhouette widths or Dunn index. The function `compute_metric` works similarly to `compute_gapstat`, whereas `optimal_score` is similar to maxSE. However, `optimal_score` varies only between first and global minimum and maximum.
 
 ```{r dunn}
-res <- compute_metric(scale(numeric_data), clusters, "Dunn")
+res <- compute_metric(dmat, clusters, "dunn")
 optimal_k <- optimal_score(res$score)
 line_plot(res, "k", "score", optimal_k)
 ```

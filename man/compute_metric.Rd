@@ -4,14 +4,14 @@
 \alias{compute_metric}
 \title{Compute an internal evaluation metric for clustered data}
 \usage{
-compute_metric(df, clusters, metric_name, max_k = 14)
+compute_metric(dmat, clusters, metric_name, max_k = 14)
 }
 \arguments{
-\item{df}{data frame used to compute clusters}
+\item{dmat}{distance matrix output of \code{\link[=compute_dmat]{compute_dmat()}} or \code{\link[stats:dist]{stats::dist()}}}
 
 \item{clusters}{output of \code{\link[=compute_clusters]{compute_clusters()}} or \code{\link[fastcluster:hclust]{fastcluster::hclust()}}}
 
-\item{metric_name}{valid metric name from \code{\link[clusterCrit:getCriteriaNames]{clusterCrit::getCriteriaNames()}} (with TRUE argument)}
+\item{metric_name}{"silhouette" or "dunn"}
 
 \item{max_k}{maximum number of clusters to cut using \code{\link[dendextend:cutree-methods]{dendextend::cutree()}}. Default is 14.}
 }
@@ -25,5 +25,5 @@ Metric will be computed from 2 to max_k clusters. Note that the row number in re
 data_to_cluster <- iris[c("Petal.Length", "Sepal.Length")]
 dmat <- compute_dmat(data_to_cluster, "euclidean", TRUE)
 clusters <- compute_clusters(dmat, "complete")
-compute_metric(scale(data_to_cluster), clusters, "Dunn")
+compute_metric(dmat, clusters, "dunn")
 }
