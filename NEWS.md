@@ -1,3 +1,5 @@
+# visxhclust (development version)
+
 # visxhclust 1.1.0
 
 - Remove clusterCrit as dependency

@@ -1,7 +1,7 @@
 Package: visxhclust
 Type: Package
 Title: A Shiny App for Visual Exploration of Hierarchical Clustering
-Version: 1.1.0
+Version: 1.1.0.9000
 Authors@R: c(person("Rafael", "Henkin",
                     email = "r.henkin@qmul.ac.uk", 
                     role = c("aut", "cre")))
