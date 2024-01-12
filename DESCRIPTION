@@ -8,7 +8,7 @@ Authors@R: c(person("Rafael", "Henkin",
 Maintainer: Rafael Henkin <r.henkin@qmul.ac.uk>
 Description: A Shiny application and functions for visual exploration of hierarchical clustering with numeric datasets. Allows users to iterative set hyperparameters, select features and evaluate results through various plots and computation of evaluation criteria.
 License: GPL-3
-URL: https://github.com/rhenkin/visxhclust
+URL: https://github.com/rhenkin/visxhclust, https://rhenkin.github.io/visxhclust/
 BugReports: https://github.com/rhenkin/visxhclust/issues
 Encoding: UTF-8
 LazyData: true
